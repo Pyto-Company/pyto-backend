@@ -19,7 +19,7 @@ jobs:
       - name: Log in to DockerHub
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
         env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_USER: ${{ vars.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       # Build and tag Docker image
@@ -43,8 +43,8 @@ jobs:
       - name: Copy docker-compose.yml to the server
         uses: appleboy/scp-action@v0.2.0
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: docker-compose.yml
           target: /var/www/pyto_project
@@ -53,8 +53,8 @@ jobs:
       - name: SSH into server and deploy
         uses: appleboy/ssh-action@v0.1.5
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USER }}
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/pyto_project &&
@@ -63,5 +63,5 @@ jobs:
             docker-compose pull &&
             docker-compose up -d
         env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_USER: ${{ vars.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
