@@ -8,7 +8,6 @@ services:
       - "8000:8000"
     environment:
       ENV: "production"
-      DATABASE_URL: ${DATABASE_URL}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       MISTRAL_AI_API_KEY: ${MISTRAL_AI_API_KEY}

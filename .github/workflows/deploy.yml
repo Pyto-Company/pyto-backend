@@ -63,10 +63,11 @@ jobs:
           script: |
             cd /var/www/pyto_project &&
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ vars.DOCKER_USER }} --password-stdin &&
+            echo 'starting down' &&
             docker-compose down &&
+            echo 'starting pull' &&
             docker-compose pull &&
-            DOCKER_USER=${{ vars.DOCKER_USER }} \
-            DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} \
+            echo 'starting up' &&
             DATABASE_USER=${{ vars.DATABASE_USER }} \
             DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
             DATABASE_NAME=${{ vars.DATABASE_NAME }} \
