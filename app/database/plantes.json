@@ -1,0 +1,37 @@
+[
+    {
+        "id": 1,
+        "nom": "Mon Ficus",
+        "date_creation": "2024-01-10T12:30:00",
+        "espece_id": 101,
+        "utilisateur_id": 1
+    },
+    {
+        "id": 2,
+        "nom": "Ma Monstera",
+        "date_creation": "2024-02-15T08:45:00",
+        "espece_id": 102,
+        "utilisateur_id": 1
+    },
+    {
+        "id": 3,
+        "nom": "Mon Cactus",
+        "date_creation": "2024-03-20T14:00:00",
+        "espece_id": 103,
+        "utilisateur_id": 2
+    },
+    {
+        "id": 4,
+        "nom": "Mon Pothos",
+        "date_creation": "2024-04-25T16:20:00",
+        "espece_id": 104,
+        "utilisateur_id": 2
+    },
+    {
+        "id": 5,
+        "nom": "Mon Succulent",
+        "date_creation": "2024-05-30T10:15:00",
+        "espece_id": 105,
+        "utilisateur_id": 3
+    }
+]

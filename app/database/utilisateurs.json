@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "nom": "Uzan",
+        "prenom": "Valentin",
+        "est_actif": true,
+        "password": "valentinuzan",
+        "email": "uzanval@gmail.com"
+    },
+    {
+        "id": 2,
+        "nom": "Merzouki",
+        "prenom": "Ilian",
+        "est_actif": true,
+        "password": "ilianmerzouki",
+        "email": "ilian@gmail.com"
+    },
+    {
+        "id": 3,
+        "nom": "Uzan",
+        "prenom": "Lucas",
+        "est_actif": true,
+        "password": "lucasuzan",
+        "email": "uzanlah@gmail.com"
+    }
+]

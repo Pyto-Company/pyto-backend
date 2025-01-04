@@ -1,0 +1,67 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # Trigger only on pushes to the main branch
+
+jobs:
+  build_and_push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Log in to DockerHub
+      - name: Log in to DockerHub
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build and tag Docker image
+      - name: Build Docker image
+        run: docker build -t fastapi .
+
+      - name: Tag Docker image
+        run: docker tag fastapi pytocompany/fastapi:latest
+
+      # Push Docker image to registry
+      - name: Push Docker image to DockerHub
+        run: docker push pytocompany/fastapi:latest
+
+  deploy:
+    name: Deploy on AlmaLinux Server
+    needs: build_and_push  # This job runs after the build_and_push job
+    runs-on: ubuntu-latest
+
+    steps:
+      # Copy docker-compose.yml to the server
+      - name: Copy docker-compose.yml to the server
+        uses: appleboy/scp-action@v0.2.0
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: docker-compose.yml
+          target: /var/www/pyto_project
+
+      # SSH into the server and deploy
+      - name: SSH into server and deploy
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/pyto_project &&
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin &&
+            docker-compose down &&
+            docker-compose pull &&
+            docker-compose up -d
+        env:
+          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

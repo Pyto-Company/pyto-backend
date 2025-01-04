@@ -1,0 +1,47 @@
+[
+    {
+        "id": 101,
+        "nom_commun": "Ficus",
+        "photo_defaut": "ficus.jpg",
+        "nom_scientifique": "Ficus benjamina",
+        "type": "Arbre d'intérieur",
+        "habitat": "Intérieur",
+        "classe_ia": "ficus_benjamina_class"
+    },
+    {
+        "id": 102,
+        "nom_commun": "Monstera",
+        "photo_defaut": "monstera.jpg",
+        "nom_scientifique": "Monstera deliciosa",
+        "type": "Plante grimpante",
+        "habitat": "Intérieur",
+        "classe_ia": "monstera_deliciosa_class"
+    },
+    {
+        "id": 103,
+        "nom_commun": "Cactus",
+        "photo_defaut": "cactus.jpg",
+        "nom_scientifique": "Cactaceae",
+        "type": "Plante succulente",
+        "habitat": "Intérieur",
+        "classe_ia": "cactaceae_class"
+    },
+    {
+        "id": 104,
+        "nom_commun": "Pothos",
+        "photo_defaut": "pothos.jpg",
+        "nom_scientifique": "Epipremnum aureum",
+        "type": "Plante grimpante",
+        "habitat": "Intérieur",
+        "classe_ia": "epipremnum_aureum_class"
+    },
+    {
+        "id": 105,
+        "nom_commun": "Succulent",
+        "photo_defaut": "succulent.jpg",
+        "nom_scientifique": "Crassulaceae",
+        "type": "Plante succulente",
+        "habitat": "Intérieur",
+        "classe_ia": "crassulaceae_class"
+    }
+]

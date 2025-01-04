@@ -1,0 +1,41 @@
+version: "3.8"
+
+services:
+  fastapi:
+    image: pytocompany/fastapi:latest
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    environment:
+      ENV: "production"
+      DATABASE_URL: ${DATABASE_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      MISTRAL_AI_API_KEY: ${MISTRAL_AI_API_KEY}
+      OPEN_WEATHER_API_KEY: ${OPEN_WEATHER_API_KEY}
+      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+    volumes:
+      - ./app/static:/app/static
+    restart: always
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

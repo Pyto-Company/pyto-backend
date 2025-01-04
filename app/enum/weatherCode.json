@@ -1,0 +1,28 @@
+{
+  "weatherCode": {
+    "0": "Inconnu",
+    "1000": "Clair, Ensoleillé",
+    "1100": "Plutôt clair",
+    "1101": "Partiellement nuageux",
+    "1102": "Plutôt nuageux",
+    "1001": "Nuageux",
+    "2000": "Brouillard",
+    "2100": "Léger brouillard",
+    "4000": "Bruine",
+    "4001": "Pluie",
+    "4200": "Pluie légère",
+    "4201": "Fortes pluie",
+    "5000": "Neige",
+    "5001": "Averses de neige",
+    "5100": "Neige légère",
+    "5101": "Forte neige",
+    "6000": "Bruine verglaçante",
+    "6001": "Pluie verglaçante",
+    "6200": "Pluie verglaçante légère",
+    "6201": "Fortes pluies verglaçantes",
+    "7000": "Grésils de glace",
+    "7101": "Grésillons lourds",
+    "7102": "Grésillons légers",
+    "8000": "Orage"
+  }
+}
