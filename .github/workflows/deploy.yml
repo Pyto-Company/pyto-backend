@@ -63,19 +63,19 @@ jobs:
           script: |
             cd /var/www/pyto_project &&
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ vars.DOCKER_USER }} --password-stdin &&
+            export DATABASE_USER=${{ vars.DATABASE_USER }} &&
+            export DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} &&
+            export DATABASE_NAME=${{ vars.DATABASE_NAME }} &&
+            export DATABASE_HOST=${{ vars.DATABASE_HOST }} &&
+            export DATABASE_PORT=${{ vars.DATABASE_PORT }} &&
+            export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} &&
+            export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} &&
+            export MISTRAL_AI_API_KEY=${{ secrets.MISTRAL_AI_API_KEY }} &&
+            export OPEN_WEATHER_API_KEY=${{ secrets.OPEN_WEATHER_API_KEY }} &&
             echo 'starting down' &&
             docker-compose down &&
             echo 'starting pull' &&
             docker-compose pull &&
             echo 'starting up' &&
-            DATABASE_USER=${{ vars.DATABASE_USER }} \
-            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
-            DATABASE_NAME=${{ vars.DATABASE_NAME }} \
-            DATABASE_HOST=${{ vars.DATABASE_HOST }} \
-            DATABASE_PORT=${{ vars.DATABASE_PORT }} \
-            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
-            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
-            MISTRAL_AI_API_KEY=${{ secrets.MISTRAL_AI_API_KEY }} \
-            OPEN_WEATHER_API_KEY=${{ secrets.OPEN_WEATHER_API_KEY }} \
             docker-compose up -d &&
             mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml
