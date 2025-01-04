@@ -63,24 +63,15 @@ jobs:
           script: |
             cd /var/www/pyto_project &&
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ vars.DOCKER_USER }} --password-stdin &&
-            echo 'DATABASE_USER' &&
-            export DATABASE_USER=${{ vars.DATABASE_USER }} &&
-            echo 'DATABASE_PASSWORD' &&
-            export DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} &&
-            echo 'DATABASE_NAME' &&
-            export DATABASE_NAME=${{ vars.DATABASE_NAME }} &&
-            echo 'DATABASE_HOST' &&
-            export DATABASE_HOST=${{ vars.DATABASE_HOST }} &&
-            echo 'DATABASE_PORT' &&
-            export DATABASE_PORT=${{ vars.DATABASE_PORT }} &&
-            echo 'GOOGLE_CLIENT_ID' &&
-            export GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} &&
-            echo 'GOOGLE_CLIENT_SECRET' &&
-            export GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} &&
-            echo 'MISTRAL_AI_API_KEY' &&
-            export MISTRAL_AI_API_KEY=${{ secrets.MISTRAL_AI_API_KEY }} &&
-            echo 'OPEN_WEATHER_API_KEY' &&
-            export OPEN_WEATHER_API_KEY=${{ secrets.OPEN_WEATHER_API_KEY }} &&
+            export DATABASE_USER="${{ vars.DATABASE_USER }}" &&
+            export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}" &&
+            export DATABASE_NAME="${{ vars.DATABASE_NAME }}" &&
+            export DATABASE_HOST="${{ vars.DATABASE_HOST }}" &&
+            export DATABASE_PORT="${{ vars.DATABASE_PORT }}" &&
+            export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" &&
+            export GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" &&
+            export MISTRAL_AI_API_KEY="${{ secrets.MISTRAL_AI_API_KEY }}" &&
+            export OPEN_WEATHER_API_KEY="${{ secrets.OPEN_WEATHER_API_KEY }}" &&
             echo 'starting down' &&
             docker-compose down &&
             echo 'starting pull' &&
