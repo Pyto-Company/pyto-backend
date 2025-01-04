@@ -39,6 +39,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug Files
+        run: |
+          ls -la
+
       # Copy docker-compose.yml to the server
       - name: Copy docker-compose.yml to the server
         uses: appleboy/scp-action@v0.1.7
@@ -61,6 +65,17 @@ jobs:
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin &&
             docker-compose down &&
             docker-compose pull &&
+            DOCKER_USER=${{ vars.DOCKER_USER }} \
+            DOCKER_PASSWORD=${{ secrets.DOCKER_PASSWORD }} \
+            DATABASE_USER=${{ vars.DATABASE_USER }} \
+            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} \
+            DATABASE_NAME=${{ vars.DATABASE_NAME }} \
+            DATABASE_HOST=${{ vars.DATABASE_HOST }} \
+            DATABASE_PORT=${{ vars.DATABASE_PORT }} \
+            GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
+            GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
+            MISTRAL_AI_API_KEY=${{ secrets.MISTRAL_AI_API_KEY }} \
+            OPEN_WEATHER_API_KEY=${{ secrets.OPEN_WEATHER_API_KEY }} \
             docker-compose up -d
         env:
           DOCKER_USER: ${{ vars.DOCKER_USER }}
