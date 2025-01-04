@@ -23,15 +23,15 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       # Build and tag Docker image
-      - name: Build Docker image
-        run: docker build -t fastapi .
+      # - name: Build Docker image
+      #   run: docker build -t fastapi .
 
-      - name: Tag Docker image
-        run: docker tag fastapi pytocompany/fastapi:latest
+      # - name: Tag Docker image
+      #   run: docker tag fastapi pytocompany/fastapi:latest
 
-      # Push Docker image to registry
-      - name: Push Docker image to DockerHub
-        run: docker push pytocompany/fastapi:latest
+      # # Push Docker image to registry
+      # - name: Push Docker image to DockerHub
+      #   run: docker push pytocompany/fastapi:latest
 
   deploy:
     name: Deploy on AlmaLinux Server
@@ -41,7 +41,7 @@ jobs:
     steps:
       # Copy docker-compose.yml to the server
       - name: Copy docker-compose.yml to the server
-        uses: appleboy/scp-action@v0.2.0
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SERVER_IP }}
           username: ${{ vars.SSH_USER }}
@@ -51,7 +51,7 @@ jobs:
 
       # SSH into the server and deploy
       - name: SSH into server and deploy
-        uses: appleboy/ssh-action@v0.1.5
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.SERVER_IP }}
           username: ${{ vars.SSH_USER }}
