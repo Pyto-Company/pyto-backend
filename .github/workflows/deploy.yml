@@ -50,7 +50,7 @@ jobs:
           host: ${{ vars.SERVER_IP }}
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: docker-compose.yml
+          source: ./docker-compose.yml
           target: /var/www/pyto_project
 
       # SSH into the server and deploy
