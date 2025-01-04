@@ -62,7 +62,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/pyto_project &&
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin &&
+            echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ vars.DOCKER_USER }} --password-stdin &&
             docker-compose down &&
             docker-compose pull &&
             DOCKER_USER=${{ vars.DOCKER_USER }} \
@@ -76,7 +76,5 @@ jobs:
             GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
             MISTRAL_AI_API_KEY=${{ secrets.MISTRAL_AI_API_KEY }} \
             OPEN_WEATHER_API_KEY=${{ secrets.OPEN_WEATHER_API_KEY }} \
-            docker-compose up -d
-        env:
-          DOCKER_USER: ${{ vars.DOCKER_USER }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+            docker-compose up -d &&
+            mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml
