@@ -9,13 +9,20 @@ from torchvision import transforms
 import torch
 from torchvision.models import efficientnet_b0
 import torch.nn as nn
+import os
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement
+load_dotenv()
+
+model_name = "efficientnet_b0_disease_best.pth"
+model_path = f"{os.getenv("PATH_TO_MODELS")}{model_name}"
 
 model = efficientnet_b0(pretrained=False)
 
 num_classes = 17  # Remplacez par votre nombre de classes
 model.classifier[1] = nn.Linear(model.classifier[1].in_features, num_classes)
 
-model_path = "../ai_models/efficientnet_b0_disease_best.pth"
 state_dict = torch.load(model_path, map_location=torch.device('cpu'))
 model.load_state_dict(state_dict)  # Charger les poids
 model.eval()  # Mettre le modèle en mode évaluation
