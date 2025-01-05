@@ -15,6 +15,10 @@ from app.model.message import Message
 from app.model.abonnement import Abonnement
 from app.model.parametrage import Parametrage
 from app.model.scan import Scan
+from app.model.conseil import Conseil
+from app.model.predisposition import Predisposition
+from app.model.symptome import Symptome
+from app.model.traitement import Traitement
 
 from app.api.scan import router as scan_router
 from app.api.meteo import router as weather_router
