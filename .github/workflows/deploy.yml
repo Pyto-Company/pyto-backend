@@ -23,15 +23,15 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       # Build and tag Docker image
-      # - name: Build Docker image
-      #   run: docker build -t fastapi .
+      - name: Build Docker image
+        run: docker build -t fastapi .
 
-      # - name: Tag Docker image
-      #   run: docker tag fastapi pytocompany/fastapi:latest
+      - name: Tag Docker image
+        run: docker tag fastapi pytocompany/fastapi:latest
 
-      # # Push Docker image to registry
-      # - name: Push Docker image to DockerHub
-      #   run: docker push pytocompany/fastapi:latest
+      # Push Docker image to registry
+      - name: Push Docker image to DockerHub
+        run: docker push pytocompany/fastapi:latest
 
   deploy:
     name: Deploy on AlmaLinux Server
