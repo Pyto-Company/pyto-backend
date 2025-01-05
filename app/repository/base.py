@@ -1,7 +1,7 @@
 from typing import TypeVar, Generic, Annotated
 from fastapi import Depends, Query, HTTPException
 from sqlmodel import Session, select
-from app.database.database import get_session
+from database.database import get_session
 
 # Define a generic type for your entities
 T = TypeVar("T")

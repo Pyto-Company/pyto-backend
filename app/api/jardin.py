@@ -1,8 +1,8 @@
 from typing import List
 from fastapi import APIRouter, HTTPException
-from app.dto.plante_jardin import PlanteJardinDTO
-from app.service.jardin import JardinService
-from app.service.meteo import MeteoService
+from dto.plante_jardin import PlanteJardinDTO
+from service.jardin import JardinService
+from service.meteo import MeteoService
 
 router = APIRouter(prefix="/jardin", tags=["jardin"])
 

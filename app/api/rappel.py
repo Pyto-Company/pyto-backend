@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from typing import Annotated
-from app.model.rappel import Rappel
-from app.repository.rappel import RappelRepository
+from model.rappel import Rappel
+from repository.rappel import RappelRepository
 
 router = APIRouter(prefix="/rappel", tags=["rappel"])
 

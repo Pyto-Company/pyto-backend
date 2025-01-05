@@ -2,18 +2,18 @@ from datetime import datetime
 from typing import Dict, List
 from fastapi import UploadFile, File
 
-from app.dto.resultat_scan import ResultatScanDTO
-from app.model.espece import Espece
-from app.model.maladie import Maladie
-from app.model.scan import Scan
-from app.repository.entretien import EntretienRepository
-from app.repository.espece import EspeceRepository
-from app.repository.maladie import MaladieRepository
-from app.repository.scan import ScanRepository
-from app.service.scan_espece import ScanEspeceService
-from app.service.scan_maladie import ScanMaladieService
-from app.storage.image import ImageStorage
-from app.logger.logger import logger
+from dto.resultat_scan import ResultatScanDTO
+from model.espece import Espece
+from model.maladie import Maladie
+from model.scan import Scan
+from repository.entretien import EntretienRepository
+from repository.espece import EspeceRepository
+from repository.maladie import MaladieRepository
+from repository.scan import ScanRepository
+from service.scan_espece import ScanEspeceService
+from service.scan_maladie import ScanMaladieService
+from storage.image import ImageStorage
+from logger.logger import logger
 
 class ScanService():
 

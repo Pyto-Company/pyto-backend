@@ -1,8 +1,8 @@
 from fastapi import Depends, Query, HTTPException
 from sqlmodel import Session, select
-from app.database.database import get_session, engine
+from database.database import get_session, engine
 from sqlalchemy import text
-from app.dto.plante_jardin import PlanteJardinDTO
+from dto.plante_jardin import PlanteJardinDTO
 from typing import List
 
 class JardinRepository():

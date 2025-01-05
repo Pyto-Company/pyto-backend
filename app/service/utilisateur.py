@@ -1,8 +1,8 @@
 import uuid
 from sqlmodel import Session
-from app.model.utilisateur import Utilisateur
-from app.repository.utilisateur import UtilisateurRepository
-from app.service.email import EmailService
+from model.utilisateur import Utilisateur
+from repository.utilisateur import UtilisateurRepository
+from service.email import EmailService
 
 class UtilisateurService():
 

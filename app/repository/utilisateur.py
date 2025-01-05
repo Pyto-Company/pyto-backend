@@ -1,9 +1,9 @@
 from typing import Annotated
 from fastapi import Depends, Query, HTTPException
 from sqlmodel import Session, select
-from app.database.database import get_session
-from app.model.utilisateur import Utilisateur
-from app.repository.base import BaseRepository
+from database.database import get_session
+from model.utilisateur import Utilisateur
+from repository.base import BaseRepository
 
 class UtilisateurRepository(BaseRepository[Utilisateur]):
 

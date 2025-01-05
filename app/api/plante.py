@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from typing import Annotated
-from app.model.plante import Plante
-from app.repository.plante import PlanteRepository
+from model.plante import Plante
+from repository.plante import PlanteRepository
 
 router = APIRouter(prefix="/plante", tags=["plante"])
 

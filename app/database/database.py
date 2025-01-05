@@ -9,10 +9,10 @@ import os
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
-from app.model.espece import Espece
-from app.model.parametrage import Parametrage
-from app.model.plante import Plante
-from app.model.utilisateur import Utilisateur
+from model.espece import Espece
+from model.parametrage import Parametrage
+from model.plante import Plante
+from model.utilisateur import Utilisateur
 from dotenv import load_dotenv
 
 # Charger les variables d'environnement

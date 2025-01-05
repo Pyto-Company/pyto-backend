@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
-from app.client.open_weather import OpenWeatherClient
-from app.service.meteo import MeteoService
+from client.open_weather import OpenWeatherClient
+from service.meteo import MeteoService
 
 router = APIRouter(prefix="/meteo", tags=["meteo"])
 

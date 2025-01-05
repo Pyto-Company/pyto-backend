@@ -1,8 +1,8 @@
 from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
-from app.model.espece import Espece
-from app.repository.base import BaseRepository
+from model.espece import Espece
+from repository.base import BaseRepository
 
 class EspeceRepository(BaseRepository[Espece]):
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, UploadFile, File
-from app.dto.resultat_scan import ResultatScanDTO
-from app.service.scan import ScanService
+from dto.resultat_scan import ResultatScanDTO
+from service.scan import ScanService
 
 router = APIRouter(prefix="/scan", tags=["scan"])
 

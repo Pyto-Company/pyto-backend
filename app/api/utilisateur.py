@@ -1,11 +1,11 @@
 from fastapi import APIRouter, Query, HTTPException, Depends
 from typing import Annotated
-from app.model.utilisateur import Utilisateur
-from app.database import database  
+from model.utilisateur import Utilisateur
+from database import database  
 from sqlmodel import select, Session
 
-from app.repository.utilisateur import UtilisateurRepository
-from app.service.utilisateur import UtilisateurService
+from repository.utilisateur import UtilisateurRepository
+from service.utilisateur import UtilisateurService
 
 router = APIRouter(prefix="/utilisateur", tags=["utilisateur"])
 

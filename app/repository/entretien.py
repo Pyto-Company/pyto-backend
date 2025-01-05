@@ -1,8 +1,8 @@
 from typing import Annotated
 from fastapi import Query
 from torch import select
-from app.model.entretien import Entretien
-from app.repository.base import BaseRepository
+from model.entretien import Entretien
+from repository.base import BaseRepository
 
 class EntretienRepository(BaseRepository[Entretien]):
 

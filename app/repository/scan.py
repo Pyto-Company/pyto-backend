@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query
-from app.model.scan import Scan
-from app.repository.base import BaseRepository
+from model.scan import Scan
+from repository.base import BaseRepository
 
 class ScanRepository(BaseRepository[Scan]):
 

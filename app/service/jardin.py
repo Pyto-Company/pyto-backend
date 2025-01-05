@@ -1,7 +1,7 @@
-from app.dto.plante_jardin import PlanteJardinDTO
+from dto.plante_jardin import PlanteJardinDTO
 from typing import List
 
-from app.repository.jardin import JardinRepository
+from repository.jardin import JardinRepository
 
 class JardinService():
 

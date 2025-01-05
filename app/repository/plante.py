@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query
-from app.model.plante import Plante
-from app.repository.base import BaseRepository
+from model.plante import Plante
+from repository.base import BaseRepository
 
 class PlanteRepository(BaseRepository[Plante]):
 

@@ -1,6 +1,6 @@
 import requests
 
-from app.dto.weatherData import WeatherData, WeatherReport
+from dto.weatherData import WeatherData, WeatherReport
 
 class MeteoService():
 

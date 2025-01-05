@@ -1,8 +1,8 @@
 from typing import Annotated, List
 from fastapi import Query
 from sqlmodel import select
-from app.model.maladie import Maladie
-from app.repository.base import BaseRepository
+from model.maladie import Maladie
+from repository.base import BaseRepository
 
 class MaladieRepository(BaseRepository[Maladie]):
 

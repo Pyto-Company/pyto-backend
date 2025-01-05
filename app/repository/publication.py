@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Depends, Query
-from app.model.publication import Publication
-from app.repository.base import BaseRepository
+from model.publication import Publication
+from repository.base import BaseRepository
 
 class PublicationRepository(BaseRepository[Publication]):
 

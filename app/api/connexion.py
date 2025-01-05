@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 
-from app.service.connexion import ConnexionService
+from service.connexion import ConnexionService
 
 router = APIRouter(prefix="/connexion", tags=["connexion"])
 

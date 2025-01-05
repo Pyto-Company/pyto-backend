@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query
-from app.model.rappel import Rappel
-from app.repository.base import BaseRepository
+from model.rappel import Rappel
+from repository.base import BaseRepository
 
 class RappelRepository(BaseRepository[Rappel]):
 
