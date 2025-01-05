@@ -6,7 +6,8 @@
         "nom_scientifique": "Ficus benjamina",
         "type": "Arbre d'intérieur",
         "habitat": "Intérieur",
-        "classe_ia": "ficus_benjamina_class"
+        "classe_ia": "ficus_benjamina_class",
+        "description": "Plante d'intérieur populaire, souvent arbustive, aux feuilles brillantes et variées selon les espèces (comme le Ficus elastica ou le Ficus benjamina). Facile d'entretien, elle aime la lumière indirecte et un arrosage modéré."
     },
     {
         "id": 102,
@@ -15,7 +16,8 @@
         "nom_scientifique": "Monstera deliciosa",
         "type": "Plante grimpante",
         "habitat": "Intérieur",
-        "classe_ia": "monstera_deliciosa_class"
+        "classe_ia": "monstera_deliciosa_class",
+        "description": "Connu pour ses grandes feuilles découpées en forme de cœur, le Monstera deliciosa est une plante tropicale robuste qui apprécie un environnement lumineux mais sans soleil direct."
     },
     {
         "id": 103,
@@ -24,7 +26,8 @@
         "nom_scientifique": "Cactaceae",
         "type": "Plante succulente",
         "habitat": "Intérieur",
-        "classe_ia": "cactaceae_class"
+        "classe_ia": "cactaceae_class",
+        "description": "Plante succulente adaptée aux environnements arides, le cactus est apprécié pour sa résistance et sa capacité à stocker l'eau. Il en existe une grande variété, souvent épineuse, idéale pour un entretien minimal."
     },
     {
         "id": 104,
@@ -33,7 +36,8 @@
         "nom_scientifique": "Epipremnum aureum",
         "type": "Plante grimpante",
         "habitat": "Intérieur",
-        "classe_ia": "epipremnum_aureum_class"
+        "classe_ia": "epipremnum_aureum_class",
+        "description": "Plante grimpante ou retombante, le Pothos est facile à cultiver grâce à sa résistance. Ses feuilles en forme de cœur peuvent être vertes ou panachées, et il tolère des conditions de lumière faible à moyenne."
     },
     {
         "id": 105,
@@ -42,6 +46,7 @@
         "nom_scientifique": "Crassulaceae",
         "type": "Plante succulente",
         "habitat": "Intérieur",
-        "classe_ia": "crassulaceae_class"
+        "classe_ia": "crassulaceae_class",
+        "description": "Catégorie regroupant des plantes charnues comme l'Aloe ou l'Echeveria. Elles stockent l'eau dans leurs feuilles épaisses, demandent peu d'arrosage et préfèrent des zones lumineuses."
     }
 ]
