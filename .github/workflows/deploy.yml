@@ -11,26 +11,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the repository with full history for comparison
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
 
-      # Log in to DockerHub
+      # Check for changes in app directory
+      - name: Check for changes in app directory
+        id: check_changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^app/ || true)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+
+      # Log in to DockerHub if changes detected
       - name: Log in to DockerHub
+        if: steps.check_changes.outputs.changed != ''
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
         env:
           DOCKER_USER: ${{ vars.DOCKER_USER }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-      # Build and tag Docker image
+      # Build and tag Docker image if changes detected
       - name: Build Docker image
+        if: steps.check_changes.outputs.changed != ''
         run: docker build -t fastapi .
 
       - name: Tag Docker image
+        if: steps.check_changes.outputs.changed != ''
         run: docker tag fastapi pytocompany/fastapi:latest
 
-      # Push Docker image to registry
+      # Push Docker image to registry if changes detected
       - name: Push Docker image to DockerHub
+        if: steps.check_changes.outputs.changed != ''
         run: docker push pytocompany/fastapi:latest
 
   deploy_models:
