@@ -10,7 +10,7 @@ Ouvrir un terminal à la racine du projet
 
 Exécuter la commande suivante pour télécharger toutes les librairies nécessaires : 
 ```
-pip install -r FullPathToFile\pyto_fastapi\requirements.txt
+pip install -r requirements.txt
 ```
 
 ### 3) Fichier .env
