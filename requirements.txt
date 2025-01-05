@@ -21,3 +21,4 @@ asyncpg
 psycopg2-binary
 sqlalchemy
 python-multipart
+greenlet
