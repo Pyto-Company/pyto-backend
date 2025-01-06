@@ -64,6 +64,20 @@ jobs:
 
       - name: Copy AI models to server
       #  if: steps.check_changes.outputs.changed != ''
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Créer le dossier models s'il n'existe pas
+            sudo mkdir -p /var/www/pyto_project/app/models
+            # Donner les bonnes permissions
+            sudo chown -R ${{ vars.SSH_USER }}:${{ vars.SSH_USER }} /var/www/pyto_project/app/models
+            sudo chmod -R 755 /var/www/pyto_project/app/models
+
+      - name: Copy models files
+      #  if: steps.check_changes.outputs.changed != ''
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SERVER_IP }}
