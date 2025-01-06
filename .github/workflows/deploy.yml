@@ -56,14 +56,14 @@ jobs:
         with:
           fetch-depth: 2
 
-      # - name: Check for changes in ai_models
-      #   id: check_changes
-      #   run: |
-      #     CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^ai_models/ || true)
-      #     echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+      - name: Check for changes in ai_models
+        id: check_changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^ai_models/ || true)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
       - name: Copy AI models to server
-      #  if: steps.check_changes.outputs.changed != ''
+        if: steps.check_changes.outputs.changed != ''
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ vars.SERVER_IP }}
@@ -77,7 +77,7 @@ jobs:
             sudo chmod -R 755 /var/www/pyto_project/app/models
 
       - name: Copy models files
-      #  if: steps.check_changes.outputs.changed != ''
+        if: steps.check_changes.outputs.changed != ''
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SERVER_IP }}
@@ -129,6 +129,7 @@ jobs:
             export MISTRAL_AI_API_KEY="${{ secrets.MISTRAL_AI_API_KEY }}" &&
             export OPEN_WEATHER_API_KEY="${{ secrets.OPEN_WEATHER_API_KEY }}" &&
             export PATH_TO_MODELS="${{ vars.PATH_TO_MODELS }}" &&
+            export PATH_TO_LOGS="${{ vars.PATH_TO_LOGS }}" &&
             echo 'starting down' &&
             timeout 500 docker-compose down &&
             echo 'starting pull' &&
