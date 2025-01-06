@@ -21,7 +21,7 @@ jobs:
       - name: Check for changes in app directory
         id: check_changes
         run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^app/ || true)
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^app/ | sed 's/^/"/; s/$/"/' | tr '\n' ' ' || true)
           echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
       # Log in to DockerHub if changes detected
