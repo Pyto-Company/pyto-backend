@@ -63,7 +63,7 @@ jobs:
       #     echo "changed=$CHANGED" >> $GITHUB_OUTPUT
 
       - name: Copy AI models to server
-        if: steps.check_changes.outputs.changed != ''
+      #  if: steps.check_changes.outputs.changed != ''
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.SERVER_IP }}
