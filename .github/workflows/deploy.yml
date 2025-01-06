@@ -69,7 +69,7 @@ jobs:
           host: ${{ vars.SERVER_IP }}
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "ai_models/*"
+          source: "models/*"
           target: ${{ vars.PATH_TO_MODELS }}
           strip_components: 1
 
