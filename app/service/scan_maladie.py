@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 model_name = "efficientnet_b0_disease_best.pth"
-model_path = f"{os.getenv("PATH_TO_MODELS")}{model_name}"
+model_path = f"{os.getenv('PATH_TO_MODELS')}{model_name}"
 
 model = efficientnet_b0(pretrained=False)
 
