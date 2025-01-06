@@ -70,7 +70,7 @@ jobs:
           username: ${{ vars.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "models/*"
-          target: ${{ vars.PATH_TO_MODELS }}
+          target: /var/www/pyto_project/app/models
           strip_components: 1
 
   deploy:
