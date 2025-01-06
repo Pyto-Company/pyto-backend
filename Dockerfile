@@ -4,12 +4,14 @@ FROM python:3.11-slim
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers nécessaires
-COPY ./app /app
-
-# Installer les dépendances
+# Copier d'abord les requirements pour profiter du cache Docker
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Installer les dépendances en gardant le cache pip
+RUN pip install -r requirements.txt
+
+# Copier le reste des fichiers
+COPY ./app /app
 
 # Exposer le port
 EXPOSE 8000
