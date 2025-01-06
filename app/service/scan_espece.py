@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 model_name = "efficientnet_b0_identification_best.pth"
-model_path = f"{os.getenv('PATH_TO_MODELS')}{model_name}"
+model_path = os.path.join(os.getenv('PATH_TO_MODELS'), model_name)
 
 model = efficientnet_b0(pretrained=False)
 # Ajuster la dernière couche pour 64 classes (ou votre nombre exact de classes)
