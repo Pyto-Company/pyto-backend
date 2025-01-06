@@ -76,6 +76,7 @@ jobs:
   deploy:
     name: Deploy on AlmaLinux Server
     needs: [build_and_push, deploy_models]
+    timeout-minutes: 60
     runs-on: ubuntu-latest
 
     steps:
@@ -102,6 +103,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd /var/www/pyto_project &&
+            docker system prune -a --volumes -f &&
             echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ vars.DOCKER_USER }} --password-stdin &&
             export DATABASE_USER="${{ vars.DATABASE_USER }}" &&
             export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}" &&
