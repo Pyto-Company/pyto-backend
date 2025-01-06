@@ -120,8 +120,5 @@ jobs:
             echo 'starting pull' &&
             timeout 500 docker-compose pull &&
             echo 'starting up' &&
-            timeout 500docker-compose up -d &&
-            echo "Waiting for containers to be healthy..." &&
-            timeout 300 bash -c 'until docker ps | grep fastapi | grep -q "(healthy)"; do sleep 5; done' &&
-            echo "Containers are ready!"
+            timeout 500 docker-compose up -d &&
             mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml

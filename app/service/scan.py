@@ -92,4 +92,3 @@ class ScanService():
             filtered_maladies: List[Maladie] = [maladie for maladie in maladies if maladie.classe_ia == highest_prediction["prediction"]]
 
         return filtered_maladies
-        
