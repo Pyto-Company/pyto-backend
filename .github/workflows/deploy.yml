@@ -116,9 +116,12 @@ jobs:
             export OPEN_WEATHER_API_KEY="${{ secrets.OPEN_WEATHER_API_KEY }}" &&
             export PATH_TO_MODELS="${{ vars.PATH_TO_MODELS }}" &&
             echo 'starting down' &&
-            docker-compose down &&
+            timeout 500 docker-compose down &&
             echo 'starting pull' &&
-            docker-compose pull &&
+            timeout 500 docker-compose pull &&
             echo 'starting up' &&
-            docker-compose up -d &&
+            timeout 500docker-compose up -d &&
+            echo "Waiting for containers to be healthy..." &&
+            timeout 300 bash -c 'until docker ps | grep fastapi | grep -q "(healthy)"; do sleep 5; done' &&
+            echo "Containers are ready!"
             mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml
