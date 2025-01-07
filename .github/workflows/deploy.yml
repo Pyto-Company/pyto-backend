@@ -136,4 +136,5 @@ jobs:
             timeout 500 docker-compose pull &&
             echo 'starting up' &&
             timeout 500 docker-compose up -d &&
+            docker cp /var/www/pyto_project/app/models/ fastapi:/app/ &&
             mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml

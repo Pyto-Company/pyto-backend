@@ -22,7 +22,7 @@ services:
     volumes:
       - ./static:/app/static
       - ./models:/app/models
-      - ./logs:/app/logs:ro
+      - ./logs:/app/logs
     restart: always
     depends_on:
       - postgres
