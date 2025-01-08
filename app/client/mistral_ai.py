@@ -22,7 +22,7 @@ class MistralClient():
             ]
         }
         headers = {
-            "Authorization": f"Bearer {os.getenv("MISTRAL_AI_API_KEY")}",
+            "Authorization": f"Bearer {os.getenv('MISTRAL_AI_API_KEY')}",
             "Content-Type": "application/json"
         }
 
