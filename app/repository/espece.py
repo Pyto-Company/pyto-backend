@@ -3,32 +3,33 @@ from fastapi import Query
 from sqlmodel import select
 from model.espece import Espece
 from repository.base import BaseRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class EspeceRepository(BaseRepository[Espece]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Espece, session)
 
-    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Espece]:
-        return self.get_all(Espece, offset, limit)
+    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Espece]:
+        return await super().get_all(offset, limit)
 
-    def get_by_id(self, espece_id: int) -> Espece:
-        return self.get_by_id(Espece, espece_id)
+    async def get_by_id(self, espece_id: int) -> Espece:
+        return await super().get_by_id(espece_id)
 
-    def create(self, espece: Espece) -> Espece:
-        return self.create(espece)
+    async def create(self, espece: Espece) -> Espece:
+        return await super().create(espece)
 
-    def delete(self, espece_id: int) -> dict:
-        return self.delete(Espece, espece_id)
+    async def delete(self, espece_id: int) -> dict:
+        return await super().delete(espece_id)
     
-    def update(self, espece_id: int, updated_data: dict) -> Espece:
-        return self.update(Espece, espece_id, updated_data)
+    async def update(self, espece_id: int, updated_data: dict) -> Espece:
+        return await super().update(espece_id, updated_data)
     
-    def get_all_classe_ia(self) -> list[str]:
-        # Use SQLAlchemy's distinct to get all unique values for the specified column
+    async def get_all_classe_ia(self) -> list[str]:
         query = select(getattr(Espece, "classe_ia"))
-        result = self.session.exec(query).all()
-
-        # Extract the values from the result
-        return [item[0] for item in result]
+        result = await self.session.execute(query)
+        return [item[0] for item in result.all()]
     
-    def get_by_class_ia(self, classe_ia: str) -> Espece:
-        query = query(Espece).filter(Espece.classe_ia == classe_ia)
-        return self.session.exec(query).all()
+    async def get_by_class_ia(self, classe_ia: str) -> list[Espece]:
+        query = select(Espece).where(Espece.classe_ia == classe_ia)
+        result = await self.session.execute(query)
+        return result.scalars().all()

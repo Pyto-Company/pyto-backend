@@ -2,7 +2,7 @@ from datetime import datetime
 import psycopg2
 from sqlmodel import Session
 from fastapi import Depends
-from typing import Generator
+from typing import AsyncGenerator
 from sqlmodel import Session, SQLModel
 import json
 import os
@@ -31,10 +31,11 @@ engine = create_async_engine(
     echo=True,
     future=True
 )
+
 async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
-def get_session() -> Generator[Session, None, None]:
-    with Session(engine) as session:
+async def get_session() -> AsyncGenerator[AsyncSession, None]:
+    async with async_session() as session:
         yield session
 
 SessionDep = Depends(get_session)

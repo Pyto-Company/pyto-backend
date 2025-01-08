@@ -1,34 +1,35 @@
-from typing import Annotated, List
+from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
 from model.maladie import Maladie
 from repository.base import BaseRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class MaladieRepository(BaseRepository[Maladie]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Maladie, session)
 
-    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Maladie]:
-        return self.get_all(Maladie, offset, limit)
+    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Maladie]:
+        return await super().get_all(offset, limit)
 
-    def get_by_id(self, maladie_id: int) -> Maladie:
-        return self.get_by_id(Maladie, maladie_id)
+    async def get_by_id(self, maladie_id: int) -> Maladie:
+        return await super().get_by_id(maladie_id)
 
-    def create(self, maladie: Maladie) -> Maladie:
-        return self.create(maladie)
+    async def create(self, maladie: Maladie) -> Maladie:
+        return await super().create(maladie)
 
-    def delete(self, maladie_id: int) -> dict:
-        return self.delete(Maladie, maladie_id)
+    async def delete(self, maladie_id: int) -> dict:
+        return await super().delete(maladie_id)
     
-    def update(self, maladie_id: int, updated_data: dict) -> Maladie:
-        return self.update(Maladie, maladie_id, updated_data)
+    async def update(self, maladie_id: int, updated_data: dict) -> Maladie:
+        return await super().update(maladie_id, updated_data)
     
-    def get_all_classe_ia(self) -> list[str]:
-        # Use SQLAlchemy's distinct to get all unique values for the specified column
+    async def get_all_classe_ia(self) -> list[str]:
         query = select(getattr(Maladie, "classe_ia"))
-        result = self.session.exec(query).all()
-
-        # Extract the values from the result
-        return [item[0] for item in result]
+        result = await self.session.execute(query)
+        return [item[0] for item in result.all()]
     
-    async def get_maladies_by_espece_id(self, espece_id):
+    async def get_maladies_by_espece_id(self, espece_id: int) -> list[Maladie]:
         query = select(Maladie).where(Maladie.espece_id == espece_id)
-        return self.session.exec(query).all()
+        result = await self.session.execute(query)
+        return result.scalars().all()

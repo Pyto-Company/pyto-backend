@@ -1,32 +1,22 @@
 from typing import Annotated
-from fastapi import Depends, Query, HTTPException
-from sqlmodel import Session, select
-from database.database import get_session
+from fastapi import Query, HTTPException
+from sqlmodel import select
 from model.utilisateur import Utilisateur
 from repository.base import BaseRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class UtilisateurRepository(BaseRepository[Utilisateur]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Utilisateur, session)
 
-    def get_users(
-        self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100
-    ) -> list[Utilisateur]:
-        return self.get_all(Utilisateur, offset, limit)
+    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Utilisateur]:
+        return await super().get_all(offset, limit)
 
-    def get_user_by_id(self, user_id: int) -> Utilisateur:
-        return self.get_by_id(Utilisateur, user_id)
+    async def get_by_id(self, user_id: int) -> Utilisateur:
+        return await super().get_by_id(user_id)
 
-    def create_user(self, user: Utilisateur) -> Utilisateur:
-        return self.create(user)
+    async def create(self, user: Utilisateur) -> Utilisateur:
+        return await super().create(user)
 
-    def delete_user(self, user_id: int) -> dict:
-        return self.delete(Utilisateur, user_id)
-
-    def validate_user(self, token: str):
-        query = select(Utilisateur).where(Utilisateur.validation_token == token)
-        user = self.session.exec(query).first()
-        if not user:
-            raise HTTPException(status_code=400, detail="Invalid token")
-        user.is_active = True
-        user.validation_token = None  # Remove token after use
-        self.session.add(user)
-        self.session.commit()
+    async def delete(self, user_id: int) -> dict:
+        return await super().delete(user_id)

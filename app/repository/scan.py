@@ -2,20 +2,23 @@ from typing import Annotated
 from fastapi import Query
 from model.scan import Scan
 from repository.base import BaseRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 class ScanRepository(BaseRepository[Scan]):
+    def __init__(self, session: AsyncSession):
+        super().__init__(Scan, session)
 
-    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Scan]:
-        return self.get_all(Scan, offset, limit)
+    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Scan]:
+        return await super().get_all(offset, limit)
 
-    def get_by_id(self, scan_maladie_id: int) -> Scan:
-        return self.get_by_id(Scan, scan_maladie_id)
+    async def get_by_id(self, scan_id: int) -> Scan:
+        return await super().get_by_id(scan_id)
 
-    def create(self, scan_maladie: Scan) -> Scan:
-        return self.create(scan_maladie)
+    async def create(self, scan: Scan) -> Scan:
+        return await super().create(scan)
 
-    def delete(self, scan_maladie_id: int) -> dict:
-        return self.delete(Scan, scan_maladie_id)
+    async def delete(self, scan_id: int) -> dict:
+        return await super().delete(scan_id)
     
-    def update(self, scan_maladie_id: int, updated_data: dict) -> Scan:
-        return self.update(Scan, scan_maladie_id, updated_data)
+    async def update(self, scan_id: int, updated_data: dict) -> Scan:
+        return await super().update(scan_id, updated_data)

@@ -46,50 +46,9 @@ jobs:
         if: steps.check_changes.outputs.changed != ''
         run: docker push pytocompany/fastapi:latest
 
-  deploy_models:
-    name: Deploy AI Models
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-
-      - name: Check for changes in ai_models
-        id: check_changes
-        run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^ai_models/ || true)
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
-
-      - name: Copy AI models to server
-        if: steps.check_changes.outputs.changed != ''
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ vars.SERVER_IP }}
-          username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            # Créer le dossier models s'il n'existe pas
-            sudo mkdir -p /var/www/pyto_project/app/models
-            # Donner les bonnes permissions
-            sudo chown -R ${{ vars.SSH_USER }}:${{ vars.SSH_USER }} /var/www/pyto_project/app/models
-            sudo chmod -R 755 /var/www/pyto_project/app/models
-
-      - name: Copy models files
-        if: steps.check_changes.outputs.changed != ''
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ vars.SERVER_IP }}
-          username: ${{ vars.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "models/*"
-          target: /var/www/pyto_project/app/models
-          strip_components: 1
-
   deploy:
     name: Deploy on AlmaLinux Server
-    needs: [build_and_push, deploy_models]
+    needs: [build_and_push]
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
@@ -136,5 +95,46 @@ jobs:
             timeout 500 docker-compose pull &&
             echo 'starting up' &&
             timeout 500 docker-compose up -d &&
-            docker cp /var/www/pyto_project/app/models/ fastapi:/app/ &&
             mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml
+
+  deploy_models:
+    name: Deploy AI Models
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+
+      - name: Check for changes in models
+        id: check_changes
+        run: |
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^models/ || true)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Copy AI models to server
+        if: steps.check_changes.outputs.changed != ''
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Créer le dossier models s'il n'existe pas
+            sudo mkdir -p /var/www/pyto_project/models
+            # Donner les bonnes permissions
+            sudo chown -R ${{ vars.SSH_USER }}:${{ vars.SSH_USER }} /var/www/pyto_project/models
+            sudo chmod -R 755 /var/www/pyto_project/models
+
+      - name: Copy models files
+        if: steps.check_changes.outputs.changed != ''
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "models/*"
+          target: /var/www/pyto_project/models
+          strip_components: 1

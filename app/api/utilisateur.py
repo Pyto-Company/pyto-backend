@@ -24,8 +24,3 @@ def readUser(user_id: int) -> Utilisateur:
 @router.delete("/{user_id}")
 def deleteUser(user_id: int):
     return UtilisateurRepository.deleteUser()
-
-@router.get("/validate-email")
-async def validateEmail(token: str = Query(...)):
-    UtilisateurRepository.validateUser(token)
-    return {"message": "Email successfully validated!"}

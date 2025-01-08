@@ -1,55 +1,41 @@
-from typing import TypeVar, Generic, Annotated
-from fastapi import Depends, Query, HTTPException
-from sqlmodel import Session, select
-from database.database import get_session
+from typing import TypeVar, Generic, Type
+from sqlmodel import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-# Define a generic type for your entities
 T = TypeVar("T")
 
 class BaseRepository(Generic[T]):
-    def __init__(self, session: Session = Depends(get_session)):
+    def __init__(self, model: Type[T], session: AsyncSession):
+        self.model = model
         self.session = session
 
-    def get_all(
-        self,
-        model: type[T],
-        offset: int = 0,
-        limit: Annotated[int, Query(le=100)] = 100,
-    ) -> list[T]:
-        return self.session.exec(select(model).offset(offset).limit(limit)).all()
+    async def get_all(self, offset: int = 0, limit: int = 100) -> list[T]:
+        result = await self.session.execute(select(self.model).offset(offset).limit(limit))
+        return result.scalars().all()
 
-    def get_by_id(self, model: type[T], entity_id: int) -> T:
-        entity = self.session.get(model, entity_id)
-        if not entity:
-            raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
-        return entity
+    async def get_by_id(self, id: int) -> T:
+        result = await self.session.get(self.model, id)
+        return result
 
-    def create(self, entity: T) -> T:
+    async def create(self, entity: T) -> T:
         self.session.add(entity)
-        self.session.commit()
-        self.session.refresh(entity)
+        await self.session.commit()
+        await self.session.refresh(entity)
         return entity
 
-    def delete(self, model: type[T], entity_id: int) -> dict:
-        entity = self.session.get(model, entity_id)
-        if not entity:
-            raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
-        self.session.delete(entity)
-        self.session.commit()
-        return {"ok": True}
-    
-    def update(self, model: type[T], entity_id: int, updated_data: dict) -> T:
-        # Get the existing entity
-        entity = self.session.get(model, entity_id)
-        if not entity:
-            raise HTTPException(status_code=404, detail=f"{model.__name__} not found")
-        
-        # Update the entity fields with the provided data
-        for key, value in updated_data.items():
-            if hasattr(entity, key):
-                setattr(entity, key, value)
-        
-        # Commit the changes to the database
-        self.session.commit()
-        self.session.refresh(entity)
+    async def delete(self, id: int) -> dict:
+        entity = await self.session.get(self.model, id)
+        if entity:
+            await self.session.delete(entity)
+            await self.session.commit()
+            return {"ok": True}
+        return {"ok": False}
+
+    async def update(self, id: int, data: dict) -> T:
+        entity = await self.session.get(self.model, id)
+        for key, value in data.items():
+            setattr(entity, key, value)
+        self.session.add(entity)
+        await self.session.commit()
+        await self.session.refresh(entity)
         return entity
