@@ -19,11 +19,11 @@ from dotenv import load_dotenv
 # Charger les variables d'environnement
 load_dotenv()
 
-DB_HOST = os.getenv("DATABASE_HOST")
-DB_USER = os.getenv("DATABASE_USER")
-DB_PASSWORD = os.getenv("DATABASE_PASSWORD")
-DB_PORT = os.getenv("DATABASE_PORT")
-DB_NAME = os.getenv("DATABASE_NAME")
+DB_HOST = os.getenv('DATABASE_HOST')
+DB_USER = os.getenv('DATABASE_USER')
+DB_PASSWORD = os.getenv('DATABASE_PASSWORD')
+DB_PORT = os.getenv('DATABASE_PORT')
+DB_NAME = os.getenv('DATABASE_NAME')
 
 POSTGRESQL_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

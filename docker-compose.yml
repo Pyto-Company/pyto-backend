@@ -19,6 +19,10 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
       PATH_TO_MODELS: /app/models/
       PATH_TO_LOGS: /app/logs
+      SECRET_KEY: ${SECRET_KEY}
+      ALGORITHM: ${ALGORITHM}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
+      REFRESH_TOKEN_EXPIRE_MINUTES: ${REFRESH_TOKEN_EXPIRE_MINUTES}
     volumes:
       - ./static:/app/static
       - ./models:/app/models

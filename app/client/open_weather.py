@@ -6,6 +6,8 @@ from dotenv import load_dotenv
 # Charger les variables d'environnement
 load_dotenv()
 
+OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
+
 # https://openweathermap.org/current
 CURREN_WEATHER_API="https://api.openweathermap.org/data/2.5/weather"
 # https://openweathermap.org/forecast5
@@ -22,7 +24,7 @@ class OpenWeatherClient():
         params = {
             "lat": lat,
             "lon": lon,
-            "appid": os.getenv("OPEN_WEATHER_API_KEY"),
+            "appid": OPEN_WEATHER_API_KEY,
             "units": "metric",  # Pour des données en Celsius
             "lang": "fr"        # Langue française pour les descriptions
         }
@@ -53,7 +55,7 @@ class OpenWeatherClient():
         params = {
             "lat": lat,
             "lon": lon,
-            "appid": os.getenv("OPEN_WEATHER_API_KEY"),
+            "appid": OPEN_WEATHER_API_KEY,
             "units": "metric",  # Pour des données en Celsius
             "lang": "fr"        # Langue française pour les descriptions
         }
@@ -73,7 +75,7 @@ class OpenWeatherClient():
         params = {
             "lat": lat,
             "lon": lon,
-            "appid": os.getenv("OPEN_WEATHER_API_KEY")
+            "appid": OPEN_WEATHER_API_KEY
         }
         
         async with httpx.AsyncClient() as client:

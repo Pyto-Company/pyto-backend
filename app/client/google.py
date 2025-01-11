@@ -11,8 +11,8 @@ load_dotenv()
 oauth = OAuth()
 google = oauth.register(
     name="google",
-    client_id=os.getenv("GOOGLE_CLIENT_ID"),  # ID client de Google
-    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),  # Secret client de Google
+    client_id=os.getenv('GOOGLE_CLIENT_ID'),  # ID client de Google
+    client_secret=os.getenv('GOOGLE_CLIENT_SECRET'),  # Secret client de Google
     server_metadata_url="https://accounts.google.com/.well-known/openid-configuration",
     client_kwargs={"scope": "openid email profile"}
 )

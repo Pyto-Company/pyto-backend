@@ -89,6 +89,10 @@ jobs:
             export OPEN_WEATHER_API_KEY="${{ secrets.OPEN_WEATHER_API_KEY }}" &&
             export PATH_TO_MODELS="${{ vars.PATH_TO_MODELS }}" &&
             export PATH_TO_LOGS="${{ vars.PATH_TO_LOGS }}" &&
+            export REFRESH_TOKEN_EXPIRE_MINUTES="${{ vars.REFRESH_TOKEN_EXPIRE_MINUTES }}" &&
+            export ALGORITHM="${{ vars.ALGORITHM }}" &&
+            export ACCESS_TOKEN_EXPIRE_MINUTES="${{ vars.ACCESS_TOKEN_EXPIRE_MINUTES }}" &&
+            export SECRET_KEY="${{ secrets.SECRET_KEY }}" &&
             echo 'starting down' &&
             timeout 500 docker-compose down &&
             echo 'starting pull' &&
