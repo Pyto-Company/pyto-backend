@@ -4,6 +4,8 @@ services:
   fastapi:
     image: pytocompany/fastapi:latest
     container_name: fastapi
+    networks:
+      - app-network
     ports:
       - "8000:8000"
     environment:
