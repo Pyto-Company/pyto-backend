@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
-from fastapi import Depends, FastAPI, APIRouter
+from fastapi import Depends, FastAPI, APIRouter, Request
 from sqlmodel import SQLModel, Session
+from fastapi.openapi.utils import get_openapi
 
 from model.espece import Espece
 from model.utilisateur import Utilisateur
@@ -56,6 +57,47 @@ async def lifespan(app: FastAPI):
     await create_initial_data()
     yield  # L'application démarre ici
 
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+        
+    openapi_schema = get_openapi(
+        title="Pyto API",
+        version="1.0.0",
+        description="API de l'application Pyto",
+        routes=app.routes,
+    )
+    
+    # Ajout du composant de sécurité
+    openapi_schema["components"] = {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "Entrez votre token JWT ici"
+            }
+        }
+    }
+    
+    # Application de la sécurité globalement sauf pour les routes exclues
+    for path in openapi_schema["paths"]:
+        if path in [
+            "/connexion/",
+            "/inscription/",
+            "/inscription/auth/google",
+            "/inscription/auth/google/callback",
+            "/utilisateur"
+        ]:
+            for method in openapi_schema["paths"][path]:
+                openapi_schema["paths"][path][method]["security"] = []
+    
+    # Pour toutes les autres routes, on applique la sécurité
+    openapi_schema["security"] = [{"Bearer": []}]
+    
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
 # Initialize the app with lifespan
 app = FastAPI(title="Pyto API", version="1.0.0", lifespan=lifespan)
 app.include_router(router=router)
@@ -74,4 +116,7 @@ app.add_middleware(
 
 # Ajout du middleware d'authentification
 # Doit être ajouté après CORS pour assurer le bon fonctionnement des requêtes préflight
-# app.add_middleware(AuthMiddleware)
+app.add_middleware(AuthMiddleware)
+
+# Remplacer les lignes existantes de configuration OpenAPI par :
+app.openapi = custom_openapi

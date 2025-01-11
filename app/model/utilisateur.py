@@ -7,7 +7,6 @@ class Utilisateur(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True, index=True)
     email: EmailStr = Field(index=True, unique=True)
     password: str
-    nom: str
     prenom: str
     nb_scan: int = Field(default=0)
     date_creation: datetime = Field(default_factory=datetime.now)

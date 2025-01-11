@@ -3,8 +3,7 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.security import HTTPBearer
 import jwt
-from service.connexion import SECRET_KEY, ALGORITHM
-
+from config.token import SECRET_KEY, ALGORITHM
 # Configuration du bearer token
 security = HTTPBearer()
 

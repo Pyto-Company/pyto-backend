@@ -20,3 +20,6 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
 
     async def delete(self, user_id: int) -> dict:
         return await super().delete(user_id)
+    
+    async def get_by_email_and_password(self, email: str, password: str) -> Utilisateur:
+        return await super().get_by_email_and_password(email, password) 

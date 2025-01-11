@@ -8,6 +8,7 @@ import json
 import os
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import text
 
 from model.espece import Espece
 from model.parametrage import Parametrage
@@ -113,6 +114,12 @@ async def create_initial_data():
         async with async_session() as session:
             session.add_all(objects)
             await session.flush()
+            
+            # Réinitialiser la séquence d'ID pour la table utilisateur
+            await session.execute(
+                text("SELECT setval('utilisateur_id_seq', (SELECT MAX(id) FROM utilisateur))")
+            )
+            
             await session.commit()
             print("Tables alimentées avec succès.")
 
