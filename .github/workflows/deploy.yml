@@ -99,7 +99,7 @@ jobs:
             timeout 500 docker-compose pull &&
             echo 'starting up' &&
             timeout 500 docker-compose up -d &&
-            mv docker-compose.yml docker-compose-$(date +"%Y%m%d%H%M%S").yml
+            rm docker-compose.yml
 
   deploy_models:
     name: Deploy AI Models
