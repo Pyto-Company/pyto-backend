@@ -4,8 +4,6 @@ services:
   fastapi:
     image: pytocompany/fastapi:latest
     container_name: fastapi
-    links:
-      - postgresql
     networks:
       - app-network
     ports:

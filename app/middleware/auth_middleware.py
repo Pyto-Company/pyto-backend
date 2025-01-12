@@ -24,6 +24,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         """
         super().__init__(app)
         self.exclude_paths = exclude_paths or [
+            "/health",
             "/docs",              # Documentation Swagger
             "/openapi.json",      # Schéma OpenAPI
             "/redoc",             # Documentation ReDoc

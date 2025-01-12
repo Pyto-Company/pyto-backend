@@ -30,6 +30,7 @@ from api.jardin import router as jardin_router
 from api.rappel import router as rappel_router
 from api.inscription import router as inscription_router
 from api.dr_pyto import router as drpyto_router
+from api.health import router as health_router
 
 from database.database import create_database, create_initial_data, create_tables_sync, drop_database, engine
 
@@ -47,6 +48,7 @@ router.include_router(router=jardin_router)
 router.include_router(router=rappel_router)
 router.include_router(router=inscription_router)
 router.include_router(router=drpyto_router)
+router.include_router(router=health_router)
 
 # Lifespan context manager
 @asynccontextmanager
@@ -87,7 +89,8 @@ def custom_openapi():
             "/inscription/",
             "/inscription/auth/google",
             "/inscription/auth/google/callback",
-            "/utilisateur"
+            "/utilisateur",
+            "/health"
         ]:
             for method in openapi_schema["paths"][path]:
                 openapi_schema["paths"][path][method]["security"] = []
