@@ -2,10 +2,9 @@ from fastapi import APIRouter
 import psycopg2
 import os
 from dotenv import load_dotenv
-import logging
+from logger.logger import logger
 
 router = APIRouter()
-logger = logging.getLogger(__name__)
 
 @router.get("/health")
 async def health_check():

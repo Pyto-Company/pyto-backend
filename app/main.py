@@ -37,6 +37,7 @@ from database.database import create_database, create_initial_data, create_table
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.cors import CORSMiddleware
 from middleware.auth_middleware import AuthMiddleware
+from middleware.error_middleware import ErrorLoggingMiddleware
 
 router = APIRouter()
 router.include_router(router=scan_router)
@@ -120,6 +121,9 @@ app.add_middleware(
 # Ajout du middleware d'authentification
 # Doit être ajouté après CORS pour assurer le bon fonctionnement des requêtes préflight
 app.add_middleware(AuthMiddleware)
+
+# Après le middleware CORS
+app.add_middleware(ErrorLoggingMiddleware)
 
 # Remplacer les lignes existantes de configuration OpenAPI par :
 app.openapi = custom_openapi
