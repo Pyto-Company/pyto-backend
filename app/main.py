@@ -51,8 +51,8 @@ router.include_router(router=drpyto_router)
 # Lifespan context manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    drop_database()
-    create_database()
+    #drop_database()
+    #create_database()
     await create_tables_sync()
     await create_initial_data()
     yield  # L'application démarre ici
