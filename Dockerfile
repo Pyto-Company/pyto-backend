@@ -1,6 +1,13 @@
 # Utiliser une image de base Python
 FROM python:3.11-slim
 
+# Installer les outils nécessaires
+RUN apt-get update && apt-get install -y \
+    curl \
+    dnsutils \
+    iputils-ping \
+    && rm -rf /var/lib/apt/lists/*
+
 # Définir le répertoire de travail
 WORKDIR /app
 

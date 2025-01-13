@@ -48,7 +48,7 @@ async def health_check():
     
     try:
         connection = await asyncpg.connect(
-            dbname=os.getenv('DATABASE_NAME'),
+            database=os.getenv('DATABASE_NAME'),
             user=os.getenv('DATABASE_USER'),
             password=os.getenv('DATABASE_PASSWORD'),
             host=os.getenv('DATABASE_HOST'),
