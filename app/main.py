@@ -32,7 +32,7 @@ from api.inscription import router as inscription_router
 from api.dr_pyto import router as drpyto_router
 from api.health import router as health_router
 
-from database.database import create_database, create_initial_data, create_tables_sync, drop_database, engine
+from database.database import create_database, create_initial_data, create_tables, drop_database, engine
 
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.cors import CORSMiddleware
@@ -56,7 +56,7 @@ router.include_router(router=health_router)
 async def lifespan(app: FastAPI):
     #drop_database()
     #create_database()
-    await create_tables_sync()
+    await create_tables()
     await create_initial_data()
     yield  # L'application démarre ici
 
