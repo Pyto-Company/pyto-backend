@@ -9,6 +9,8 @@ import os
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
+import traceback
+from logger.logger import logger
 
 from model.espece import Espece
 from model.parametrage import Parametrage
@@ -61,8 +63,14 @@ def drop_database():
             cur.execute(f"DROP DATABASE IF EXISTS {DB_NAME}")
             print(f"Base de données {DB_NAME} supprimée.")
     except Exception as e:
-        print(f"Erreur lors de la suppression de la base de données : {e}")
-
+        logger.error(
+            f"Erreur lors de la suppression de la base de données:\n"
+            f"Operation: drop_database \n"
+            f"Database: {DB_NAME}\n"
+            f"Host: {DB_HOST}\n"
+            f"Error: {str(e)}\n"
+            f"Traceback:\n{traceback.format_exc()}"
+        )
 
 def create_database():
     try:
@@ -74,17 +82,30 @@ def create_database():
             cur.execute(f"CREATE DATABASE {DB_NAME}")
             print(f"Base de données {DB_NAME} créée.")
     except Exception as e:
-        print(f"Erreur lors de la création de la base de données : {e}")
+        logger.error(
+            f"Erreur lors de la création de la base de données:\n"
+            f"Operation: create_database \n"
+            f"Database: {DB_NAME}\n"
+            f"Host: {DB_HOST}\n"
+            f"Error: {str(e)}\n"
+            f"Traceback:\n{traceback.format_exc()}"
+        )
 
-
-async def create_tables_sync():
+async def create_tables():
     try:
         async with engine.begin() as conn:
             await conn.run_sync(SQLModel.metadata.drop_all)
             await conn.run_sync(SQLModel.metadata.create_all)
     except Exception as e:
-        print(f"Erreur lors de la création des tables de la base de données : {e}")
-
+        logger.error(
+            f"Erreur lors de la création des tables:\n"
+            f"POSTGRESQL_URL: {POSTGRESQL_URL}\n"
+            f"Operation: create_tables \n"
+            f"Database: {DB_NAME}\n"
+            f"Host: {DB_HOST}\n"
+            f"Error: {str(e)}\n"
+            f"Traceback:\n{traceback.format_exc()}"
+        )
 
 async def create_initial_data():
     try:
@@ -124,4 +145,11 @@ async def create_initial_data():
             print("Tables alimentées avec succès.")
 
     except Exception as e:
-        print(f"Erreur lors de l'alimentation des tables de la base de données : {e}")
+        logger.error(
+            f"Erreur lors de l'alimentation des tables de la base de données:\n"
+            f"Operation: create_initial_data \n"
+            f"Database: {DB_NAME}\n"
+            f"Host: {DB_HOST}\n"
+            f"Error: {str(e)}\n"
+            f"Traceback:\n{traceback.format_exc()}"
+        )
