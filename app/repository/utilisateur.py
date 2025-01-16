@@ -22,4 +22,7 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         return await super().delete(user_id)
     
     async def get_by_email_and_password(self, email: str, password: str) -> Utilisateur:
-        return await super().get_by_email_and_password(email, password) 
+        query = select(self.model).where(self.model.email == email, self.model.password == password)
+        result = await self.session.execute(query)
+        utilisateur = result.scalar_one_or_none()
+        return utilisateur

@@ -1,11 +1,12 @@
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi.security import HTTPBearer
+from starlette.responses import JSONResponse
 import jwt
+from jwt.exceptions import PyJWTError, ExpiredSignatureError
 from config.token import SECRET_KEY, ALGORITHM
-# Configuration du bearer token
-security = HTTPBearer()
+from repository.utilisateur import UtilisateurRepository
+from database.database import async_session
+from logger.logger import logger
 
 class AuthMiddleware(BaseHTTPMiddleware):
     """
@@ -14,7 +15,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
     sauf celles explicitement exclues.
     """
     
-    def __init__(self, app: FastAPI, exclude_paths: list[str] = None):
+    def __init__(self, app):
         """
         Initialise le middleware avec les chemins à exclure de l'authentification.
         
@@ -23,7 +24,11 @@ class AuthMiddleware(BaseHTTPMiddleware):
             exclude_paths (list[str], optional): Liste des chemins à exclure
         """
         super().__init__(app)
-        self.exclude_paths = exclude_paths or [
+        self.exclude_paths = [
+            "/docs",
+            "/openapi.json",
+            "/connexion",
+            "/inscription",
             "/health",
             "/docs",              # Documentation Swagger
             "/openapi.json",      # Schéma OpenAPI
@@ -63,23 +68,46 @@ class AuthMiddleware(BaseHTTPMiddleware):
             
             try:
                 payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-                request.state.user_id = payload.get("sub")
+                user_id = int(payload.get("sub"))
+                logger.info(f"L'identifiant de l'utilisateur du token est {user_id}")
+
+                # Vérifier l'existence de l'utilisateur
+                async with async_session() as session:
+                    repository = UtilisateurRepository(session)
+                    user = await repository.get_by_id(user_id)
+                    logger.info(f"L'utilisateur est {user}")
+
+                    if not user:
+                        message = "L'identifiant n'a pas été trouvé"
+                        logger.error(message)
+                        return JSONResponse(
+                            status_code=401,
+                            content={"detail": message}
+                        )
+                    
+                request.state.user_id = user_id
                 
-            except jwt.ExpiredSignatureError:
+            except (ExpiredSignatureError, ValueError) as e:
+                message = "Token expiré ou invalide"
+                logger.error(message + " : " + str(e))
                 return JSONResponse(
                     status_code=401,
-                    content={"detail": "Token expiré"}
+                    content={"detail": message}
                 )
-            except jwt.JWTError:
+            except PyJWTError as e:
+                message = "Token invalide"
+                logger.error(message + " : " + str(e))
                 return JSONResponse(
                     status_code=401,
-                    content={"detail": "Token invalide"}
+                    content={"detail": message}
                 )
                 
         except Exception as e:
+            message = "Erreur inconnue"
+            logger.error(message + " : " + str(e))
             return JSONResponse(
                 status_code=401,
-                content={"detail": str(e)}
+                content={"detail": message}
             )
             
         return await call_next(request) 

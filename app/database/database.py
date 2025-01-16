@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, time
 import psycopg2
 from sqlmodel import Session
 from fastapi import Depends
@@ -10,7 +10,10 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 import traceback
+from model.notification import Notification
+from model.rappel import Rappel
 from logger.logger import logger
+import logging
 
 from model.espece import Espece
 from model.parametrage import Parametrage
@@ -20,6 +23,10 @@ from dotenv import load_dotenv
 
 # Charger les variables d'environnement
 load_dotenv()
+
+# Configurer le logging de SQLAlchemy
+logging.getLogger('sqlalchemy.engine').setLevel(logging.WARNING)
+logging.getLogger('sqlalchemy.pool').setLevel(logging.WARNING)
 
 DB_HOST = os.getenv('DATABASE_HOST')
 DB_USER = os.getenv('DATABASE_USER')
@@ -31,7 +38,7 @@ POSTGRESQL_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PO
 
 engine = create_async_engine(
     POSTGRESQL_URL,
-    echo=True,
+    echo=False,  # Désactiver l'echo des requêtes SQL
     future=True
 )
 
@@ -61,7 +68,7 @@ def drop_database():
             )
             # Supprimer la base de données
             cur.execute(f"DROP DATABASE IF EXISTS {DB_NAME}")
-            print(f"Base de données {DB_NAME} supprimée.")
+            logger.info(f"Base de données {DB_NAME} supprimée.")
     except Exception as e:
         logger.error(
             f"Erreur lors de la suppression de la base de données:\n"
@@ -80,7 +87,7 @@ def create_database():
         connection.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
         with connection.cursor() as cur:
             cur.execute(f"CREATE DATABASE {DB_NAME}")
-            print(f"Base de données {DB_NAME} créée.")
+            logger.info(f"Base de données {DB_NAME} créée.")
     except Exception as e:
         logger.error(
             f"Erreur lors de la création de la base de données:\n"
@@ -96,6 +103,7 @@ async def create_tables():
         async with engine.begin() as conn:
             await conn.run_sync(SQLModel.metadata.drop_all)
             await conn.run_sync(SQLModel.metadata.create_all)
+            logger.info("Tables créées avec succès.")
     except Exception as e:
         logger.error(
             f"Erreur lors de la création des tables:\n"
@@ -115,6 +123,8 @@ async def create_initial_data():
         parametrage_json_file_path = os.path.join(current_dir, "parametrage.json")
         especes_json_file_path = os.path.join(current_dir, "especes.json")
         plantes_json_file_path = os.path.join(current_dir, "plantes.json")
+        rappels_json_file_path = os.path.join(current_dir, "rappels.json")
+        notifications_json_file_path = os.path.join(current_dir, "notifications.json")
 
         with open(utilisateurs_json_file_path, "r", encoding="utf-8") as file:
             objects = [Utilisateur(**elem) for elem in json.load(file)]
@@ -132,6 +142,22 @@ async def create_initial_data():
                     plante["date_creation"] = datetime.fromisoformat(plante["date_creation"])
             objects += [Plante(**elem) for elem in data]
 
+        with open(rappels_json_file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            for rappel in data:
+                if "date_creation" in rappel:
+                    rappel["date_creation"] = datetime.fromisoformat(rappel["date_creation"])
+                if "heure" in rappel:
+                    rappel["heure"] = time.fromisoformat(rappel['heure'])
+            objects += [Rappel(**elem) for elem in data]
+
+        with open(notifications_json_file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            for notification in data:
+                if "date_creation" in notification:
+                    notification["date_creation"] = datetime.fromisoformat(notification["date_creation"])
+            objects += [Notification(**elem) for elem in data]
+
         async with async_session() as session:
             session.add_all(objects)
             await session.flush()
@@ -142,7 +168,7 @@ async def create_initial_data():
             )
             
             await session.commit()
-            print("Tables alimentées avec succès.")
+            logger.info("Tables alimentées avec succès.")
 
     except Exception as e:
         logger.error(

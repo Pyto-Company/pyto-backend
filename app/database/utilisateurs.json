@@ -2,19 +2,19 @@
     {
         "id": 1,
         "prenom": "Valentin",
-        "password": "valentinuzan",
+        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
         "email": "uzanval@gmail.com"
     },
     {
         "id": 2,
         "prenom": "Ilian",
-        "password": "ilianmerzouki",
+        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
         "email": "ilian@gmail.com"
     },
     {
         "id": 3,
         "prenom": "Lucas",
-        "password": "lucasuzan",
+        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
         "email": "uzanlah@gmail.com"
     }
 ]

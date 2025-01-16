@@ -20,6 +20,7 @@ from model.conseil import Conseil
 from model.predisposition import Predisposition
 from model.symptome import Symptome
 from model.traitement import Traitement
+from model.notification import Notification
 
 from api.scan import router as scan_router
 from api.meteo import router as weather_router

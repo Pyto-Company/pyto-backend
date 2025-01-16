@@ -53,3 +53,4 @@ Thumbs.db
 .venv/
 *.db
 .env
+.vscode/launch.json
