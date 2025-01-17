@@ -1,6 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Request, Depends
 from dto.plante_jardin import PlanteJardinDTO
+from dto.plante_mois import PlanteMoisDTO
 from service.jardin import JardinService
 from database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession

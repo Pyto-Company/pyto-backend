@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Query, Depends
-from typing import Annotated
+from typing import Annotated, List
+from app.dto.plante_mois import PlanteMoisDTO
 from model.plante import Plante
 from repository.plante import PlanteRepository
 from database.database import get_session
@@ -15,6 +16,10 @@ async def get_all(
 ) -> list[Plante]:
     repository = PlanteRepository(session)
     return await repository.get_all(offset, limit)
+
+@router.get("/momemt", response_model=List[PlanteMoisDTO])
+async def getPlantesMoment(session: AsyncSession = Depends(get_session)):
+    return await PlanteRepository(session).getPlantesMoment()
 
 @router.post("/")
 async def create(

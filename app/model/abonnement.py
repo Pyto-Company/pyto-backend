@@ -10,8 +10,6 @@ class TypeAbonnement(str, Enum):
     PREMIUM = "PREMIUM"
 
 class Abonnement(SQLModel, table=True):
-    __tablename__ = "abonnement"
-    
     id: Optional[int] = Field(default=None, primary_key=True, index=True)
     type: TypeAbonnement = Field(sa_column=SQLAlchemyEnum(TypeAbonnement, name="type_abonnement", create_constraint=True, native_enum=True))
     date_debut: datetime = Field(default_factory=datetime.now)
