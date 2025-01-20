@@ -2,7 +2,7 @@ from enum import Enum
 from typing import Optional
 from sqlmodel import Field, Relationship, SQLModel, Session, create_engine
 
-class NomMois(str, Enum):
+class Mois(str, Enum):
     JANVIER = "Janvier"
     FEVRIER = "Février"
     MARS = "Mars"
@@ -16,8 +16,9 @@ class NomMois(str, Enum):
     NOVEMBRE = "Novembre"
     DECEMBRE = "Décembre"
 
-class Mois(SQLModel, table=True):
-    numero: int = Field(default=None, primary_key=True, index=True)
-    nom: NomMois = Field(default=None, unique=True)
+class Plantation(SQLModel, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True, index=True)
+    numero_mois: int = Field(index=True)
+    espece_id: int = Field(foreign_key="espece.id", index=True)
 
-    especes: list["Espece"] = Relationship(back_populates="mois", link_model="EspeceMois")
+    especes: list["Espece"] = Relationship(back_populates="plantations")   

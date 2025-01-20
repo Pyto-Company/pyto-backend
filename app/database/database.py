@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 import traceback
+from model.plantation import Plantation
 from model.notification import Notification
 from model.rappel import Rappel
 from logger.logger import logger
@@ -125,6 +126,7 @@ async def create_initial_data():
         plantes_json_file_path = os.path.join(current_dir, "plantes.json")
         rappels_json_file_path = os.path.join(current_dir, "rappels.json")
         notifications_json_file_path = os.path.join(current_dir, "notifications.json")
+        plantations_json_file_path = os.path.join(current_dir, "plantations.json")
 
         with open(utilisateurs_json_file_path, "r", encoding="utf-8") as file:
             objects = [Utilisateur(**elem) for elem in json.load(file)]
@@ -157,6 +159,9 @@ async def create_initial_data():
                 if "date_creation" in notification:
                     notification["date_creation"] = datetime.fromisoformat(notification["date_creation"])
             objects += [Notification(**elem) for elem in data]
+
+        with open(plantations_json_file_path, "r", encoding="utf-8") as file:
+            objects += [Plantation(**elem) for elem in json.load(file)]
 
         async with async_session() as session:
             session.add_all(objects)

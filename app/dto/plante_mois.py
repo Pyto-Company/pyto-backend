@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class PlanteMoisDTO(BaseModel):
+class PlanteMomentDTO(BaseModel):
     espece_id: int
     espece_nom: str
     mois_nom: str

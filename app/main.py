@@ -21,8 +21,7 @@ from model.predisposition import Predisposition
 from model.symptome import Symptome
 from model.traitement import Traitement
 from model.notification import Notification
-from model.mois import Mois
-from model.espece_mois import EspeceMois
+from model.plantation import Plantation
 
 from api.scan import router as scan_router
 from api.meteo import router as weather_router
@@ -57,8 +56,8 @@ router.include_router(router=health_router)
 # Lifespan context manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    #drop_database()
-    #create_database()
+    drop_database()
+    create_database()
     await create_tables()
     await create_initial_data()
     yield  # L'application démarre ici

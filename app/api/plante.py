@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query, Depends
 from typing import Annotated, List
-from app.dto.plante_mois import PlanteMoisDTO
+from dto.plante_mois import PlanteMoisDTO
 from model.plante import Plante
 from repository.plante import PlanteRepository
 from database.database import get_session

@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query, HTTPException
 from sqlmodel import select
-from app.dto import MeDTO
+from dto import MeDTO
 from model.utilisateur import Utilisateur
 from repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession

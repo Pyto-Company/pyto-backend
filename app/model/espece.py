@@ -20,4 +20,4 @@ class Espece(SQLModel, table=True):
     maladies: list["Maladie"] = Relationship(back_populates="espece")
     entretiens: list["Entretien"] = Relationship(back_populates="espece")
     scans: list["Scan"] = Relationship(back_populates="espece")
-    mois: list["Mois"] = Relationship(back_populates="especes", link_model="EspeceMois")
+    plantations: list["Plantation"] = Relationship(back_populates="especes")
