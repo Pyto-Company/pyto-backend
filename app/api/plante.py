@@ -1,8 +1,12 @@
 from fastapi import APIRouter, Query, Depends
-from typing import Annotated, List
-from dto.plante_mois import PlanteMoisDTO
+from typing import Annotated
 from model.plante import Plante
 from repository.plante import PlanteRepository
+from database.database import get_session
+from sqlalchemy.ext.asyncio import AsyncSession
+from typing import List
+from fastapi import APIRouter, Request, Depends
+from dto.plante_jardin import PlanteJardinDTO
 from database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,10 +20,6 @@ async def get_all(
 ) -> list[Plante]:
     repository = PlanteRepository(session)
     return await repository.get_all(offset, limit)
-
-@router.get("/momemt", response_model=List[PlanteMoisDTO])
-async def getPlantesMoment(session: AsyncSession = Depends(get_session)):
-    return await PlanteRepository(session).getPlantesMoment()
 
 @router.post("/")
 async def create(
@@ -53,3 +53,8 @@ async def delete(
 ) -> dict:
     repository = PlanteRepository(session)
     return await repository.delete(plante_id)
+
+@router.get("/jardin", response_model=List[PlanteJardinDTO])
+async def getMonJardin(request: Request, session: AsyncSession = Depends(get_session)):
+    user_id = request.state.user_id
+    return await PlanteRepository(session).get(user_id)

@@ -33,7 +33,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
             "/docs",              # Documentation Swagger
             "/openapi.json",      # Schéma OpenAPI
             "/redoc",             # Documentation ReDoc
-            "/utilisateur",       # Création de compte
             "/connexion/token",   # Obtention du token
             "/inscription"        # Inscription avec Google
         ]

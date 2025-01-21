@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query, HTTPException
 from sqlmodel import select
-from dto import MeDTO
+from dto.UtilisateurDTO import UtilisateurDTO
 from model.utilisateur import Utilisateur
 from repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -29,7 +29,7 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         utilisateur = result.scalar_one_or_none()
         return utilisateur
 
-    async def getMe(self, user_id: int) -> MeDTO:
+    async def getMe(self, user_id: int) -> UtilisateurDTO:
         sql = text("""
             SELECT 
                 u.id,
@@ -37,14 +37,13 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
                 u.prenom,
                 u.nb_scan,
                 u.date_creation,
-                COUNT(p.id) as nb_plantes,
+                (SELECT COUNT(id) FROM plante WHERE utilisateur_id = u.id) as nb_plantes,
                 a.id as abonnement_id,
                 a.type,
                 a.date_debut,
                 a.est_actif,
                 a.utilisateur_id
             FROM utilisateur u
-            INNER JOIN plante p ON p.utilisateur_id = u.id
             INNER JOIN abonnement a ON a.utilisateur_id = u.id
             WHERE u.id = :user_id
             AND a.est_actif = true
@@ -57,7 +56,7 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
             
         row = rows[0]
         
-        meDto: MeDTO = {
+        meDto: UtilisateurDTO = {
             "user_id": row.id,
             "user_email": row.email,
             "user_prenom": row.prenom,

@@ -1,0 +1,20 @@
+[
+    {
+        "type": "GRATUIT",
+        "date_debut": "2024-05-30T10:15:00",
+        "est_actif": true,
+        "utilisateur_id": 1
+    },
+    {
+        "type": "ESSAI",
+        "date_debut": "2024-05-30T10:15:00",
+        "est_actif": true,
+        "utilisateur_id": 2
+    },
+    {
+        "type": "PREMIUM",
+        "date_debut": "2024-05-30T10:15:00",
+        "est_actif": true,
+        "utilisateur_id": 3
+    }
+]

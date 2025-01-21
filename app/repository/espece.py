@@ -1,9 +1,13 @@
+from datetime import datetime
 from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
+from dto.EspeceDTO import EspeceDTO
+from model.plantation import Plantation
 from model.espece import Espece
 from repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 class EspeceRepository(BaseRepository[Espece]):
     def __init__(self, session: AsyncSession):
@@ -33,3 +37,59 @@ class EspeceRepository(BaseRepository[Espece]):
         query = select(Espece).where(Espece.classe_ia == classe_ia)
         result = await self.session.execute(query)
         return result.scalars().all()
+
+    async def search_by_nom_commun(self, search_term: str):
+        query = (
+            select(
+                Espece.id.label("espece_id"),
+                Espece.nom_commun.label("espece_nom"),
+                Espece.photo_defaut.label("image_url")
+            )
+            .where(Espece.nom_commun.ilike(f"{search_term}%"))
+        )
+
+        result = await self.session.execute(query)
+        rows = result.all()
+        
+        # Convertir les résultats en EspeceDTO
+        especes = []
+        for row in rows:
+            espece = EspeceDTO(
+                espece_id=row.espece_id,
+                espece_nom=row.espece_nom,
+                image_url=row.image_url
+            )
+            especes.append(espece)
+
+        return especes
+        
+    
+    async def getPlantesMoment(self) -> list[EspeceDTO]:
+        mois_actuel = datetime.now().month
+
+        # Construire la requête pour récupérer les espèces du mois actuel
+        query = (
+            select(
+                Espece.id.label("espece_id"),
+                Espece.nom_commun.label("espece_nom"),
+                Espece.photo_defaut.label("image_url"),
+                Plantation.numero_mois
+            )
+            .join(Plantation, Espece.id == Plantation.espece_id)
+            .where(Plantation.numero_mois == mois_actuel)
+        )
+
+        result = await self.session.execute(query)
+        rows = result.all()
+        
+        # Convertir les résultats en EspeceDTO
+        plantes_moment = []
+        for row in rows:
+            plante_dto = EspeceDTO(
+                espece_id=row.espece_id,
+                espece_nom=row.espece_nom,
+                image_url=row.image_url
+            )
+            plantes_moment.append(plante_dto)
+
+        return plantes_moment

@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
 from model.abonnement import TypeAbonnement
 
-class InscriptionDTO(BaseModel):
+class UtilisateurDTO(BaseModel):
     user_id: int
     user_email: EmailStr
     user_prenom: str

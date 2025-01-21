@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Query, Depends, Request
 from typing import Annotated
+from dto.UtilisateurDTO import UtilisateurDTO
 from model.utilisateur import Utilisateur
 from database import database  
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -18,7 +19,7 @@ def readUsers(offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> li
     return UtilisateurRepository.getUsers(offset, limit)
 
 @router.get("/me")
-async def getMe(request: Request, session: AsyncSession = Depends(database.get_session)) -> Utilisateur:
+async def getMe(request: Request, session: AsyncSession = Depends(database.get_session)) -> UtilisateurDTO:
     user_id = request.state.user_id
     return await UtilisateurRepository(session).getMe(user_id)
 

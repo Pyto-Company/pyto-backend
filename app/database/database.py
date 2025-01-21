@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 import traceback
+from model.abonnement import Abonnement
 from model.plantation import Plantation
 from model.notification import Notification
 from model.rappel import Rappel
@@ -127,6 +128,7 @@ async def create_initial_data():
         rappels_json_file_path = os.path.join(current_dir, "rappels.json")
         notifications_json_file_path = os.path.join(current_dir, "notifications.json")
         plantations_json_file_path = os.path.join(current_dir, "plantations.json")
+        abonnements_json_file_path = os.path.join(current_dir, "abonnements.json")
 
         with open(utilisateurs_json_file_path, "r", encoding="utf-8") as file:
             objects = [Utilisateur(**elem) for elem in json.load(file)]
@@ -162,6 +164,13 @@ async def create_initial_data():
 
         with open(plantations_json_file_path, "r", encoding="utf-8") as file:
             objects += [Plantation(**elem) for elem in json.load(file)]
+
+        with open(abonnements_json_file_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+            for abonnement in data:
+                if "date_debut" in abonnement:
+                    abonnement["date_debut"] = datetime.fromisoformat(abonnement["date_debut"])
+            objects += [Abonnement(**elem) for elem in data]
 
         async with async_session() as session:
             session.add_all(objects)

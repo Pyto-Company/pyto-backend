@@ -14,5 +14,13 @@
     {
         "espece_id": 101,
         "numero_mois": 6
+    },
+    {
+        "espece_id": 102,
+        "numero_mois": 1
+    },
+    {
+        "espece_id": 102,
+        "numero_mois": 2
     }
 ]
