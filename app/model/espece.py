@@ -2,10 +2,6 @@ from enum import Enum
 from typing import Optional
 from sqlmodel import Field, Relationship, SQLModel
 
-class Habitat(str, Enum):
-    INTERIEUR = "Intérieur"
-    EXTERIEUR = "Extérieur"
-
 class Espece(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True, index=True)
     nom_commun: str = Field(unique=True)
