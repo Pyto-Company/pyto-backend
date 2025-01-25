@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Query, Depends
 from typing import List
-from service.plante import PlanteService
-from repository.entretien import EntretienRepository
-from repository.maladie import MaladieRepository
-from dto.EspeceDTO import EspeceDTO
-from database.database import get_session
+from app.service.plante import PlanteService
+from app.repository.entretien import EntretienRepository
+from app.repository.maladie import MaladieRepository
+from app.dto.EspeceDTO import EspeceDTO
+from app.database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
-from repository.espece import EspeceRepository
+from app.repository.espece import EspeceRepository
 
 router = APIRouter(prefix="/espece", tags=["espece"])
 

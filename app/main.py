@@ -3,43 +3,43 @@ from fastapi import Depends, FastAPI, APIRouter, Request
 from sqlmodel import SQLModel, Session
 from fastapi.openapi.utils import get_openapi
 
-from model.espece import Espece
-from model.utilisateur import Utilisateur
-from model.publication import Publication
-from model.plante import Plante
-from model.commentaire import Commentaire
-from model.photo import Photo
-from model.maladie import Maladie
-from model.rappel import Rappel
-from model.entretien import Entretien
-from model.message import Message
-from model.abonnement import Abonnement
-from model.parametrage import Parametrage
-from model.scan import Scan
-from model.conseil import Conseil
-from model.predisposition import Predisposition
-from model.symptome import Symptome
-from model.traitement import Traitement
-from model.notification import Notification
-from model.plantation import Plantation
+from app.model.espece import Espece
+from app.model.utilisateur import Utilisateur
+from app.model.publication import Publication
+from app.model.plante import Plante
+from app.model.commentaire import Commentaire
+from app.model.photo import Photo
+from app.model.maladie import Maladie
+from app.model.rappel import Rappel
+from app.model.entretien import Entretien
+from app.model.message import Message
+from app.model.abonnement import Abonnement
+from app.model.parametrage import Parametrage
+from app.model.scan import Scan
+from app.model.conseil import Conseil
+from app.model.predisposition import Predisposition
+from app.model.symptome import Symptome
+from app.model.traitement import Traitement
+from app.model.notification import Notification
+from app.model.plantation import Plantation
 
-from api.scan import router as scan_router
-from api.meteo import router as weather_router
-from api.connexion import router as auth_router
-from api.plante import router as plant_router
-from api.utilisateur import router as user_router
-from api.rappel import router as rappel_router
-from api.inscription import router as inscription_router
-from api.dr_pyto import router as drpyto_router
-from api.health import router as health_router
-from api.espece import router as espece_router
+from app.api.scan import router as scan_router
+from app.api.meteo import router as weather_router
+from app.api.connexion import router as auth_router
+from app.api.plante import router as plant_router
+from app.api.utilisateur import router as user_router
+from app.api.rappel import router as rappel_router
+from app.api.inscription import router as inscription_router
+from app.api.dr_pyto import router as drpyto_router
+from app.api.health import router as health_router
+from app.api.espece import router as espece_router
 
-from database.database import create_database, create_initial_data, create_tables, drop_database, engine
+from app.database.database import create_database, create_initial_data, create_tables, drop_database, engine
 
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.middleware.cors import CORSMiddleware
-from middleware.auth_middleware import AuthMiddleware
-from middleware.error_middleware import ErrorLoggingMiddleware
+from app.middleware.auth_middleware import AuthMiddleware
+from app.middleware.error_middleware import ErrorLoggingMiddleware
 
 router = APIRouter()
 router.include_router(router=scan_router)

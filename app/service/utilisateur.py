@@ -1,9 +1,9 @@
-from repository.utilisateur import UtilisateurRepository
-from repository.abonnement import AbonnementRepository
-from config.password import PasswordConfig
-from dto.InscriptionDTO import InscriptionDTO, InscriptionEmailDTO
-from model.utilisateur import ProviderType, Utilisateur
-from model.abonnement import Abonnement, TypeAbonnement
+from app.repository.utilisateur import UtilisateurRepository
+from app.repository.abonnement import AbonnementRepository
+from app.config.password import PasswordConfig
+from app.dto.InscriptionDTO import InscriptionDTO, InscriptionEmailDTO
+from app.model.utilisateur import ProviderType, Utilisateur
+from app.model.abonnement import Abonnement, TypeAbonnement
 from datetime import datetime
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession

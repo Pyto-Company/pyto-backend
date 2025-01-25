@@ -2,8 +2,9 @@ from typing import Annotated
 from fastapi import Query
 from sqlalchemy import text
 from sqlmodel import select
-from model.rappel import Rappel
-from repository.base import BaseRepository
+from app.dto.RappelPrevuDTO import RappelPrevuDTO
+from app.model.rappel import Rappel
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class RappelRepository(BaseRepository[Rappel]):
@@ -72,16 +73,15 @@ class RappelRepository(BaseRepository[Rappel]):
         
         return rappels
 
-    async def get_rappels_by_user_id(self, user_id: int) -> list[Rappel]:
+    async def get_rappels_by_user_id(self, user_id: int) -> list[RappelPrevuDTO]:
         sql = text("""
             WITH date_prochain_rappel AS (
                 SELECT 
                     r.id,
-                    r.type_entretien,
-                    r.date_creation,
-                    r.nb_jours_intervalle,
-                    r.heure,
+                    ent.type,
                     r.plante_id,
+                    p.nom,
+                    e.photo_defaut,
                     r.date_creation + 
                         (CEIL(
                             EXTRACT(EPOCH FROM (CURRENT_TIMESTAMP - r.date_creation)) / 
@@ -90,15 +90,17 @@ class RappelRepository(BaseRepository[Rappel]):
                         AS prochain_rappel
                 FROM rappel r
                 INNER JOIN plante p ON r.plante_id = p.id
+                INNER JOIN espece e ON p.espece_id = e.id
+                INNER JOIN entretien ent ON r.entretien_id = ent.id
                 WHERE p.utilisateur_id = :user_id
             )
             SELECT 
                 id,
-                type_entretien,
-                date_creation,
-                nb_jours_intervalle,
-                heure,
-                plante_id
+                type,
+                plante_id,
+                prochain_rappel,
+                nom,
+                photo_defaut
             FROM date_prochain_rappel
             ORDER BY prochain_rappel ASC
         """)
@@ -108,13 +110,13 @@ class RappelRepository(BaseRepository[Rappel]):
         
         rappels = []
         for row in rows:
-            rappel = Rappel(
-                id=row.id,
-                type_entretien=row.type_entretien,
-                date_creation=row.date_creation,
-                nb_jours_intervalle=row.nb_jours_intervalle,
-                heure=row.heure,
-                plante_id=row.plante_id
+            rappel = RappelPrevuDTO(
+                id_rappel=row.id,
+                id_plante=row.plante_id,
+                type_entretien=row.type,
+                planter_nom=row.nom,
+                espece_image=row.photo_defaut,
+                date_prochain_rappel=row.prochain_rappel
             )
             rappels.append(rappel)
         

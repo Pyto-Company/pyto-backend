@@ -2,10 +2,10 @@ from datetime import datetime
 from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
-from dto.EspeceDTO import EspeceDTO
-from model.plantation import Plantation
-from model.espece import Espece
-from repository.base import BaseRepository
+from app.dto.EspeceDTO import EspeceDTO
+from app.model.plantation import Plantation
+from app.model.espece import Espece
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 

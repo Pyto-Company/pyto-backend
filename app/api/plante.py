@@ -1,16 +1,16 @@
 from fastapi import APIRouter, Query, Depends
 from typing import Annotated
-from repository.rappel import RappelRepository
-from repository.scan import ScanRepository
-from service.plante import PlanteService
-from model.plante import Plante
-from repository.plante import PlanteRepository
-from database.database import get_session
+from app.repository.rappel import RappelRepository
+from app.repository.scan import ScanRepository
+from app.service.plante import PlanteService
+from app.model.plante import Plante
+from app.repository.plante import PlanteRepository
+from app.database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 from fastapi import APIRouter, Request, Depends
-from dto.plante_jardin import PlanteJardinDTO
-from database.database import get_session
+from app.dto.PlanteJardinDTO import PlanteJardinDTO
+from app.database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/plante", tags=["plante"])

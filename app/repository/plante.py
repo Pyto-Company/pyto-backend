@@ -1,12 +1,12 @@
 from typing import Annotated
-from model.plante import Plante
-from repository.base import BaseRepository
+from app.model.plante import Plante
+from app.repository.base import BaseRepository
 from fastapi import Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from dto.plante_jardin import PlanteJardinDTO, RappelDTO
+from app.dto.PlanteJardinDTO import PlanteJardinDTO, RappelDTO
 from typing import List
-from repository.base import BaseRepository
+from app.repository.base import BaseRepository
 from datetime import datetime, timedelta
 
 class PlanteRepository(BaseRepository[Plante]):

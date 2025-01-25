@@ -1,7 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
 
-from model.utilisateur import ProviderType
+from app.model.utilisateur import ProviderType
 
 class InscriptionDTO(BaseModel):
     email: EmailStr = Field(

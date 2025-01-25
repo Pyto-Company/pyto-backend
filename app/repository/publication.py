@@ -1,7 +1,7 @@
 from typing import Annotated
 from fastapi import Query
-from model.publication import Publication
-from repository.base import BaseRepository
+from app.model.publication import Publication
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 

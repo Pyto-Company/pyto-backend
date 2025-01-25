@@ -1,9 +1,9 @@
 from typing import Annotated, Optional
 from fastapi import Query, HTTPException
 from sqlmodel import select
-from dto.UtilisateurDTO import UtilisateurDTO
-from model.utilisateur import Utilisateur
-from repository.base import BaseRepository
+from app.dto.UtilisateurDTO import UtilisateurDTO
+from app.model.utilisateur import Utilisateur
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from pydantic import BaseModel
-from client.mistral_ai import MistralClient
+from app.client.mistral_ai import MistralClient
 
 router = APIRouter(prefix="/drpyto", tags=["drpyto"])
 

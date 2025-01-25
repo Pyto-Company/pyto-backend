@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, Request
-from model.utilisateur import ProviderType
-from database.database import get_session
-from dto.InscriptionDTO import InscriptionDTO, InscriptionEmailDTO, InscriptionSocialDTO
-from client.google import GoogleClient
-from service.utilisateur import UtilisateurService
+from app.model.utilisateur import ProviderType
+from app.database.database import get_session
+from app.dto.InscriptionDTO import InscriptionDTO, InscriptionEmailDTO, InscriptionSocialDTO
+from app.client.google import GoogleClient
+from app.service.utilisateur import UtilisateurService
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/inscription", tags=["inscription"])

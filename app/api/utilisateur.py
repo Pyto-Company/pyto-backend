@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Query, Depends, Request
 from typing import Annotated
-from dto.UtilisateurDTO import UtilisateurDTO
-from model.utilisateur import Utilisateur
-from database import database  
+from app.dto.UtilisateurDTO import UtilisateurDTO
+from app.model.utilisateur import Utilisateur
+from app.database import database  
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from repository.utilisateur import UtilisateurRepository
-from service.utilisateur import UtilisateurService
+from app.repository.utilisateur import UtilisateurRepository
+from app.service.utilisateur import UtilisateurService
 
 router = APIRouter(prefix="/utilisateur", tags=["utilisateur"])
 

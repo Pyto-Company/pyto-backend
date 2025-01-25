@@ -1,7 +1,10 @@
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 import httpx
 import os
 from dotenv import load_dotenv
+
+from app.dto.PrevisionMeteoDTO import PrevisionMeteoDTO
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -66,7 +69,34 @@ class OpenWeatherClient():
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail="Erreur lors de la récupération des données météo")
         
-        return response
+        data = response.json()
+        
+        # Extraire les informations clés
+        forecast = []
+        for row in data.get("list"):
+
+            # Conversion du timestamp epoch en date
+            epoch_time = row.get("dt")
+            forecast_date = datetime.fromtimestamp(epoch_time).date()
+
+            prevision = PrevisionMeteoDTO(
+                date=forecast_date,
+                temperature=row.get("main").get("temp"),
+                meteo=row.get("weather")[0].get("main"),
+            )
+            forecast.append(prevision)
+
+        return forecast
+
+
+        weather_data = {
+            "temperature": data["main"].get("temp"),
+            "description": data["weather"][0].get("description"),
+            "vent": data["wind"].get("speed"),
+            "humidite": data["main"].get("humidity"),
+        }
+        
+        return weather_data
 
     async def get_pollution(lat: float, lon: float):
         """

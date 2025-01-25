@@ -1,8 +1,8 @@
 from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
-from model.maladie import Maladie
-from repository.base import BaseRepository
+from app.model.maladie import Maladie
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class MaladieRepository(BaseRepository[Maladie]):

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Query
-from client.open_weather import OpenWeatherClient
-from service.meteo import MeteoService
+from app.client.open_weather import OpenWeatherClient
+from app.service.meteo import MeteoService
 
 router = APIRouter(prefix="/meteo", tags=["meteo"])
 
@@ -23,7 +23,7 @@ async def realtime(location: str):
 async def get_weather(lat: float, lon: float):
     return await OpenWeatherClient.get_weather(lat, lon)
 
-@router.get("/forecast")
+@router.get("/previsions")
 async def get_forecast(lat: float, lon: float):
     return await OpenWeatherClient.get_forecast(lat, lon)
 

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
-from dto.ConnexionDTO import ConnexionEmailDTO, ConnexionSocialDTO
-from service.connexion import ConnexionService
+from app.dto.ConnexionDTO import ConnexionEmailDTO, ConnexionSocialDTO
+from app.service.connexion import ConnexionService
 from sqlalchemy.ext.asyncio import AsyncSession
-from database.database import get_session
+from app.database.database import get_session
 
 router = APIRouter(prefix="/connexion", tags=["connexion"])
 

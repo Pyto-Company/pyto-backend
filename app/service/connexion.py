@@ -1,9 +1,9 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from config.token import TokenConfig
-from config.password import PasswordConfig
-from dto.ConnexionDTO import ConnexionEmailDTO, ConnexionSocialDTO
-from repository.utilisateur import UtilisateurRepository
+from app.config.token import TokenConfig
+from app.config.password import PasswordConfig
+from app.dto.ConnexionDTO import ConnexionEmailDTO, ConnexionSocialDTO
+from app.repository.utilisateur import UtilisateurRepository
 
 class ConnexionService():
 

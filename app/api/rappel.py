@@ -1,9 +1,9 @@
 from datetime import time
-from fastapi import APIRouter, Query, Depends, Request
-from typing import Annotated
-from model.rappel import Rappel
-from repository.rappel import RappelRepository
-from database.database import get_session
+from fastapi import APIRouter, Depends, Request
+from app.dto.RappelPrevuDTO import RappelPrevuDTO
+from app.model.rappel import Rappel
+from app.repository.rappel import RappelRepository
+from app.database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/rappel", tags=["rappel"])
@@ -20,7 +20,7 @@ async def create(
 async def get_rappels(
     request: Request,
     session: AsyncSession = Depends(get_session)
-) -> list[Rappel]:
+) -> list[RappelPrevuDTO]:
     user_id = request.state.user_id
     return await RappelRepository(session).get_rappels_by_user_id(user_id)
 

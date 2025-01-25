@@ -1,6 +1,22 @@
 [
     {
-        "type": "",
-        "description": ""
+        "id": 1,
+        "type": "ARROSAGE",
+        "info_principale": "2-3 x",
+        "info_secondaire": "/ semaine",
+        "espece_id": 101
+    },
+    {
+        "id": 2,
+        "type": "LUMINOSITE",
+        "info_principale": "vive",
+        "espece_id": 101
+    },
+    {
+        "id": 3,
+        "type": "TAILLAGE",
+        "info_principale": "1-2 x",
+        "info_secondaire": "/ an",
+        "espece_id": 101
     }
 ]

@@ -3,10 +3,10 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 import jwt
 from jwt.exceptions import PyJWTError, ExpiredSignatureError
-from config.token import SECRET_KEY, ALGORITHM
-from repository.utilisateur import UtilisateurRepository
-from database.database import async_session
-from logger.logger import logger
+from app.config.token import SECRET_KEY, ALGORITHM
+from app.repository.utilisateur import UtilisateurRepository
+from app.database.database import async_session
+from app.logger.logger import logger
 
 class AuthMiddleware(BaseHTTPMiddleware):
     """

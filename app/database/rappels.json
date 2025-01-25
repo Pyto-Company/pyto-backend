@@ -1,66 +1,66 @@
 [
     {
         "id": 1,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 1
+        "date_creation": "2025-01-01T12:30:00",
+        "plante_id": 1,
+        "entretien_id": 1
     },
     {
         "id": 2,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 1
+        "date_creation": "2025-01-12T12:30:00",
+        "plante_id": 1,
+        "entretien_id": 1
     },
     {
         "id": 3,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 1
+        "date_creation": "2025-01-14T12:30:00",
+        "plante_id": 1,
+        "entretien_id": 1
     },
     {
         "id": 4,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 2
+        "date_creation": "2025-01-16T12:30:00",
+        "plante_id": 2,
+        "entretien_id": 1
     },
     {
         "id": 5,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 3
+        "date_creation": "2025-01-20T12:30:00",
+        "plante_id": 3,
+        "entretien_id": 1
     },
     {
         "id": 6,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 3
+        "date_creation": "2025-01-23T12:30:00",
+        "plante_id": 3,
+        "entretien_id": 1
     },
     {
         "id": 7,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 4
+        "date_creation": "2025-01-06T12:30:00",
+        "plante_id": 4,
+        "entretien_id": 1
     },
     {
         "id": 8,
-        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
-        "date_creation": "2024-01-10T12:30:00",
-        "plante_id": 4
+        "date_creation": "2025-01-10T12:30:00",
+        "plante_id": 4,
+        "entretien_id": 1
     }
 ]

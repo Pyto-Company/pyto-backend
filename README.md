@@ -32,7 +32,7 @@ DATABASE_NAME = "pyto"
 
 Exécuter la commande suivante :
 ```
-uvicorn main:app --reload
+PS C:\Users\uzanl\Documents\GitHub\pyto-backend> uvicorn app.main:app --reload
 ```
 
 ### 5) Swagger
@@ -40,3 +40,10 @@ uvicorn main:app --reload
 Une fois l'application lancée, ouvrez le lien suivant dans un navigateur : http://127.0.0.1:8000/docs
 
 Pour lancer en debug : https://fastapi.tiangolo.com/tutorial/debugging/#run-your-code-with-your-debugger 
+
+### 6) Lancement des tests
+
+Exécuter la commande suivante :
+```
+PS C:\Users\uzanl\Documents\GitHub\pyto-backend> python -m pytest
+```

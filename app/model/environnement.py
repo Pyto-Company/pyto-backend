@@ -3,9 +3,9 @@ from sqlmodel import Field, Relationship, SQLModel
 from enum import Enum
 
 class TypeEnvironnement(str, Enum):
-    TEMPERATURE = "Température"
-    HABITAT = "Habitat"
-    HUMIDITE = "Humidité"
+    TEMPERATURE = "TEMPÉRATURE"
+    HABITAT = "HABITAT"
+    HUMIDITE = "HUMIDITÉ"
 
 class Environnement(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True, index=True)

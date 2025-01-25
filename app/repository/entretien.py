@@ -1,8 +1,8 @@
 from typing import Annotated
 from fastapi import Query
 from sqlmodel import select
-from model.entretien import Entretien
-from repository.base import BaseRepository
+from app.model.entretien import Entretien
+from app.repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class EntretienRepository(BaseRepository[Entretien]):

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
 from datetime import datetime
-from model.abonnement import TypeAbonnement
+from app.model.abonnement import TypeAbonnement
 
 class UtilisateurDTO(BaseModel):
     user_id: int

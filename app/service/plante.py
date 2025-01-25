@@ -1,8 +1,8 @@
-from repository.entretien import EntretienRepository
-from repository.rappel import RappelRepository
-from repository.scan import ScanRepository
-from dto.InscriptionDTO import InscriptionEmailDTO
-from model.utilisateur import ProviderType
+from app.repository.entretien import EntretienRepository
+from app.repository.rappel import RappelRepository
+from app.repository.scan import ScanRepository
+from app.dto.InscriptionDTO import InscriptionEmailDTO
+from app.model.utilisateur import ProviderType
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class PlanteService:

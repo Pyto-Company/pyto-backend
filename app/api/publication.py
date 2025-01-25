@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
-from database import database
-from model.publication import Publication
-from model.utilisateur import Utilisateur
-from repository.publication import PublicationRepository
+from app.database import database
+from app.model.publication import Publication
+from app.model.utilisateur import Utilisateur
+from app.repository.publication import PublicationRepository
 
 router = APIRouter(prefix="/publication", tags=["publication"])
 

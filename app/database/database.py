@@ -10,17 +10,18 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 import traceback
-from model.abonnement import Abonnement
-from model.plantation import Plantation
-from model.notification import Notification
-from model.rappel import Rappel
-from logger.logger import logger
+from app.model.entretien import Entretien
+from app.model.abonnement import Abonnement
+from app.model.plantation import Plantation
+from app.model.notification import Notification
+from app.model.rappel import Rappel
+from app.logger.logger import logger
 import logging
 
-from model.espece import Espece
-from model.parametrage import Parametrage
-from model.plante import Plante
-from model.utilisateur import Utilisateur
+from app.model.espece import Espece
+from app.model.parametrage import Parametrage
+from app.model.plante import Plante
+from app.model.utilisateur import Utilisateur
 from dotenv import load_dotenv
 
 # Charger les variables d'environnement
@@ -129,6 +130,8 @@ async def create_initial_data():
         notifications_json_file_path = os.path.join(current_dir, "notifications.json")
         plantations_json_file_path = os.path.join(current_dir, "plantations.json")
         abonnements_json_file_path = os.path.join(current_dir, "abonnements.json")
+        entretiens_json_file_path = os.path.join(current_dir, "entretiens.json")
+
 
         with open(utilisateurs_json_file_path, "r", encoding="utf-8") as file:
             objects = [Utilisateur(**elem) for elem in json.load(file)]
@@ -145,6 +148,9 @@ async def create_initial_data():
                 if "date_creation" in plante:
                     plante["date_creation"] = datetime.fromisoformat(plante["date_creation"])
             objects += [Plante(**elem) for elem in data]
+
+        with open(entretiens_json_file_path, "r", encoding="utf-8") as file:
+            objects += [Entretien(**elem) for elem in json.load(file)]
 
         with open(rappels_json_file_path, "r", encoding="utf-8") as file:
             data = json.load(file)

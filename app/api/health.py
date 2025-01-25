@@ -3,7 +3,7 @@ from fastapi import APIRouter
 import psycopg2
 import os
 from dotenv import load_dotenv
-from logger.logger import logger
+from app.logger.logger import logger
 
 router = APIRouter()
 
