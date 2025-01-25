@@ -4,7 +4,7 @@ from sqlmodel import Session, select
 
 class EmailService():
 
-    async def SendValidationEmailToUser(email: str, token: str) -> None:
+    def SendValidationEmailToUser(email: str, token: str) -> None:
         message = MessageSchema(
             subject="Email Validation",
             recipients=[email],
@@ -15,4 +15,4 @@ class EmailService():
         
         # Send the email (assumes FastMail is configured properly)
         fm = FastMail()
-        await fm.send_message(message)
+        fm.send_message(message)

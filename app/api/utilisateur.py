@@ -3,7 +3,7 @@ from typing import Annotated
 from app.dto.UtilisateurDTO import UtilisateurDTO
 from app.model.utilisateur import Utilisateur
 from app.database import database  
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 from app.repository.utilisateur import UtilisateurRepository
 from app.service.utilisateur import UtilisateurService
@@ -19,9 +19,9 @@ def readUsers(offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> li
     return UtilisateurRepository.getUsers(offset, limit)
 
 @router.get("/me")
-async def getMe(request: Request, session: AsyncSession = Depends(database.get_session)) -> UtilisateurDTO:
+def getMe(request: Request, session: Session = Depends(database.get_session)) -> UtilisateurDTO:
     user_id = request.state.user_id
-    return await UtilisateurRepository(session).getMe(user_id)
+    return UtilisateurRepository(session).getMe(user_id)
 
 @router.get("/{user_id}")
 def readUser(user_id: int) -> Utilisateur:

@@ -5,28 +5,28 @@ from sqlmodel import select
 from app.dto.RappelPrevuDTO import RappelPrevuDTO
 from app.model.rappel import Rappel
 from app.repository.base import BaseRepository
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 class RappelRepository(BaseRepository[Rappel]):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         super().__init__(Rappel, session)
 
-    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Rappel]:
-        return await super().get_all(offset, limit)
+    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Rappel]:
+        return super().get_all(offset, limit)
 
-    async def get_by_id(self, rappel_id: int) -> Rappel:
-        return await super().get_by_id(rappel_id)
+    def get_by_id(self, rappel_id: int) -> Rappel:
+        return super().get_by_id(rappel_id)
 
-    async def create(self, rappel: Rappel) -> Rappel:
-        return await super().create(rappel)
+    def create(self, rappel: Rappel) -> Rappel:
+        return super().create(rappel)
 
-    async def delete(self, rappel_id: int) -> dict:
-        return await super().delete(rappel_id)
+    def delete(self, rappel_id: int) -> dict:
+        return super().delete(rappel_id)
     
-    async def update(self, rappel_id: int, updated_data: dict) -> Rappel:
-        return await super().update(rappel_id, updated_data)
+    def update(self, rappel_id: int, updated_data: dict) -> Rappel:
+        return super().update(rappel_id, updated_data)
     
-    async def get_rappels_by_plante_id(self, plante_id: int) -> list[Rappel]:
+    def get_rappels_by_plante_id(self, plante_id: int) -> list[Rappel]:
         sql = text("""
             WITH date_prochain_rappel AS (
                 SELECT 
@@ -56,7 +56,7 @@ class RappelRepository(BaseRepository[Rappel]):
             ORDER BY prochain_rappel ASC
         """)
 
-        result = await self.session.execute(sql, {"plante_id": plante_id})
+        result = self.session.execute(sql, {"plante_id": plante_id})
         rows = result.all()
         
         rappels = []
@@ -73,7 +73,7 @@ class RappelRepository(BaseRepository[Rappel]):
         
         return rappels
 
-    async def get_rappels_by_user_id(self, user_id: int) -> list[RappelPrevuDTO]:
+    def get_rappels_by_user_id(self, user_id: int) -> list[RappelPrevuDTO]:
         sql = text("""
             WITH date_prochain_rappel AS (
                 SELECT 
@@ -105,7 +105,7 @@ class RappelRepository(BaseRepository[Rappel]):
             ORDER BY prochain_rappel ASC
         """)
 
-        result = await self.session.execute(sql, {"user_id": user_id})
+        result = self.session.execute(sql, {"user_id": user_id})
         rows = result.all()
         
         rappels = []
@@ -122,7 +122,7 @@ class RappelRepository(BaseRepository[Rappel]):
         
         return rappels
 
-    async def get_rappels_for_notifications(self) -> list[Rappel]:
+    def get_rappels_for_notifications(self) -> list[Rappel]:
         sql = text("""
             SELECT 
                 r.id,
@@ -137,7 +137,7 @@ class RappelRepository(BaseRepository[Rappel]):
             AND r.heure <= CURRENT_TIME
         """)
 
-        result = await self.session.execute(sql)
+        result = self.session.execute(sql)
         rows = result.all()
         
         rappels = []

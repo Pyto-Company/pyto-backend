@@ -6,39 +6,39 @@ from app.dto.EspeceDTO import EspeceDTO
 from app.model.plantation import Plantation
 from app.model.espece import Espece
 from app.repository.base import BaseRepository
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from sqlalchemy import select
 
 class EspeceRepository(BaseRepository[Espece]):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         super().__init__(Espece, session)
 
-    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Espece]:
-        return await super().get_all(offset, limit)
+    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Espece]:
+        return super().get_all(offset, limit)
 
-    async def get_by_id(self, espece_id: int) -> Espece:
-        return await super().get_by_id(espece_id)
+    def get_by_id(self, espece_id: int) -> Espece:
+        return super().get_by_id(espece_id)
 
-    async def create(self, espece: Espece) -> Espece:
-        return await super().create(espece)
+    def create(self, espece: Espece) -> Espece:
+        return super().create(espece)
 
-    async def delete(self, espece_id: int) -> dict:
-        return await super().delete(espece_id)
+    def delete(self, espece_id: int) -> dict:
+        return super().delete(espece_id)
     
-    async def update(self, espece_id: int, updated_data: dict) -> Espece:
-        return await super().update(espece_id, updated_data)
+    def update(self, espece_id: int, updated_data: dict) -> Espece:
+        return super().update(espece_id, updated_data)
     
-    async def get_all_classe_ia(self) -> list[str]:
+    def get_all_classe_ia(self) -> list[str]:
         query = select(getattr(Espece, "classe_ia"))
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         return [item[0] for item in result.all()]
     
-    async def get_by_class_ia(self, classe_ia: str) -> list[Espece]:
+    def get_by_class_ia(self, classe_ia: str) -> list[Espece]:
         query = select(Espece).where(Espece.classe_ia == classe_ia)
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         return result.scalars().all()
 
-    async def search_by_nom_commun(self, search_term: str):
+    def search_by_nom_commun(self, search_term: str):
         query = (
             select(
                 Espece.id.label("espece_id"),
@@ -48,7 +48,7 @@ class EspeceRepository(BaseRepository[Espece]):
             .where(Espece.nom_commun.ilike(f"{search_term}%"))
         )
 
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         rows = result.all()
         
         # Convertir les résultats en EspeceDTO
@@ -64,7 +64,7 @@ class EspeceRepository(BaseRepository[Espece]):
         return especes
         
     
-    async def getPlantesMoment(self) -> list[EspeceDTO]:
+    def getPlantesMoment(self) -> list[EspeceDTO]:
         mois_actuel = datetime.now().month
 
         # Construire la requête pour récupérer les espèces du mois actuel
@@ -79,7 +79,7 @@ class EspeceRepository(BaseRepository[Espece]):
             .where(Plantation.numero_mois == mois_actuel)
         )
 
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         rows = result.all()
         
         # Convertir les résultats en EspeceDTO

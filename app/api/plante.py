@@ -6,62 +6,62 @@ from app.service.plante import PlanteService
 from app.model.plante import Plante
 from app.repository.plante import PlanteRepository
 from app.database.database import get_session
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from typing import List
 from fastapi import APIRouter, Request, Depends
 from app.dto.PlanteJardinDTO import PlanteJardinDTO
 from app.database.database import get_session
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/plante", tags=["plante"])
 
 @router.get("/")
-async def get_all(
-    session: AsyncSession = Depends(get_session),
+def get_all(
+    session: Session = Depends(get_session),
     offset: int = 0, 
     limit: Annotated[int, Query(le=100)] = 100
 ) -> list[Plante]:
-    return await PlanteRepository(session).get_all(offset, limit)
+    return PlanteRepository(session).get_all(offset, limit)
 
 @router.post("/")
-async def create(
+def create(
     plante: Plante, 
-    session: AsyncSession = Depends(get_session)
+    session: Session = Depends(get_session)
 ) -> Plante:
-    return await PlanteRepository(session).create(plante)
+    return PlanteRepository(session).create(plante)
 
 @router.get("/{plante_id}")
-async def get_by_id(
+def get_by_id(
     plante_id: int,
-    session: AsyncSession = Depends(get_session)
+    session: Session = Depends(get_session)
 ) -> Plante:
-    return await PlanteRepository(session).get_by_id(plante_id)
+    return PlanteRepository(session).get_by_id(plante_id)
 
 @router.put("/{plante_id}")
-async def update(
+def update(
     plante_id: int,
     updated_data: dict,
-    session: AsyncSession = Depends(get_session)
+    session: Session = Depends(get_session)
 ) -> Plante:
-    return await PlanteRepository(session).update(plante_id, updated_data)
+    return PlanteRepository(session).update(plante_id, updated_data)
 
 @router.delete("/{plante_id}")
-async def delete(
+def delete(
     plante_id: int,
-    session: AsyncSession = Depends(get_session)
+    session: Session = Depends(get_session)
 ) -> dict:
-    return await PlanteRepository(session).delete(plante_id)
+    return PlanteRepository(session).delete(plante_id)
 
 @router.get("/jardin", response_model=List[PlanteJardinDTO])
-async def getMonJardin(request: Request, session: AsyncSession = Depends(get_session)):
+def getMonJardin(request: Request, session: Session = Depends(get_session)):
     user_id = request.state.user_id
-    return await PlanteRepository(session).get_jardin(user_id)
+    return PlanteRepository(session).get_jardin(user_id)
 
 @router.get("/{plante_id}/rappels")
-async def getRappels(plante_id: int, request: Request, session: AsyncSession = Depends(get_session)):
-    return await RappelRepository(session).get_rappels_by_plante_id(plante_id)
+def getRappels(plante_id: int, request: Request, session: Session = Depends(get_session)):
+    return RappelRepository(session).get_rappels_by_plante_id(plante_id)
 
 @router.get("/plante/{plante_id}/scans")
-async def getScans(plante_id: int, request: Request, session: AsyncSession = Depends(get_session)):
-    return await ScanRepository(session).get_scans_by_plante_id(plante_id)
+def getScans(plante_id: int, request: Request, session: Session = Depends(get_session)):
+    return ScanRepository(session).get_scans_by_plante_id(plante_id)
 

@@ -6,18 +6,18 @@ from app.model.utilisateur import ProviderType, Utilisateur
 from app.model.abonnement import Abonnement, TypeAbonnement
 from datetime import datetime
 from fastapi import HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 class UtilisateurService:
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         self.session = session
 
     
-    async def createUser(self, request: InscriptionEmailDTO, provider: ProviderType):
+    def createUser(self, request: InscriptionEmailDTO, provider: ProviderType):
         try:
             # Vérifier si l'utilisateur existe déjà avec cet email
-            existing_user = await UtilisateurRepository(self.session).get_by_email(request.email)
+            existing_user = UtilisateurRepository(self.session).get_by_email(request.email)
             
             if existing_user:
                 if existing_user.provider == provider:
@@ -42,7 +42,7 @@ class UtilisateurService:
             )
             
             # Création de l'utilisateur
-            created_user = await UtilisateurRepository(self.session).create(new_user)
+            created_user = UtilisateurRepository(self.session).create(new_user)
             
             # Création de l'abonnement si premium_started est True
             if request.premium_started:
@@ -56,9 +56,9 @@ class UtilisateurService:
                 est_actif=True,
                 type=abonnement_type
             )
-            await AbonnementRepository(self.session).create(new_abonnement)
+            AbonnementRepository(self.session).create(new_abonnement)
             
-            await self.session.commit()
+            self.session.commit()
             
             return {
                 "message": "Inscription réussie",
@@ -70,8 +70,8 @@ class UtilisateurService:
                 }
             }
         except HTTPException:
-            await self.session.rollback()
+            self.session.rollback()
             raise
         except Exception as e:
-            await self.session.rollback()
+            self.session.rollback()
             raise HTTPException(status_code=400, detail=str(e))

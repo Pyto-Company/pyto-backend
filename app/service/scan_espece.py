@@ -36,11 +36,11 @@ transform = transforms.Compose([
 
 class ScanEspeceService():
 
-    async def predict(file: UploadFile = File(...)):
+    def predict(file: UploadFile = File(...)):
         try:
             # Charger l'image
-            image = Image.open(io.BytesIO(await file.read()))
-            # image = Image.open(io.BytesIO(await file.read())).convert("RGB")
+            image = Image.open(io.BytesIO(file.read()))
+            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
             # Appliquer les transformations
             input_tensor = transform(image).unsqueeze(0)  # Ajouter une dimension batch

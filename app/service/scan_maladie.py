@@ -48,11 +48,11 @@ class ScanMaladieService():
         return output
 
     
-    async def predict_higher(self,file: UploadFile = File(...)):
+    def predict_higher(self,file: UploadFile = File(...)):
         try:
             # Charger l'image
-            image = Image.open(io.BytesIO(await file.read()))
-            # image = Image.open(io.BytesIO(await file.read())).convert("RGB")
+            image = Image.open(io.BytesIO(file.read()))
+            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
             output = self.predict_common(image)
             _, predicted = torch.max(output, 1)
@@ -69,11 +69,11 @@ class ScanMaladieService():
             return JSONResponse(content={"error": str(e)}, status_code=500)
     
     
-    async def predict_all(self,file: UploadFile = File(...)) -> List[Dict[str, float]]:
+    def predict_all(self,file: UploadFile = File(...)) -> List[Dict[str, float]]:
         try:
             # Charger l'image
-            image = Image.open(io.BytesIO(await file.read()))
-            # image = Image.open(io.BytesIO(await file.read())).convert("RGB")
+            image = Image.open(io.BytesIO(file.read()))
+            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
             output = self.predict_common(image)
             output_list = output.squeeze(0).tolist()

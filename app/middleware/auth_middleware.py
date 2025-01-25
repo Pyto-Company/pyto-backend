@@ -5,7 +5,7 @@ import jwt
 from jwt.exceptions import PyJWTError, ExpiredSignatureError
 from app.config.token import SECRET_KEY, ALGORITHM
 from app.repository.utilisateur import UtilisateurRepository
-from app.database.database import async_session
+from app.database.database import SessionLocal
 from app.logger.logger import logger
 
 class AuthMiddleware(BaseHTTPMiddleware):
@@ -45,7 +45,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
             "/inscription/apple",
         ]
 
-    async def dispatch(self, request, call_next):
+    def dispatch(self, request, call_next):
         """
         Traite chaque requête entrante.
         
@@ -60,7 +60,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         
         # Vérifie si le chemin est exclu de l'authentification
         if any(path.startswith(excluded) for excluded in self.exclude_paths):
-            return await call_next(request)
+            return call_next(request)
         
         # Vérifie le token pour tous les autres chemins
         try:    
@@ -79,9 +79,9 @@ class AuthMiddleware(BaseHTTPMiddleware):
                 logger.info(f"L'identifiant de l'utilisateur du token est {user_id}")
 
                 # Vérifier l'existence de l'utilisateur
-                async with async_session() as session:
+                with SessionLocal() as session:
                     repository = UtilisateurRepository(session)
-                    user = await repository.get_by_id(user_id)
+                    user = repository.get_by_id(user_id)
                     logger.info(f"L'utilisateur est {user}")
 
                     if not user:
@@ -117,4 +117,4 @@ class AuthMiddleware(BaseHTTPMiddleware):
                 content={"detail": message}
             )
             
-        return await call_next(request) 
+        return call_next(request) 

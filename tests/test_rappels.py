@@ -1,11 +1,11 @@
 import pytest
 from datetime import datetime
 from app.repository.rappel import RappelRepository
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 @pytest.mark.asyncio
-async def test_rappels(session: AsyncSession) -> None:
-    results = await RappelRepository(session).get_rappels_by_user_id(1)
+def test_rappels(session: Session) -> None:
+    results = RappelRepository(session).get_rappels_by_user_id(1)
     print(results)
     assert len(results) == 8
     assert results[0].id_rappel == 2

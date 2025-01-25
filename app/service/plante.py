@@ -3,13 +3,13 @@ from app.repository.rappel import RappelRepository
 from app.repository.scan import ScanRepository
 from app.dto.InscriptionDTO import InscriptionEmailDTO
 from app.model.utilisateur import ProviderType
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 
 class PlanteService:
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         self.session = session
     
-    async def getEntretiensPrincipaux(self, espece_id: int):
-        return await EntretienRepository(self.session).get_entretiens_by_espece_id(espece_id)
+    def getEntretiensPrincipaux(self, espece_id: int):
+        return EntretienRepository(self.session).get_entretiens_by_espece_id(espece_id)
     

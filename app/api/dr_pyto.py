@@ -8,5 +8,5 @@ class MistralRequest(BaseModel):
     prompt: str
 
 @router.post("/call-mistral")
-async def call_mistral(request: MistralRequest):
-    return await MistralClient.call_mistral(request.prompt)
+def call_mistral(request: MistralRequest):
+    return MistralClient.call_mistral(request.prompt)

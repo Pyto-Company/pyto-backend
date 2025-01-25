@@ -17,7 +17,7 @@ from app.logger.logger import logger
 
 class ScanService():
 
-    async def predict(self, file: UploadFile = File(...)) -> ResultatScanDTO:
+    def predict(self, file: UploadFile = File(...)) -> ResultatScanDTO:
         # Préparation du retour
         resultat_scan = ResultatScanDTO()
 

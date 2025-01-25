@@ -2,7 +2,7 @@ from typing import Annotated
 from app.model.plante import Plante
 from app.repository.base import BaseRepository
 from fastapi import Query
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from sqlalchemy import text
 from app.dto.PlanteJardinDTO import PlanteJardinDTO, RappelDTO
 from typing import List
@@ -10,25 +10,25 @@ from app.repository.base import BaseRepository
 from datetime import datetime, timedelta
 
 class PlanteRepository(BaseRepository[Plante]):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         super().__init__(Plante, session)
 
-    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Plante]:
-        return await super().get_all(offset, limit)
+    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Plante]:
+        return super().get_all(offset, limit)
 
-    async def get_by_id(self, plante_id: int) -> Plante:
-        return await super().get_by_id(plante_id)
+    def get_by_id(self, plante_id: int) -> Plante:
+        return super().get_by_id(plante_id)
 
-    async def create(self, plante: Plante) -> Plante:
-        return await super().create(plante)
+    def create(self, plante: Plante) -> Plante:
+        return super().create(plante)
 
-    async def delete(self, plante_id: int) -> dict:
-        return await super().delete(plante_id)
+    def delete(self, plante_id: int) -> dict:
+        return super().delete(plante_id)
     
-    async def update(self, plante_id: int, updated_data: dict) -> Plante:
-        return await super().update(plante_id, updated_data)
+    def update(self, plante_id: int, updated_data: dict) -> Plante:
+        return super().update(plante_id, updated_data)
     
-    async def get_jardin(self, user_id: int) -> List[PlanteJardinDTO]:
+    def get_jardin(self, user_id: int) -> List[PlanteJardinDTO]:
         sql = text("""
             WITH rappels_notifs AS (
                 SELECT 
@@ -74,7 +74,7 @@ class PlanteRepository(BaseRepository[Plante]):
             ORDER BY plante_id, priorite, rang
         """)
         
-        result = await self.session.execute(sql, {"user_id": user_id})
+        result = self.session.execute(sql, {"user_id": user_id})
         rows = result.all()
         
         plantes_dict = {}

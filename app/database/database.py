@@ -1,28 +1,36 @@
 from datetime import datetime, time
 import psycopg2
-from sqlmodel import Session
-from fastapi import Depends
-from typing import AsyncGenerator
-from sqlmodel import Session, SQLModel
+from sqlmodel import SQLModel
 import json
 import os
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy import create_engine
 from sqlalchemy import text
 import traceback
-from app.model.entretien import Entretien
-from app.model.abonnement import Abonnement
-from app.model.plantation import Plantation
-from app.model.notification import Notification
-from app.model.rappel import Rappel
 from app.logger.logger import logger
 import logging
+from fastapi import Depends
+from dotenv import load_dotenv
 
 from app.model.espece import Espece
-from app.model.parametrage import Parametrage
-from app.model.plante import Plante
 from app.model.utilisateur import Utilisateur
-from dotenv import load_dotenv
+from app.model.publication import Publication
+from app.model.plante import Plante
+from app.model.commentaire import Commentaire
+from app.model.photo import Photo
+from app.model.maladie import Maladie
+from app.model.rappel import Rappel
+from app.model.entretien import Entretien
+from app.model.message import Message
+from app.model.abonnement import Abonnement
+from app.model.parametrage import Parametrage
+from app.model.scan import Scan
+from app.model.conseil import Conseil
+from app.model.predisposition import Predisposition
+from app.model.symptome import Symptome
+from app.model.traitement import Traitement
+from app.model.notification import Notification
+from app.model.plantation import Plantation
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -37,21 +45,33 @@ DB_PASSWORD = os.getenv('DATABASE_PASSWORD')
 DB_PORT = os.getenv('DATABASE_PORT')
 DB_NAME = os.getenv('DATABASE_NAME')
 
-POSTGRESQL_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+POSTGRESQL_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
-engine = create_async_engine(
+engine = create_engine(
     POSTGRESQL_URL,
-    echo=False,  # Désactiver l'echo des requêtes SQL
+    echo=False,
     future=True
 )
 
-async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
 
-async def get_session() -> AsyncGenerator[AsyncSession, None]:
-    async with async_session() as session:
-        yield session
+def get_session():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-SessionDep = Depends(get_session)
+# Pour l'injection de dépendance
+def get_db():
+    with SessionLocal() as db:
+        yield db
+
+SessionDep = Depends(get_db)
 
 def drop_database():
     try:
@@ -101,12 +121,10 @@ def create_database():
             f"Traceback:\n{traceback.format_exc()}"
         )
 
-async def create_tables():
+def create_tables():
     try:
-        async with engine.begin() as conn:
-            await conn.run_sync(SQLModel.metadata.drop_all)
-            await conn.run_sync(SQLModel.metadata.create_all)
-            logger.info("Tables créées avec succès.")
+        SQLModel.metadata.create_all(engine)
+        logger.info("Tables créées avec succès.")
     except Exception as e:
         logger.error(
             f"Erreur lors de la création des tables:\n"
@@ -118,7 +136,7 @@ async def create_tables():
             f"Traceback:\n{traceback.format_exc()}"
         )
 
-async def create_initial_data():
+def create_initial_data():
     try:
         # Get the directory of this script
         current_dir = os.path.dirname(__file__)
@@ -178,21 +196,21 @@ async def create_initial_data():
                     abonnement["date_debut"] = datetime.fromisoformat(abonnement["date_debut"])
             objects += [Abonnement(**elem) for elem in data]
 
-        async with async_session() as session:
+        with SessionLocal() as session:
             session.add_all(objects)
-            await session.flush()
+            session.flush()
             
             # Réinitialiser la séquence d'ID pour la table utilisateur
-            await session.execute(
+            session.execute(
                 text("SELECT setval('utilisateur_id_seq', (SELECT MAX(id) FROM utilisateur))")
             )
 
             # Réinitialiser la séquence d'ID pour la table rappel
-            await session.execute(
+            session.execute(
                 text("SELECT setval('rappel_id_seq', (SELECT MAX(id) FROM rappel))")
             )
             
-            await session.commit()
+            session.commit()
             logger.info("Tables alimentées avec succès.")
 
     except Exception as e:

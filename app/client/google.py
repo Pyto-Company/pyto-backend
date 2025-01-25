@@ -20,22 +20,22 @@ google = oauth.register(
 class GoogleClient():
 
     # Route pour démarrer le processus d'inscription avec Google
-    async def login_via_google(request: Request):
+    def login_via_google(request: Request):
         redirect_uri = "http://127.0.0.1:8000/inscription/auth/google/callback"  # URI de redirection
-        return await google.authorize_redirect(request, redirect_uri)
+        return google.authorize_redirect(request, redirect_uri)
 
     # Callback après authentification avec Google
-    async def google_callback(request: Request):
+    def google_callback(request: Request):
         try:
             try:
                 # Récupérer le token d'accès
-                token = await google.authorize_access_token(request)
+                token = google.authorize_access_token(request)
                 print(token)  # Log the token response for debugging
             except Exception as e:
                 print(e)
                 raise HTTPException(status_code=400, detail=f"Authentication failed: {str(e)}")
 
-            user_info = await google.get("https://openidconnect.googleapis.com/v1/userinfo", token=token)
+            user_info = google.get("https://openidconnect.googleapis.com/v1/userinfo", token=token)
             user_data = user_info.json()
 
             # Exemple de récupération des informations utilisateur

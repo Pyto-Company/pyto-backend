@@ -5,9 +5,9 @@ import traceback
 from app.logger.logger import logger
 
 class ErrorLoggingMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
+    def dispatch(self, request: Request, call_next):
         try:
-            response = await call_next(request)
+            response = call_next(request)
             return response
         except Exception as e:
             # Log l'erreur avec la stack trace

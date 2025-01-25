@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from app.config.token import TokenConfig
 from app.config.password import PasswordConfig
 from app.dto.ConnexionDTO import ConnexionEmailDTO, ConnexionSocialDTO
@@ -7,11 +7,11 @@ from app.repository.utilisateur import UtilisateurRepository
 
 class ConnexionService():
 
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         self.session = session
 
-    async def login(self, infoConnexion: ConnexionEmailDTO):
-        utilisateur = await UtilisateurRepository(self.session).get_by_email_and_password(
+    def login(self, infoConnexion: ConnexionEmailDTO):
+        utilisateur = UtilisateurRepository(self.session).get_by_email_and_password(
             infoConnexion.email, 
             PasswordConfig.hash(infoConnexion.password)
         )
@@ -21,8 +21,8 @@ class ConnexionService():
         access_token = TokenConfig.create_access_token(data={"sub": str(utilisateur.id)})
         return {"access_token": access_token, "token_type": "bearer"}
     
-    async def login_social(self, infoConnexion: ConnexionSocialDTO):
-        utilisateur = await UtilisateurRepository(self.session).get_by_provider_id(infoConnexion.provider_id)
+    def login_social(self, infoConnexion: ConnexionSocialDTO):
+        utilisateur = UtilisateurRepository(self.session).get_by_provider_id(infoConnexion.provider_id)
         if not utilisateur:
             raise HTTPException(status_code=401, detail="Invalid credentials")
         

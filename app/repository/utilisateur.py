@@ -4,32 +4,32 @@ from sqlmodel import select
 from app.dto.UtilisateurDTO import UtilisateurDTO
 from app.model.utilisateur import Utilisateur
 from app.repository.base import BaseRepository
-from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Session
 from sqlalchemy import text
 
 class UtilisateurRepository(BaseRepository[Utilisateur]):
-    def __init__(self, session: AsyncSession):
+    def __init__(self, session: Session):
         super().__init__(Utilisateur, session)
 
-    async def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Utilisateur]:
-        return await super().get_all(offset, limit)
+    def get_all(self, offset: int = 0, limit: Annotated[int, Query(le=100)] = 100) -> list[Utilisateur]:
+        return super().get_all(offset, limit)
 
-    async def get_by_id(self, user_id: int) -> Utilisateur:
-        return await super().get_by_id(user_id)
+    def get_by_id(self, user_id: int) -> Utilisateur:
+        return super().get_by_id(user_id)
 
-    async def create(self, user: Utilisateur) -> Utilisateur:
-        return await super().create(user)
+    def create(self, user: Utilisateur) -> Utilisateur:
+        return super().create(user)
 
-    async def delete(self, user_id: int) -> dict:
-        return await super().delete(user_id)
+    def delete(self, user_id: int) -> dict:
+        return super().delete(user_id)
     
-    async def get_by_email_and_password(self, email: str, password: str) -> Utilisateur:
+    def get_by_email_and_password(self, email: str, password: str) -> Utilisateur:
         query = select(self.model).where(self.model.email == email, self.model.password == password)
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         utilisateur = result.scalar_one_or_none()
         return utilisateur
 
-    async def getMe(self, user_id: int) -> UtilisateurDTO:
+    def getMe(self, user_id: int) -> UtilisateurDTO:
         sql = text("""
             SELECT 
                 u.id,
@@ -49,7 +49,7 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
             AND a.est_actif = true
         """)
         
-        result = await self.session.execute(sql, {"user_id": user_id})
+        result = self.session.execute(sql, {"user_id": user_id})
         rows = result.all()
         if not rows:
             raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
@@ -74,12 +74,12 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
 
         return meDto
 
-    async def get_by_email(self, email: str) -> Optional[Utilisateur]:
+    def get_by_email(self, email: str) -> Optional[Utilisateur]:
         query = select(Utilisateur).where(Utilisateur.email == email)
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         return result.scalar_one_or_none()
 
-    async def get_by_provider_id(self, provider_id: str) -> Optional[Utilisateur]:
+    def get_by_provider_id(self, provider_id: str) -> Optional[Utilisateur]:
         query = select(Utilisateur).where(Utilisateur.provider_id == provider_id)
-        result = await self.session.execute(query)
+        result = self.session.execute(query)
         return result.scalar_one_or_none()

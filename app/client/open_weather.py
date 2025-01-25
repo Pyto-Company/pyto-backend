@@ -1,9 +1,8 @@
+import requests
 from datetime import datetime
 from fastapi import FastAPI, HTTPException
-import httpx
 import os
 from dotenv import load_dotenv
-
 from app.dto.PrevisionMeteoDTO import PrevisionMeteoDTO
 
 # Charger les variables d'environnement
@@ -20,7 +19,7 @@ CURRENT_AIR_POLLUTION_API="http://api.openweathermap.org/data/2.5/air_pollution"
 
 class OpenWeatherClient():
 
-    async def get_weather(lat: float, lon: float):
+    def get_weather(lat: float, lon: float):
         """
         Récupère les données météo pour une ville donnée.
         """
@@ -32,9 +31,8 @@ class OpenWeatherClient():
             "lang": "fr"        # Langue française pour les descriptions
         }
         
-        async with httpx.AsyncClient() as client:
-            response = await client.get(CURREN_WEATHER_API, params=params)
-            
+        response = requests.get(CURREN_WEATHER_API, params=params)
+        
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail="Erreur lors de la récupération des données météo")
         
@@ -51,7 +49,7 @@ class OpenWeatherClient():
         
         return weather_data
 
-    async def get_forecast(lat: float, lon: float):
+    def get_forecast(lat: float, lon: float):
         """
         Récupère les prévisions météo pour une ville donnée.
         """
@@ -63,8 +61,8 @@ class OpenWeatherClient():
             "lang": "fr"        # Langue française pour les descriptions
         }
         
-        async with httpx.AsyncClient() as client:
-            response = await client.get(FIVE_DAYS_FORECAST_API, params=params)
+
+        response = requests.get(FIVE_DAYS_FORECAST_API, params=params)
             
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail="Erreur lors de la récupération des données météo")
@@ -89,16 +87,7 @@ class OpenWeatherClient():
         return forecast
 
 
-        weather_data = {
-            "temperature": data["main"].get("temp"),
-            "description": data["weather"][0].get("description"),
-            "vent": data["wind"].get("speed"),
-            "humidite": data["main"].get("humidity"),
-        }
-        
-        return weather_data
-
-    async def get_pollution(lat: float, lon: float):
+    def get_pollution(lat: float, lon: float):
         """
         Récupère les données pollution pour une ville donnée.
         """
@@ -108,8 +97,7 @@ class OpenWeatherClient():
             "appid": OPEN_WEATHER_API_KEY
         }
         
-        async with httpx.AsyncClient() as client:
-            response = await client.get(CURRENT_AIR_POLLUTION_API, params=params)
+        response = requests.get(CURRENT_AIR_POLLUTION_API, params=params)
             
         if response.status_code != 200:
             raise HTTPException(status_code=response.status_code, detail="Erreur lors de la récupération des données météo")
