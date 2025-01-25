@@ -15,3 +15,4 @@ class Plante(SQLModel, table=True):
     publications: list["Publication"] = Relationship(back_populates="plante")
     photos: list["Photo"] = Relationship(back_populates="plante")
     rappels: list["Rappel"] = Relationship(back_populates="plante")
+    scans: list["Scan"] = Relationship(back_populates="plante")

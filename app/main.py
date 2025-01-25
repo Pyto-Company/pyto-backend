@@ -88,8 +88,14 @@ def custom_openapi():
     # Application de la sécurité globalement sauf pour les routes exclues
     for path in openapi_schema["paths"]:
         if path in [
-            "/connexion/",
-            "/inscription/",
+            "/connexion/email",
+            "/connexion/google",
+            "/connexion/facebook",
+            "/connexion/apple",
+            "/inscription/email",
+            "/inscription/google",
+            "/inscription/facebook",
+            "/inscription/apple",
             "/inscription/auth/google",
             "/inscription/auth/google/callback",
             "/health"

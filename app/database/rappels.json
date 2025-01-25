@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -9,7 +9,7 @@
     },
     {
         "id": 2,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -17,7 +17,7 @@
     },
     {
         "id": 3,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -25,7 +25,7 @@
     },
     {
         "id": 4,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -33,7 +33,7 @@
     },
     {
         "id": 5,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -41,7 +41,7 @@
     },
     {
         "id": 6,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -49,7 +49,7 @@
     },
     {
         "id": 7,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",
@@ -57,7 +57,7 @@
     },
     {
         "id": 8,
-        "type_entretien": "arrosage",
+        "type_entretien": "Arrosage",
         "nb_jours_intervalle": 7,
         "heure": "10:00:00",
         "date_creation": "2024-01-10T12:30:00",

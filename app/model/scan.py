@@ -8,6 +8,8 @@ class Scan(SQLModel, table=True):
     date_creation: datetime = Field(default_factory=datetime.now)
     espece_id: int = Field(foreign_key="espece.id")
     maladie_id: Optional[int] = Field(foreign_key="maladie.id")
+    plante_id: Optional[int] = Field(foreign_key="plante.id")
 
     maladie: "Maladie" = Relationship(back_populates="scans")
     espece: "Espece" = Relationship(back_populates="scans")
+    plante: "Plante" = Relationship(back_populates="scans")

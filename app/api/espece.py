@@ -1,11 +1,22 @@
 from fastapi import APIRouter, Query, Depends
 from typing import List
+from service.plante import PlanteService
+from repository.entretien import EntretienRepository
+from repository.maladie import MaladieRepository
 from dto.EspeceDTO import EspeceDTO
 from database.database import get_session
 from sqlalchemy.ext.asyncio import AsyncSession
 from repository.espece import EspeceRepository
 
 router = APIRouter(prefix="/espece", tags=["espece"])
+
+
+@router.get("/{espece_id}")
+async def getEspece(
+    espece_id: int,
+    session: AsyncSession = Depends(get_session)
+):
+    return await EspeceRepository(session).get_by_id(espece_id)
 
 @router.get("/moment", response_model=List[EspeceDTO])
 async def getPlantesMoment(
@@ -22,3 +33,29 @@ async def search_especes(
     Recherche les espèces dont le nom commun commence par la chaîne de caractères fournie
     """
     return await EspeceRepository(session).search_by_nom_commun(q)
+
+@router.get("/{espece_id}/maladies")
+async def getEspeceMaladies(
+    espece_id: int,
+    session: AsyncSession = Depends(get_session)
+):
+    return await MaladieRepository(session).get_maladies_by_espece_id(espece_id)
+
+
+@router.get("/{espece_id}/entretiens")
+async def getEspeceEntretiens(
+    espece_id: int,
+    session: AsyncSession = Depends(get_session)
+):
+    return await PlanteService(session).getEntretiensPrincipaux(espece_id)
+
+@router.get("/{espece_id}/conditions-meteo")
+async def getEspeceConditionsMeteo(
+    espece_id: int,
+    session: AsyncSession = Depends(get_session)
+):
+    pass
+
+
+
+

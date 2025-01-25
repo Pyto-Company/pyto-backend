@@ -3,6 +3,8 @@ from fastapi import Query
 from model.scan import Scan
 from repository.base import BaseRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
+from sqlmodel import select
 
 class ScanRepository(BaseRepository[Scan]):
     def __init__(self, session: AsyncSession):
@@ -22,3 +24,8 @@ class ScanRepository(BaseRepository[Scan]):
     
     async def update(self, scan_id: int, updated_data: dict) -> Scan:
         return await super().update(scan_id, updated_data)
+
+    async def get_scans_by_plante_id(self, plante_id: int) -> list[Scan]:
+        query = select(Scan).where(Scan.plante_id == plante_id).order_by(Scan.date_creation.desc())
+        result = await self.session.execute(query)
+        return result.scalars().all()

@@ -48,7 +48,7 @@ class ScanService():
             logger.error("Plus d'une maladie détectée")
 
         # Récupération des conseils d'entretien
-        resultat_scan.entretiens = EntretienRepository.get_entretien_by_espece_id(espece.id)
+        resultat_scan.entretiens = EntretienRepository.get_entretiens_by_espece_id(espece.id)
 
         # Stockage de l'image sur le serveur
         filename: str = ImageStorage.save_scan()

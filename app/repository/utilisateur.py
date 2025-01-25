@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Optional
 from fastapi import Query, HTTPException
 from sqlmodel import select
 from dto.UtilisateurDTO import UtilisateurDTO
@@ -73,3 +73,13 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         }
 
         return meDto
+
+    async def get_by_email(self, email: str) -> Optional[Utilisateur]:
+        query = select(Utilisateur).where(Utilisateur.email == email)
+        result = await self.session.execute(query)
+        return result.scalar_one_or_none()
+
+    async def get_by_provider_id(self, provider_id: str) -> Optional[Utilisateur]:
+        query = select(Utilisateur).where(Utilisateur.provider_id == provider_id)
+        result = await self.session.execute(query)
+        return result.scalar_one_or_none()

@@ -24,7 +24,7 @@ class EntretienRepository(BaseRepository[Entretien]):
     async def update(self, entretien_id: int, updated_data: dict) -> Entretien:
         return await super().update(entretien_id, updated_data)
     
-    async def get_entretien_by_espece_id(self, espece_id: int) -> list[Entretien]:
+    async def get_entretiens_by_espece_id(self, espece_id: int) -> list[Entretien]:
         query = select(Entretien).where(Entretien.espece_id == espece_id)
         result = await self.session.execute(query)
         return result.scalars().all()

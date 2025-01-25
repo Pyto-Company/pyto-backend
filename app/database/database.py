@@ -180,6 +180,11 @@ async def create_initial_data():
             await session.execute(
                 text("SELECT setval('utilisateur_id_seq', (SELECT MAX(id) FROM utilisateur))")
             )
+
+            # Réinitialiser la séquence d'ID pour la table rappel
+            await session.execute(
+                text("SELECT setval('rappel_id_seq', (SELECT MAX(id) FROM rappel))")
+            )
             
             await session.commit()
             logger.info("Tables alimentées avec succès.")

@@ -1,4 +1,5 @@
 from typing import TypeVar, Generic, Type
+from fastapi import HTTPException
 from sqlmodel import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -15,6 +16,8 @@ class BaseRepository(Generic[T]):
 
     async def get_by_id(self, id: int) -> T:
         result = await self.session.get(self.model, id)
+        if not result:
+            raise HTTPException(status_code=404, detail=f"{self.model.__name__} non trouvé")
         return result
 
     async def create(self, entity: T) -> T:
@@ -24,12 +27,14 @@ class BaseRepository(Generic[T]):
         return entity
 
     async def delete(self, id: int) -> dict:
-        entity = await self.session.get(self.model, id)
-        if entity:
+        try:
+            entity = await self.session.get(self.model, id)
             await self.session.delete(entity)
             await self.session.commit()
             return {"ok": True}
-        return {"ok": False}
+        except Exception as e:
+            await self.session.rollback()
+            raise HTTPException(status_code=500, detail=str(e))
 
     async def update(self, id: int, data: dict) -> T:
         entity = await self.session.get(self.model, id)

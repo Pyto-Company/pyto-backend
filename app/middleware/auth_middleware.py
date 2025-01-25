@@ -34,7 +34,15 @@ class AuthMiddleware(BaseHTTPMiddleware):
             "/openapi.json",      # Schéma OpenAPI
             "/redoc",             # Documentation ReDoc
             "/connexion/token",   # Obtention du token
-            "/inscription"        # Inscription avec Google
+            "/inscription",       # Inscription avec Google
+            "/connexion/email",
+            "/connexion/google",
+            "/connexion/facebook",
+            "/connexion/apple",
+            "/inscription/email",
+            "/inscription/google",
+            "/inscription/facebook",
+            "/inscription/apple",
         ]
 
     async def dispatch(self, request, call_next):
