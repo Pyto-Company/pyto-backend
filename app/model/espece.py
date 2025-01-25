@@ -10,7 +10,6 @@ class Espece(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True, index=True)
     nom_commun: str = Field(unique=True)
     photo_defaut: str
-    habitat: Habitat = Field(sa_column_kwargs={"nullable": False})
     nom_scientifique: str = Field(unique=True)
     description: str
     type: str
