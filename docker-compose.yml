@@ -52,8 +52,6 @@ services:
     restart: always
     expose:
       - "5432"
-    volumes:
-      - ./database:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
       interval: 5s
