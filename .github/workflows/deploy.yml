@@ -17,16 +17,8 @@ jobs:
         with:
           fetch-depth: 2
 
-      # Check for changes in app directory
-      - name: Check for changes in app directory
-        id: check_changes
-        run: |
-          CHANGED=$(git diff --name-only HEAD^ HEAD | grep ^app/ | sed 's/^/"/; s/$/"/' | tr '\n' ' ' || true)
-          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
-
       # Log in to DockerHub if changes detected
       - name: Log in to DockerHub
-        if: steps.check_changes.outputs.changed != ''
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
         env:
           DOCKER_USER: ${{ vars.DOCKER_USER }}
@@ -34,16 +26,13 @@ jobs:
 
       # Build and tag Docker image if changes detected
       - name: Build Docker image
-        if: steps.check_changes.outputs.changed != ''
         run: docker build -t fastapi .
 
       - name: Tag Docker image
-        if: steps.check_changes.outputs.changed != ''
         run: docker tag fastapi pytocompany/fastapi:latest
 
       # Push Docker image to registry if changes detected
       - name: Push Docker image to DockerHub
-        if: steps.check_changes.outputs.changed != ''
         run: docker push pytocompany/fastapi:latest
 
   deploy:
