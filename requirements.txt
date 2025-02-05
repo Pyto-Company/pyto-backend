@@ -1,6 +1,5 @@
 fastapi
 uvicorn
-tensorflow
 sqlmodel
 pytest
 Pillow
@@ -10,11 +9,10 @@ jose
 torch
 torchvision
 python-dotenv
-authlib
-httpx
 itsdangerous
 pyjwt
 psycopg2-binary
 sqlalchemy
 python-multipart
 requests
+firebase-admin

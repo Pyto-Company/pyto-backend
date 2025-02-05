@@ -21,8 +21,8 @@ def get_rappels(
     request: Request,
     session: Session = Depends(get_session)
 ) -> list[RappelPrevuDTO]:
-    user_id = request.state.user_id
-    return RappelRepository(session).get_rappels_by_user_id(user_id)
+    user_uid = request.state.user_uid
+    return RappelRepository(session).get_rappels_by_user_id(user_uid)
 
 @router.get("/{rappel_id}")
 def get_by_id(

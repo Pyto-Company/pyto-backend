@@ -1,8 +1,9 @@
 import os
 from dotenv import load_dotenv
 from fastapi import HTTPException
-import httpx
 import requests
+from requests.exceptions import HTTPError, ConnectionError, Timeout, RequestException
+from app.logger.logger import logger
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -30,15 +31,25 @@ class MistralClient():
         # Faites l'appel API
         try:
             response = requests.post(MISTRAL_API_URL, json=payload, headers=headers)
-            response.raise_for_status()  # Lève une exception pour les codes d'erreur HTTP
+            response.raise_for_status()
             return response.json()
-        except httpx.HTTPStatusError as e:
+        except ConnectionError:
+            raise HTTPException(
+                status_code=503,
+                detail="Impossible de se connecter au service Mistral AI"
+            )
+        except Timeout:
+            raise HTTPException(
+                status_code=504,
+                detail="Le délai d'attente de la réponse Mistral AI a été dépassé"
+            )
+        except HTTPError as e:
             raise HTTPException(
                 status_code=e.response.status_code,
-                detail=f"Erreur depuis Mistral AI: {e.response.text}"
+                detail=f"Erreur Mistral AI: {e.response.text}"
             )
-        except Exception as e:
+        except RequestException as e:
             raise HTTPException(
                 status_code=500,
-                detail=f"Erreur interne: {str(e)}"
+                detail=f"Erreur inattendue lors de l'appel à Mistral AI: {str(e)}"
             )

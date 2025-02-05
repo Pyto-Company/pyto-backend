@@ -1,8 +1,4 @@
 from app.repository.entretien import EntretienRepository
-from app.repository.rappel import RappelRepository
-from app.repository.scan import ScanRepository
-from app.dto.InscriptionDTO import InscriptionEmailDTO
-from app.model.utilisateur import ProviderType
 from sqlalchemy.orm import Session
 
 class PlanteService:

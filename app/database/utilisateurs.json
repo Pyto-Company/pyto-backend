@@ -1,20 +1,23 @@
 [
     {
         "id": 1,
-        "prenom": "Valentin",
-        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
-        "email": "uzanval@gmail.com"
+        "firebase_user_uid": "Rg2RQAdlypdK84juxQHTtyzMznI2",
+        "prenom": "Valentin"
     },
     {
         "id": 2,
-        "prenom": "Ilian",
-        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
-        "email": "ilian@gmail.com"
+        "firebase_user_uid": "EyTpijnv9pcmL8CcP2zsadxJTNE3",
+        "prenom": "Ilian"
     },
     {
         "id": 3,
-        "prenom": "Lucas",
-        "password": "1bc2c3d5b3362a91a16d8af139b93f879c28506429b3191e09fdd75bca8f8122",
-        "email": "uzanlah@gmail.com"
+        "firebase_user_uid": "ymVpIkIwErg1x7PoMC7cXz5wck73",
+        "prenom": "Lucas"
+    }
+    ,
+    {
+        "id": 4,
+        "firebase_user_uid": "rsqJ6AkHIHRqaqP9GCvH7km7lMG3",
+        "prenom": "Nicolas"
     }
 ]

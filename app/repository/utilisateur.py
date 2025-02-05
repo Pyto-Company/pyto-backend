@@ -29,11 +29,11 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         utilisateur = result.scalar_one_or_none()
         return utilisateur
 
-    def getMe(self, user_id: int) -> UtilisateurDTO:
+    def getMe(self, firebase_user_uid: int) -> UtilisateurDTO:
         sql = text("""
             SELECT 
                 u.id,
-                u.email,
+                u.firebase_user_uid,
                 u.prenom,
                 u.nb_scan,
                 u.date_creation,
@@ -45,11 +45,11 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
                 a.utilisateur_id
             FROM utilisateur u
             INNER JOIN abonnement a ON a.utilisateur_id = u.id
-            WHERE u.id = :user_id
+            WHERE u.firebase_user_uid = :firebase_user_uid
             AND a.est_actif = true
         """)
         
-        result = self.session.execute(sql, {"user_id": user_id})
+        result = self.session.execute(sql, {"firebase_user_uid": firebase_user_uid})
         rows = result.all()
         if not rows:
             raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
@@ -58,7 +58,7 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         
         meDto: UtilisateurDTO = {
             "user_id": row.id,
-            "user_email": row.email,
+            "user_firebase_user_uid": row.firebase_user_uid,
             "user_prenom": row.prenom,
             "user_nb_scan": row.nb_scan,
             "user_date_creation": row.date_creation,
@@ -81,5 +81,10 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
 
     def get_by_provider_id(self, provider_id: str) -> Optional[Utilisateur]:
         query = select(Utilisateur).where(Utilisateur.provider_id == provider_id)
+        result = self.session.execute(query)
+        return result.scalar_one_or_none()
+
+    def get_by_firebase_user_id(self, firebase_user_id: str) -> Optional[Utilisateur]:
+        query = select(Utilisateur).where(Utilisateur.firebase_user_id == firebase_user_id)
         result = self.session.execute(query)
         return result.scalar_one_or_none()

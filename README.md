@@ -15,18 +15,9 @@ pip install -r requirements.txt
 
 ### 3) Fichier .env
 
-A la racine du projet, créer un fichier ".env" avec le contenu suivant : 
-```
-GOOGLE_CLIENT_ID={demander à Lucas}
-GOOGLE_CLIENT_SECRET={demander à Lucas}
-MISTRAL_AI_API_KEY={demander à Lucas}
-OPEN_WEATHER_API_KEY={demander à Lucas}
-DATABASE_HOST = "localhost"
-DATABASE_USER = "postgres"
-DATABASE_PASSWORD = "votremotdepasse"
-DATABASE_PORT = 5432
-DATABASE_NAME = "pyto"
-```
+Dupliquer le fichier .env-template et le renommer en .env
+
+Puis demander les informations à renseigner à Lucas 
 
 ### 4) Lancement de l'application
 

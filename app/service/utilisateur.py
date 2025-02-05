@@ -1,12 +1,13 @@
 from app.repository.utilisateur import UtilisateurRepository
 from app.repository.abonnement import AbonnementRepository
-from app.config.password import PasswordConfig
-from app.dto.InscriptionDTO import InscriptionDTO, InscriptionEmailDTO
-from app.model.utilisateur import ProviderType, Utilisateur
+from app.dto.InscriptionDTO import InscriptionDTO
+from app.model.utilisateur import Utilisateur
 from app.model.abonnement import Abonnement, TypeAbonnement
 from datetime import datetime
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
+
+from app.client.firebase import FirebaseClient
 
 class UtilisateurService:
 
@@ -14,38 +15,31 @@ class UtilisateurService:
         self.session = session
 
     
-    def createUser(self, request: InscriptionEmailDTO, provider: ProviderType):
+    def createUser(self, user_uid: str, inscription: InscriptionDTO):
         try:
+
+            user_info = FirebaseClient.get_user_info(user_uid)
+            if user_info is None:
+                raise HTTPException(status_code=400, detail="Utilisateur introuvable dans Firebase")
+
             # Vérifier si l'utilisateur existe déjà avec cet email
-            existing_user = UtilisateurRepository(self.session).get_by_email(request.email)
-            
+            existing_user = UtilisateurRepository(self.session).get_by_firebase_user_id(user_uid)
             if existing_user:
-                if existing_user.provider == provider:
-                    raise HTTPException(
-                        status_code=400, 
-                        detail=f"Un compte existe déjà avec cet email via {provider.value}"
-                    )
-                else:
-                    raise HTTPException(
-                        status_code=400, 
-                        detail=f"Un compte existe déjà avec cet email via {existing_user.provider.value}"
-                    )
+                raise HTTPException(status_code=400, detail=f"Un utilisateur existe déjà avec cet User UID")
 
             # Création d'un nouvel utilisateur sans spécifier l'ID
             new_user = Utilisateur(
-                email=request.email,
-                password=PasswordConfig.hash(request.password),
-                prenom=request.prenom,
-                date_creation=datetime.now(),
+                firebase_user_uid=user_uid,
+                prenom=inscription.prenom,
                 nb_scan=0,
-                provider=provider
+                date_creation=datetime.now()
             )
             
             # Création de l'utilisateur
             created_user = UtilisateurRepository(self.session).create(new_user)
             
             # Création de l'abonnement si premium_started est True
-            if request.premium_started:
+            if inscription.premium_started:
                 abonnement_type = TypeAbonnement.ESSAI
             else:
                 abonnement_type = TypeAbonnement.GRATUIT
@@ -60,15 +54,8 @@ class UtilisateurService:
             
             self.session.commit()
             
-            return {
-                "message": "Inscription réussie",
-                "user": {
-                    "id": created_user.id,
-                    "email": created_user.email,
-                    "prenom": created_user.prenom,
-                    "premium_started": request.premium_started
-                }
-            }
+            return {"message": "Inscription réussie"}
+        
         except HTTPException:
             self.session.rollback()
             raise

@@ -72,8 +72,12 @@ jobs:
             export DATABASE_NAME="${{ vars.DATABASE_NAME }}" &&
             export DATABASE_HOST="${{ vars.DATABASE_HOST }}" &&
             export DATABASE_PORT="${{ vars.DATABASE_PORT }}" &&
-            export GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}" &&
-            export GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}" &&
+            export GOOGLE_API_KEY="${{ secrets.GOOGLE_API_KEY }}" &&
+            export FIREBASE_PRIVATE_KEY_ID="${{ secrets.FIREBASE_PRIVATE_KEY_ID }}" &&
+            export FIREBASE_PRIVATE_KEY="${{ secrets.FIREBASE_PRIVATE_KEY }}" &&
+            export FIREBASE_CLIENT_EMAIL="${{ vars.FIREBASE_CLIENT_EMAIL }}" &&
+            export FIREBASE_CLIENT_ID="${{ vars.FIREBASE_CLIENT_ID }}" &&
+            export FIREBASE_PROJECT_ID="${{ vars.FIREBASE_PROJECT_ID }}" &&
             export MISTRAL_AI_API_KEY="${{ secrets.MISTRAL_AI_API_KEY }}" &&
             export OPEN_WEATHER_API_KEY="${{ secrets.OPEN_WEATHER_API_KEY }}" &&
             export PATH_TO_MODELS="${{ vars.PATH_TO_MODELS }}" &&

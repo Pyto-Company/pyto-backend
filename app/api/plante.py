@@ -54,8 +54,8 @@ def delete(
 
 @router.get("/jardin", response_model=List[PlanteJardinDTO])
 def getMonJardin(request: Request, session: Session = Depends(get_session)):
-    user_id = request.state.user_id
-    return PlanteRepository(session).get_jardin(user_id)
+    user_uid = request.state.user_uid
+    return PlanteRepository(session).get_jardin(user_uid)
 
 @router.get("/{plante_id}/rappels")
 def getRappels(plante_id: int, request: Request, session: Session = Depends(get_session)):

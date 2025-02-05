@@ -1,12 +1,7 @@
-from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
-import jwt
-from jwt.exceptions import PyJWTError, ExpiredSignatureError
-from app.config.token import SECRET_KEY, ALGORITHM
-from app.repository.utilisateur import UtilisateurRepository
-from app.database.database import SessionLocal
 from app.logger.logger import logger
+from firebase_admin import auth
 
 class AuthMiddleware(BaseHTTPMiddleware):
     """
@@ -27,25 +22,15 @@ class AuthMiddleware(BaseHTTPMiddleware):
         self.exclude_paths = [
             "/docs",
             "/openapi.json",
-            "/connexion",
-            "/inscription",
             "/health",
             "/docs",              # Documentation Swagger
             "/openapi.json",      # Schéma OpenAPI
             "/redoc",             # Documentation ReDoc
-            "/connexion/token",   # Obtention du token
-            "/inscription",       # Inscription avec Google
-            "/connexion/email",
-            "/connexion/google",
-            "/connexion/facebook",
-            "/connexion/apple",
-            "/inscription/email",
-            "/inscription/google",
-            "/inscription/facebook",
-            "/inscription/apple",
+            "/inscription/token",
         ]
 
-    def dispatch(self, request, call_next):
+
+    async def dispatch(self, request, call_next):
         """
         Traite chaque requête entrante.
         
@@ -60,7 +45,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
         
         # Vérifie si le chemin est exclu de l'authentification
         if any(path.startswith(excluded) for excluded in self.exclude_paths):
-            return call_next(request)
+            return await call_next(request)
         
         # Vérifie le token pour tous les autres chemins
         try:    
@@ -74,47 +59,23 @@ class AuthMiddleware(BaseHTTPMiddleware):
             token = auth_header.split(' ')[1]
             
             try:
-                payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-                user_id = int(payload.get("sub"))
-                logger.info(f"L'identifiant de l'utilisateur du token est {user_id}")
+                # Verify the token locally
+                decoded_token = auth.verify_id_token(token)
+                request.state.user_uid = decoded_token['uid']
+                return await call_next(request)
 
-                # Vérifier l'existence de l'utilisateur
-                with SessionLocal() as session:
-                    repository = UtilisateurRepository(session)
-                    user = repository.get_by_id(user_id)
-                    logger.info(f"L'utilisateur est {user}")
-
-                    if not user:
-                        message = "L'identifiant n'a pas été trouvé"
-                        logger.error(message)
-                        return JSONResponse(
-                            status_code=401,
-                            content={"detail": message}
-                        )
-                    
-                request.state.user_id = user_id
-                
-            except (ExpiredSignatureError, ValueError) as e:
+            except auth.InvalidIdTokenError as e:
                 message = "Token expiré ou invalide"
                 logger.error(message + " : " + str(e))
                 return JSONResponse(
                     status_code=401,
                     content={"detail": message}
                 )
-            except PyJWTError as e:
-                message = "Token invalide"
-                logger.error(message + " : " + str(e))
-                return JSONResponse(
-                    status_code=401,
-                    content={"detail": message}
-                )
-                
+            
         except Exception as e:
-            message = "Erreur inconnue"
+            message = "Erreur lors de la vérification du token"
             logger.error(message + " : " + str(e))
             return JSONResponse(
-                status_code=401,
+                status_code=500,
                 content={"detail": message}
             )
-            
-        return call_next(request) 
