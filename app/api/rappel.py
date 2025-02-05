@@ -45,4 +45,3 @@ def delete(
     session: Session = Depends(get_session)
 ) -> dict:
     return RappelRepository(session).delete(rappel_id)
-
