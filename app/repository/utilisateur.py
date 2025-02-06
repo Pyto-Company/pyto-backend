@@ -85,6 +85,6 @@ class UtilisateurRepository(BaseRepository[Utilisateur]):
         return result.scalar_one_or_none()
 
     def get_by_firebase_user_id(self, firebase_user_id: str) -> Optional[Utilisateur]:
-        query = select(Utilisateur).where(Utilisateur.firebase_user_id == firebase_user_id)
+        query = select(Utilisateur).where(Utilisateur.firebase_user_uid == firebase_user_id)
         result = self.session.execute(query)
         return result.scalar_one_or_none()

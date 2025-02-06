@@ -8,9 +8,8 @@ from app.client.firebase import FirebaseClient
 router = APIRouter(prefix="/inscription", tags=["inscription"])
 
 @router.post("/")
-def inscription(request: Request, session: Session = Depends(get_session)):
+def inscription(request: Request, inscription: InscriptionDTO, session: Session = Depends(get_session)):
     user_uid = request.state.user_uid
-    inscription: InscriptionDTO = request.state.inscription
     return UtilisateurService(session).createUser(user_uid, inscription)
 
 @router.post("/token/{user_uid}")

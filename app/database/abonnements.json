@@ -16,5 +16,11 @@
         "date_debut": "2024-05-30T10:15:00",
         "est_actif": true,
         "utilisateur_id": 3
+    },
+    {
+        "type": "PREMIUM",
+        "date_debut": "2024-05-30T10:15:00",
+        "est_actif": true,
+        "utilisateur_id": 4
     }
 ]

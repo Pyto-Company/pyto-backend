@@ -17,8 +17,7 @@ class UtilisateurService:
     
     def createUser(self, user_uid: str, inscription: InscriptionDTO):
         try:
-
-            user_info = FirebaseClient.get_user_info(user_uid)
+            user_info = FirebaseClient().get_user_info(user_uid)
             if user_info is None:
                 raise HTTPException(status_code=400, detail="Utilisateur introuvable dans Firebase")
 
