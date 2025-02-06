@@ -18,11 +18,16 @@ from app.database.database import create_database, create_initial_data, create_t
 from starlette.middleware.cors import CORSMiddleware
 from app.middleware.auth_middleware import AuthMiddleware
 from app.middleware.error_middleware import ErrorLoggingMiddleware
-
+from app.middleware.log_middleware import LoggingMiddleware
+from app.middleware.https_middleware import HTTPSMiddleware
 from dotenv import load_dotenv
 import os
+from app.middleware.security_headers_middleware import SecurityHeadersMiddleware
+from app.middleware.rate_limit_middleware import RateLimitMiddleware
 
 load_dotenv()
+
+ENVIRONNEMENT = os.getenv("ENV")
 
 router = APIRouter()
 router.include_router(router=scan_router)
@@ -88,14 +93,19 @@ def custom_openapi():
 app = FastAPI(title="Pyto API", version="1.0.0", lifespan=lifespan)
 app.include_router(router=router)
 
+app.add_middleware(LoggingMiddleware)
+
+if ENVIRONNEMENT != "development":
+    app.add_middleware(HTTPSMiddleware)
+
 # Allow CORS for frontend (React) and backend communication
 # TODO allow_origins=["http://127.0.0.1:8000"],  # Allow requests from frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins for testing
     allow_credentials=True,
-    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
-    allow_headers=["*"],  # Allow all headers
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 # Après le middleware CORS
@@ -106,7 +116,12 @@ app.add_middleware(ErrorLoggingMiddleware)
 app.add_middleware(AuthMiddleware)
 
 # Remplacer les lignes existantes de configuration OpenAPI par :
-app.openapi = custom_openapi
+if ENVIRONNEMENT == "development":
+    app.openapi = custom_openapi
+
+if ENVIRONNEMENT != "development":
+    app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(RateLimitMiddleware, max_requests=100, window_seconds=60)
 
 firebase_config = {
   "type": "service_account",

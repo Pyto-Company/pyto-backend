@@ -6,6 +6,36 @@ on:
       - main  # Trigger only on pushes to the main branch
 
 jobs:
+  deploy_nginx:
+    name: Deploy Nginx
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Create nginx config folder
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Créer le dossier models s'il n'existe pas
+            sudo mkdir -p /var/www/pyto_project/nginx
+            # Donner les bonnes permissions
+            sudo chown -R ${{ vars.SSH_USER }}:${{ vars.SSH_USER }} /var/www/pyto_project/nginx
+            sudo chmod -R 755 /var/www/pyto_project/nginx
+      - name: Copy nginx config to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.SERVER_IP }}
+          username: ${{ vars.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ./api.pyto.eu.conf
+          target: /var/www/pyto_project/nginx
+
   build_and_push:
     name: Build and Push Docker Image
     runs-on: ubuntu-latest
