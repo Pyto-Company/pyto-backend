@@ -24,6 +24,8 @@ from dotenv import load_dotenv
 import os
 from app.middleware.security_headers_middleware import SecurityHeadersMiddleware
 from app.middleware.rate_limit_middleware import RateLimitMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 
 load_dotenv()
 
@@ -90,7 +92,12 @@ def custom_openapi():
     return app.openapi_schema
 
 # Initialize the app with lifespan
-app = FastAPI(title="Pyto API", version="1.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="Pyto API", 
+    version="1.0.0", 
+    lifespan=lifespan,
+    servers=[{"url": "https://api.pyto.eu"}] if ENVIRONNEMENT != "development" else None
+)
 app.include_router(router=router)
 
 app.add_middleware(LoggingMiddleware)
@@ -118,10 +125,6 @@ app.add_middleware(AuthMiddleware)
 # Remplacer les lignes existantes de configuration OpenAPI par :
 if ENVIRONNEMENT == "development":
     app.openapi = custom_openapi
-
-if ENVIRONNEMENT != "development":
-    app.add_middleware(SecurityHeadersMiddleware)
-    app.add_middleware(RateLimitMiddleware, max_requests=100, window_seconds=60)
 
 firebase_config = {
   "type": "service_account",

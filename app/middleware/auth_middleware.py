@@ -21,12 +21,14 @@ class AuthMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         self.exclude_paths = [
             "/docs",
+            "/docs/oauth2-redirect",
             "/openapi.json",
             "/health",
-            "/docs",              # Documentation Swagger
-            "/openapi.json",      # Schéma OpenAPI
-            "/redoc",             # Documentation ReDoc
+            "/redoc",
             "/inscription/token",
+            "/swagger-ui.css",
+            "/swagger-ui-bundle.js",
+            "/swagger-ui-standalone-preset.js"
         ]
 
 

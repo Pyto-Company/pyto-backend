@@ -5,7 +5,19 @@ from app.logger.logger import logger
 
 class HTTPSMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
-        if request.url.scheme != "https":
+        # Liste des chemins autorisés sans HTTPS
+        allowed_paths = [
+            "/docs",
+            "/docs/oauth2-redirect",
+            "/openapi.json",
+            "/redoc",
+            "/swagger-ui.css",
+            "/swagger-ui-bundle.js",
+            "/swagger-ui-standalone-preset.js",
+            "/.well-known/acme-challenge/"
+        ]
+
+        if request.url.scheme != "https" and not any(request.url.path.startswith(path) for path in allowed_paths):
             # Log les détails de la requête non-HTTPS
             logger.warning(
                 f"Tentative d'accès non-HTTPS détectée\n"

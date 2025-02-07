@@ -10,7 +10,6 @@ torch
 torchvision
 python-dotenv
 itsdangerous
-pyjwt
 psycopg2-binary
 sqlalchemy
 python-multipart
