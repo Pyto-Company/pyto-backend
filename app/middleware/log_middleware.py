@@ -13,7 +13,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             f"Full URL: {request.url}\n"
             f"Method: {request.method}\n"
             f"Scheme: {request.url.scheme}\n"
-            f"X-Forwarded-Proto: {request.headers.get("X-Forwarded-Proto", "http")}\n"
+            f'X-Forwarded-Proto: {request.headers.get("X-Forwarded-Proto", "http")}\n'
             f"Client: {request.client.host if request.client else 'unknown'}\n"
             f"Port: {request.client.port if request.client else 'unknown'}"
         )
@@ -22,7 +22,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
         process_time = time.time() - start_time
 
         logger.info(
-            f"[{__class__.__name__}]Retour de la requête\n"
+            f"[{__class__.__name__}] Retour de la requête\n"
             f"Durée: {process_time:.2f}s\n"
             f"Code retour: {response.status_code}"
         )
