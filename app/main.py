@@ -10,6 +10,7 @@ from app.api.inscription import router as inscription_router
 from app.api.dr_pyto import router as drpyto_router
 from app.api.health import router as health_router
 from app.api.espece import router as espece_router
+from app.api.jardin import router as jardin_router
 
 from firebase_admin import credentials, initialize_app
 
@@ -22,14 +23,14 @@ from app.middleware.log_middleware import LoggingMiddleware
 from app.middleware.https_middleware import HTTPSMiddleware
 from dotenv import load_dotenv
 import os
-from app.middleware.security_headers_middleware import SecurityHeadersMiddleware
-from app.middleware.rate_limit_middleware import RateLimitMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import JSONResponse
+import logging
 
 load_dotenv()
 
 ENVIRONNEMENT = os.getenv("ENV")
+
+# Désactiver les logs d'accès d'uvicorn
+logging.getLogger("uvicorn.access").disabled = True
 
 router = APIRouter()
 router.include_router(router=scan_router)
@@ -41,7 +42,7 @@ router.include_router(router=inscription_router)
 router.include_router(router=drpyto_router)
 router.include_router(router=health_router)
 router.include_router(router=espece_router)
-
+router.include_router(router=jardin_router)
 # Lifespan context manager
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -100,7 +101,9 @@ app = FastAPI(
 )
 app.include_router(router=router)
 
-app.add_middleware(LoggingMiddleware)
+# Ajout du middleware d'authentification
+# Doit être ajouté après CORS pour assurer le bon fonctionnement des requêtes préflight
+app.add_middleware(AuthMiddleware)
 
 if ENVIRONNEMENT != "development":
     app.add_middleware(HTTPSMiddleware)
@@ -115,12 +118,10 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"],
 )
 
+app.add_middleware(LoggingMiddleware)
+
 # Après le middleware CORS
 app.add_middleware(ErrorLoggingMiddleware)
-
-# Ajout du middleware d'authentification
-# Doit être ajouté après CORS pour assurer le bon fonctionnement des requêtes préflight
-app.add_middleware(AuthMiddleware)
 
 # Remplacer les lignes existantes de configuration OpenAPI par :
 if ENVIRONNEMENT == "development":

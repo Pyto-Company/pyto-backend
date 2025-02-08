@@ -15,3 +15,4 @@ sqlalchemy
 python-multipart
 requests
 firebase-admin
+exponent_server_sdk

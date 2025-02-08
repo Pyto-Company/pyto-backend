@@ -18,13 +18,7 @@ def getEspece(
 ):
     return EspeceRepository(session).get_by_id(espece_id)
 
-@router.get("/moment", response_model=List[EspeceDTO])
-def getPlantesMoment(
-    session: Session = Depends(get_session)
-):
-    return EspeceRepository(session).getPlantesMoment()
-
-@router.get("/search", response_model=List[EspeceDTO])
+@router.post("/search", response_model=List[EspeceDTO])
 def search_especes(
     q: str = Query(..., description="Terme de recherche pour le nom commun"),
     session: Session = Depends(get_session)

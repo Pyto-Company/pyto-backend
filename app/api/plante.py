@@ -52,11 +52,6 @@ def delete(
 ) -> dict:
     return PlanteRepository(session).delete(plante_id)
 
-@router.get("/jardin", response_model=List[PlanteJardinDTO])
-def getMonJardin(request: Request, session: Session = Depends(get_session)):
-    user_uid = request.state.user_uid
-    return PlanteRepository(session).get_jardin(user_uid)
-
 @router.get("/{plante_id}/rappels")
 def getRappels(plante_id: int, request: Request, session: Session = Depends(get_session)):
     return RappelRepository(session).get_rappels_by_plante_id(plante_id)

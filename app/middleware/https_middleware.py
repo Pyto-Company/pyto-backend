@@ -14,23 +14,18 @@ class HTTPSMiddleware(BaseHTTPMiddleware):
             "/swagger-ui.css",
             "/swagger-ui-bundle.js",
             "/swagger-ui-standalone-preset.js",
-            "/.well-known/acme-challenge/"
+            "/.well-known/acme-challenge/",
+            "/inscription/token"
         ]
 
-        if request.url.scheme != "https" and not any(request.url.path.startswith(path) for path in allowed_paths):
-            # Log les détails de la requête non-HTTPS
-            logger.warning(
-                f"Tentative d'accès non-HTTPS détectée\n"
-                f"Path: {request.url.path}\n"
-                f"Method: {request.method}\n"
-                f"Client: {request.client.host if request.client else 'unknown'}\n"
-                f"Scheme: {request.url.scheme}"
-            )
-            
+        forwarded_proto = request.headers.get("X-Forwarded-Proto", "http")
+        
+        if forwarded_proto != "https" and not any(request.url.path.startswith(path) for path in allowed_paths):
+            logger.warning(f"[{__class__.__name__}] Requête non-HTTPS bloquée")
             return JSONResponse(
                 status_code=403,
-                content={
-                    "detail": "Les requêtes HTTPS sont obligatoires"
-                }
+                content={"detail": "Les requêtes HTTPS sont obligatoires"}
             )
-        return await call_next(request) 
+        
+        response = await call_next(request)
+        return response

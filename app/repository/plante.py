@@ -37,7 +37,7 @@ class PlanteRepository(BaseRepository[Plante]):
                     e.nom_commun, 
                     e.photo_defaut,
                     r.id as rappel_id,
-                    r.type_entretien,
+                    en.type,
                     r.nb_jours_intervalle,
                     r.heure,
                     r.date_creation,
@@ -49,11 +49,13 @@ class PlanteRepository(BaseRepository[Plante]):
                         WHEN n.realisation = false THEN 1  -- Notifications non réalisées
                         WHEN n.id IS NULL THEN 2           -- Prochains rappels
                     END as priorite
-                FROM plante p 
+                FROM utilisateur u
+                INNER JOIN plante p ON p.utilisateur_id = u.id
                 INNER JOIN espece e ON e.id = p.espece_id 
                 LEFT JOIN rappel r ON r.plante_id = p.id
                 LEFT JOIN notification n ON n.rappel_id = r.id
-                WHERE p.utilisateur_id = :user_id
+                LEFT JOIN entretien en ON r.entretien_id = en.id
+                WHERE u.firebase_user_uid = :user_id
             ),
             rappels_classes AS (
                 SELECT *,
@@ -92,11 +94,14 @@ class PlanteRepository(BaseRepository[Plante]):
             if row.rappel_id:
                 rappel = RappelDTO(
                     id=row.rappel_id,
-                    type_entretien=row.type_entretien,
+                    type_entretien=row.type,
                     frequence=str(row.nb_jours_intervalle),
                     heure=row.heure,
-                    date_creation=row.date_creation
+                    date_creation=row.date_creation,
+                    date_prochain_rappel=row.date_prochain_rappel
+
                 )
+
                 
                 if row.notification_id and not row.realisation:
                     plantes_dict[row.plante_id]["rappels_retard"].append(rappel)

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class NotificationService():
 
     def should_generate_notification(
