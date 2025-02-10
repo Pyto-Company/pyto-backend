@@ -33,10 +33,15 @@ class EspeceRepository(BaseRepository[Espece]):
         result = self.session.execute(query)
         return [item[0] for item in result.all()]
     
-    def get_by_class_ia(self, classe_ia: str) -> list[Espece]:
+    def get_by_class_ia(self, classe_ia: str) -> Espece:
         query = select(Espece).where(Espece.classe_ia == classe_ia)
         result = self.session.execute(query)
-        return result.scalars().all()
+        espece = result.scalar_one_or_none()
+        
+        if espece is None:
+            raise ValueError(f"Aucune espèce trouvée avec la classe_ia: {classe_ia}")
+            
+        return espece
 
     def search_by_nom_commun(self, search_term: str):
         query = (

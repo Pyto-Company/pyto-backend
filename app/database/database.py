@@ -149,7 +149,7 @@ def create_initial_data():
         plantations_json_file_path = os.path.join(current_dir, "plantations.json")
         abonnements_json_file_path = os.path.join(current_dir, "abonnements.json")
         entretiens_json_file_path = os.path.join(current_dir, "entretiens.json")
-
+        maladies_json_file_path = os.path.join(current_dir, "maladies.json")
 
         with open(utilisateurs_json_file_path, "r", encoding="utf-8") as file:
             objects = [Utilisateur(**elem) for elem in json.load(file)]
@@ -195,6 +195,9 @@ def create_initial_data():
                 if "date_debut" in abonnement:
                     abonnement["date_debut"] = datetime.fromisoformat(abonnement["date_debut"])
             objects += [Abonnement(**elem) for elem in data]
+
+        with open(maladies_json_file_path, "r", encoding="utf-8") as file:
+            objects += [Maladie(**elem) for elem in json.load(file)]
 
         with SessionLocal() as session:
             session.add_all(objects)

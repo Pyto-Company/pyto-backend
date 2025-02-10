@@ -13,5 +13,6 @@ class Espece(SQLModel, table=True):
     plantes: list["Plante"] = Relationship(back_populates="espece")
     maladies: list["Maladie"] = Relationship(back_populates="espece")
     entretiens: list["Entretien"] = Relationship(back_populates="espece")
+    environnements: list["Environnement"] = Relationship(back_populates="espece")
     scans: list["Scan"] = Relationship(back_populates="espece")
     plantations: list["Plantation"] = Relationship(back_populates="especes")

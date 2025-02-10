@@ -1,10 +1,32 @@
 [
     {
-        "nom": "Bambou Sacré, Nandina",
-        "symptome": "",
-        "predisposition": "Nandina domestica",
-        "type": "Arbuste persistant",
-        "traitement": "",
-        "espece_id": 1
+        "nom": "Maladie1",
+        "description": "Emensis itaque difficultatibus multis et nive obrutis callibus plurimis ubi prope Rauracum ventum est ad supercilia fluminis Rheni, resistente multitudine Alamanna pontem suspendere navium conpage Romani vi nimia vetabantur ritu grandinis undique convolantibus telis, et cum id inpossibile videretur, imperator cogitationibus magnis attonitus, quid capesseret ambigebat.",
+        "classe_ia": "maladie_classe1",
+        "espece_id": 101
+    },
+    {
+        "nom": "Maladie2",
+        "description": "Emensis itaque difficultatibus multis et nive obrutis callibus plurimis ubi prope Rauracum ventum est ad supercilia fluminis Rheni, resistente multitudine Alamanna pontem suspendere navium conpage Romani vi nimia vetabantur ritu grandinis undique convolantibus telis, et cum id inpossibile videretur, imperator cogitationibus magnis attonitus, quid capesseret ambigebat.",
+        "classe_ia": "maladie_classe2",
+        "espece_id": 102
+    },
+    {
+        "nom": "Maladie3",
+        "description": "Emensis itaque difficultatibus multis et nive obrutis callibus plurimis ubi prope Rauracum ventum est ad supercilia fluminis Rheni, resistente multitudine Alamanna pontem suspendere navium conpage Romani vi nimia vetabantur ritu grandinis undique convolantibus telis, et cum id inpossibile videretur, imperator cogitationibus magnis attonitus, quid capesseret ambigebat.",
+        "classe_ia": "maladie_classe3",
+        "espece_id": 103
+    },
+    {
+        "nom": "Maladie4",
+        "description": "Emensis itaque difficultatibus multis et nive obrutis callibus plurimis ubi prope Rauracum ventum est ad supercilia fluminis Rheni, resistente multitudine Alamanna pontem suspendere navium conpage Romani vi nimia vetabantur ritu grandinis undique convolantibus telis, et cum id inpossibile videretur, imperator cogitationibus magnis attonitus, quid capesseret ambigebat.",
+        "classe_ia": "maladie_classe4",
+        "espece_id": 104
+    },
+    {
+        "nom": "Maladie5",
+        "description": "Emensis itaque difficultatibus multis et nive obrutis callibus plurimis ubi prope Rauracum ventum est ad supercilia fluminis Rheni, resistente multitudine Alamanna pontem suspendere navium conpage Romani vi nimia vetabantur ritu grandinis undique convolantibus telis, et cum id inpossibile videretur, imperator cogitationibus magnis attonitus, quid capesseret ambigebat.",
+        "classe_ia": "maladie_classe5",
+        "espece_id": 105
     }
 ]

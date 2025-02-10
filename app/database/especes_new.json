@@ -1,0 +1,578 @@
+[
+    {
+        "id": 1,
+        "nom_commun": "Aglaonème",
+        "photo_defaut": "aglaoneme.webp",
+        "nom_scientifique": "Aglaonema",
+        "type": "Plante d'intérieur",
+        "classe_ia": "aglaoneme_class",
+        "description": "L'Aglaonème est une plante d'intérieur robuste et facile d'entretien, appréciée pour ses feuilles décoratives et sa tolérance à la faible luminosité."
+    },
+    {
+        "id": 2,
+        "nom_commun": "Alocasia",
+        "photo_defaut": "alocasia.webp",
+        "nom_scientifique": "Alocasia",
+        "type": "Plante d'intérieur",
+        "classe_ia": "alocasia_class",
+        "description": "L'Alocasia, également appelée 'Oreille d'éléphant', est une plante tropicale aux feuilles larges et élégantes, idéale pour ajouter une touche exotique à un intérieur lumineux."
+    },
+    {
+        "id": 3,
+        "nom_commun": "Aloe Vera",
+        "photo_defaut": "aloe_vera.webp",
+        "nom_scientifique": "Aloe barbadensis miller",
+        "type": "Plante d'intérieur",
+        "classe_ia": "aloe_vera_class",
+        "description": "L'Aloe Vera est une plante connue pour ses propriétés médicinales, en particulier son gel aux vertus apaisantes et hydratantes. Facile à entretenir, elle aime les environnements lumineux."
+    },
+    {
+        "id": 4,
+        "nom_commun": "Anthurium andraeanum",
+        "photo_defaut": "anthurium_andraeanum.webp",
+        "nom_scientifique": "Anthurium andraeanum",
+        "type": "Plante d'intérieur",
+        "classe_ia": "anthurium_andraeanum_class",
+        "description": "L'Anthurium andraeanum, également connu sous le nom de 'Fleur de flamant', est apprécié pour ses fleurs brillantes en forme de cœur et ses feuilles élégantes. Idéal pour les intérieurs lumineux et humides."
+    },
+    {
+        "id": 5,
+        "nom_commun": "Arbre de Jade",
+        "photo_defaut": "arbre_de_jade.webp",
+        "nom_scientifique": "Crassula ovata",
+        "type": "Plante d'intérieur",
+        "classe_ia": "arbre_de_jade_class",
+        "description": "L'Arbre de Jade est une plante d'intérieur robuste connue pour ses feuilles épaisses et brillantes. Elle est souvent considérée comme un symbole de prospérité et est facile à entretenir en lumière indirecte."
+    },
+    {
+        "id": 6,
+        "nom_commun": "Areca",
+        "photo_defaut": "areca_dypsis_lutescens.webp",
+        "nom_scientifique": "Dypsis lutescens",
+        "type": "Plante d'intérieur",
+        "classe_ia": "areca_dypsis_lutescens_class",
+        "description": "L'Areca, également appelée 'Palmier d'intérieur', est une plante élégante aux longues feuilles arquées. Idéale pour purifier l'air, elle prospère dans des environnements lumineux et demande un arrosage régulier."
+    },
+    {
+        "id": 7,
+        "nom_commun": "Asperge setacée",
+        "photo_defaut": "asperge_setacee.webp",
+        "nom_scientifique": "Asparagus setaceus",
+        "type": "Plante d'intérieur",
+        "classe_ia": "asperge_setacee_class",
+        "description": "L'Asperge setacée, également connue sous le nom de 'Fougère d'asperge', est une plante gracieuse aux feuilles légères et plumeuses. Elle apprécie les environnements lumineux avec une lumière indirecte et un arrosage modéré."
+    },
+    {
+        "id": 8,
+        "nom_commun": "Aspidistra",
+        "photo_defaut": "aspidistra_elatior.webp",
+        "nom_scientifique": "Aspidistra elatior",
+        "type": "Plante d'intérieur",
+        "classe_ia": "aspidistra_elatior_class",
+        "description": "L'Aspidistra, aussi appelée 'Plante de fer', est une plante robuste et facile d'entretien, capable de prospérer dans des conditions de faible luminosité. Idéale pour les débutants, elle tolère une variété d'environnements."
+    },
+    {
+        "id": 9,
+        "nom_commun": "Asplenie nid d'oiseau",
+        "photo_defaut": "asplenie_nid_d_oiseau.webp",
+        "nom_scientifique": "Asplenium nidus",
+        "type": "Plante d'intérieur",
+        "classe_ia": "asplenie_nid_d_oiseau_class",
+        "description": "L'Asplenie nid d'oiseau est une fougère tropicale aux feuilles larges et brillantes. Idéale pour les intérieurs lumineux avec une lumière indirecte, elle apprécie une humidité constante et un entretien modéré."
+    },
+    {
+        "id": 10,
+        "nom_commun": "Bambou sacré",
+        "photo_defaut": "bambou_sacre.webp",
+        "nom_scientifique": "Nandina domestica",
+        "type": "Plante d'extérieur",
+        "classe_ia": "bambou_sacre_class",
+        "description": "Le Bambou sacré, ou Nandina domestica, est un arbuste élégant apprécié pour son feuillage changeant et ses baies rouges décoratives. Il est parfait pour orner les jardins et tolère une variété de conditions climatiques."
+    },
+    {
+        "id": 11,
+        "nom_commun": "Bégonia Croix de Fer",
+        "photo_defaut": "begonia_croix_de_fer.webp",
+        "nom_scientifique": "Begonia masoniana",
+        "type": "Plante d'intérieur",
+        "classe_ia": "begonia_croix_de_fer_class",
+        "description": "Le Bégonia Croix de Fer est une plante originale, reconnue pour ses feuilles texturées ornées d'un motif en forme de croix sombre. Il aime les environnements lumineux avec une lumière indirecte et un sol légèrement humide."
+    },
+    {
+        "id": 12,
+        "nom_commun": "Bégonia",
+        "photo_defaut": "begonia.webp",
+        "nom_scientifique": "Begonia spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "begonia_class",
+        "description": "Les Bégonias sont des plantes d'intérieur populaires, appréciées pour leurs feuilles décoratives et leurs fleurs colorées. Elles prospèrent dans une lumière indirecte et demandent un arrosage modéré pour éviter l'excès d'humidité."
+    },
+    {
+        "id": 13,
+        "nom_commun": "Myrtillier",
+        "photo_defaut": "Myrtillier.webp",
+        "nom_scientifique": "Vaccinium corymbosum",
+        "type": "Plante d'extérieur",
+        "classe_ia": "myrtillier_class",
+        "description": "Le myrtillier, est un arbuste fruitier produisant des baies délicieuses et riches en antioxydants. Il prospère dans des sols acides et bien drainés, avec une exposition en plein soleil ou mi-ombre."
+    },
+    {
+        "id": 14,
+        "nom_commun": "Cactus de Noël",
+        "photo_defaut": "cactus_de_noel.webp",
+        "nom_scientifique": "Schlumbergera",
+        "type": "Plante d'intérieur",
+        "classe_ia": "cactus_de_noel_class",
+        "description": "Le Cactus de Noël est une plante succulente populaire pour ses fleurs éclatantes qui apparaissent durant l'hiver. Il aime une lumière indirecte et des arrosages modérés, en laissant sécher le sol entre deux arrosages."
+    },
+    {
+        "id": 15,
+        "nom_commun": "Calathea",
+        "photo_defaut": "calathea.webp",
+        "nom_scientifique": "Calathea spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "calathea_class",
+        "description": "Les Calatheas sont des plantes d'intérieur élégantes, connues pour leurs feuilles décoratives aux motifs uniques. Elles apprécient une lumière indirecte, une humidité élevée et un arrosage régulier sans excès."
+    },
+    {
+        "id": 16,
+        "nom_commun": "Cannes des muets",
+        "photo_defaut": "cannes_des_muets.webp",
+        "nom_scientifique": "Dieffenbachia",
+        "type": "Plante d'intérieur",
+        "classe_ia": "cannes_des_muets_class",
+        "description": "La Cannes des muets est une plante d'intérieur tropicale appréciée pour ses grandes feuilles panachées. Elle prospère dans une lumière indirecte et demande un arrosage modéré, en évitant les courants d'air froid."
+    },
+    {
+        "id": 17,
+        "nom_commun": "Châtaignier de Guyane",
+        "photo_defaut": "chataignier_de_guyane.webp",
+        "nom_scientifique": "Pachira aquatica",
+        "type": "Plante d'intérieur",
+        "classe_ia": "chataignier_de_guyane_class",
+        "description": "Le Châtaignier de Guyane, également appelé 'Arbre à monnaie', est une plante d'intérieur tropicale prisée pour son tronc tressé et ses feuilles décoratives. Il préfère une lumière indirecte et un arrosage modéré."
+    },
+    {
+        "id": 18,
+        "nom_commun": "Cerisier",
+        "photo_defaut": "cerisier.webp",
+        "nom_scientifique": "Prunus avium",
+        "type": "Plante d'extérieur",
+        "classe_ia": "cerisier_class",
+        "description": "Le Cerisier est un arbre fruitier apprécié pour ses fleurs printanières et ses fruits savoureux. Il préfère une exposition en plein soleil et un sol bien drainé pour une croissance optimale."
+    },
+    {
+        "id": 19,
+        "nom_commun": "Plante araignée",
+        "photo_defaut": "plante_araignée.webp",
+        "nom_scientifique": "Chlorophytum comosum",
+        "type": "Plante d'intérieur",
+        "classe_ia": "chlorophytum_comosum_class",
+        "description": "Le Chlorophytum chevelu, aussi appelé 'plante araignée', est une plante d'intérieur robuste et facile d'entretien. Elle est appréciée pour ses longues feuilles rubanées et ses capacités de purification de l'air."
+    },
+    {
+        "id": 20,
+        "nom_commun": "Chrysanthème",
+        "photo_defaut": "chrysanthemum.webp",
+        "nom_scientifique": "Chrysanthemum spp.",
+        "type": "Plante d'extérieur",
+        "classe_ia": "chrysanthemum_class",
+        "description": "Le Chrysanthemum, ou chrysanthème, est une plante d'extérieur populaire pour ses fleurs colorées et variées qui fleurissent à l'automne. Il prospère en plein soleil et demande un arrosage régulier."
+    },
+    {
+        "id": 21,
+        "nom_commun": "Maïs",
+        "photo_defaut": "mais.webp",
+        "nom_scientifique": "Zea mays",
+        "type": "Plante d'extérieur",
+        "classe_ia": "mais_class",
+        "description": "Le Maïs est une plante cultivée pour ses grains nutritifs et ses nombreuses utilisations. Il prospère en plein soleil et nécessite un sol fertile et bien drainé avec un arrosage régulier."
+    },
+    {
+        "id": 22,
+        "nom_commun": "Ctenanthe",
+        "photo_defaut": "ctenanthe.webp",
+        "nom_scientifique": "Ctenanthe spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "ctenanthe_class",
+        "description": "Le Ctenanthe est une plante d'intérieur tropicale appréciée pour ses feuilles élégamment panachées. Elle prospère dans des environnements lumineux avec une lumière indirecte et une humidité élevée."
+    },
+    {
+        "id": 23,
+        "nom_commun": "Dracaena",
+        "photo_defaut": "dracaena.webp",
+        "nom_scientifique": "Dracaena spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "dracaena_class",
+        "description": "Le Dracaena est une plante d'intérieur robuste et décorative, connue pour ses longues feuilles élancées. Facile à entretenir, elle s'épanouit dans une lumière indirecte et demande un arrosage modéré."
+    },
+    {
+        "id": 24,
+        "nom_commun": "Étoile de Noël",
+        "photo_defaut": "etoile_de_noel.webp",
+        "nom_scientifique": "Euphorbia pulcherrima",
+        "type": "Plante d'intérieur",
+        "classe_ia": "etoile_de_noel_class",
+        "description": "L'Étoile de Noël, ou Poinsettia, est une plante d'intérieur emblématique des fêtes de fin d'année, connue pour ses bractées rouges éclatantes. Elle prospère dans une lumière indirecte et demande un arrosage modéré."
+    },
+    {
+        "id": 25,
+        "nom_commun": "Ficus Elastica",
+        "photo_defaut": "ficus_elastica.webp",
+        "nom_scientifique": "Ficus elastica",
+        "type": "Plante d'intérieur",
+        "classe_ia": "ficus_elastica_class",
+        "description": "Le Ficus Elastica, ou caoutchouc, est une plante d'intérieur populaire pour ses grandes feuilles brillantes et coriaces. Facile d'entretien, il aime une lumière indirecte et un arrosage modéré."
+    },
+    {
+        "id": 26,
+        "nom_commun": "Ficus lyrata",
+        "photo_defaut": "ficus_lyrata.webp",
+        "nom_scientifique": "Ficus lyrata",
+        "type": "Plante d'intérieur",
+        "classe_ia": "ficus_lyrata_class",
+        "description": "Le Ficus lyrata, aussi appelé 'figuier lyre', est une plante d'intérieur élégante, connue pour ses grandes feuilles en forme de violon. Il prospère dans une lumière indirecte et demande un arrosage modéré."
+    },
+    {
+        "id": 27,
+        "nom_commun": "Fleur de Lune",
+        "photo_defaut": "fleur_de_lune.webp",
+        "nom_scientifique": "Spathiphyllum",
+        "type": "Plante d'intérieur",
+        "classe_ia": "fleur_de_lune_class",
+        "description": "La Fleur de Lune, ou Spathiphyllum, est une plante d'intérieur élégante, appréciée pour ses feuilles brillantes et ses fleurs blanches délicates. Elle prospère dans une lumière indirecte et demande un arrosage modéré."
+    },
+    {
+        "id": 28,
+        "nom_commun": "Vignes",
+        "photo_defaut": "vignes.webp",
+        "nom_scientifique": "Vitis vinifera",
+        "type": "Plante d'extérieur",
+        "classe_ia": "vignes_class",
+        "description": "Les Vignes, ou Vitis vinifera, sont des plantes grimpantes cultivées pour leurs raisins, utilisés dans la production de vin, de jus et pour la consommation fraîche. Elles aiment une exposition en plein soleil et des sols bien drainés."
+    },
+    {
+        "id": 29,
+        "nom_commun": "Jacinthe d'Orient",
+        "photo_defaut": "jacinthe_orient.webp",
+        "nom_scientifique": "Hyacinthus orientalis",
+        "type": "Plante d'extérieur",
+        "classe_ia": "jacinthe_orient_class",
+        "description": "La Jacinthe d'Orient est une plante bulbeuse connue pour ses grappes de fleurs colorées et son parfum enivrant. Elle pousse idéalement dans des sols bien drainés et une exposition en plein soleil ou mi-ombre."
+    },
+    {
+        "id": 30,
+        "nom_commun": "Kalanchoe",
+        "photo_defaut": "kalanchoe.webp",
+        "nom_scientifique": "Kalanchoe spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "kalanchoe_class",
+        "description": "Le Kalanchoe est une plante succulente d'intérieur appréciée pour ses fleurs vives et sa facilité d'entretien. Elle prospère dans une lumière indirecte et nécessite un arrosage modéré, en laissant le sol sécher entre deux arrosages."
+    },
+    {
+        "id": 31,
+        "nom_commun": "Lavande anglaise",
+        "photo_defaut": "lavande_anglaise.webp",
+        "nom_scientifique": "Lavandula angustifolia",
+        "type": "Plante d'extérieur",
+        "classe_ia": "lavande_anglaise_class",
+        "description": "La Lavande anglaise est une plante aromatique prisée pour son parfum apaisant et ses fleurs violettes. Elle prospère en plein soleil et dans des sols bien drainés, nécessitant peu d'entretien une fois établie."
+    },
+    {
+        "id": 32,
+        "nom_commun": "Lierre grimpant",
+        "photo_defaut": "lierre_grimpant.webp",
+        "nom_scientifique": "Hedera helix",
+        "type": "Plante d'extérieur",
+        "classe_ia": "lierre_grimpant_class",
+        "description": "Le Lierre grimpant est une plante vigoureuse et polyvalente, appréciée pour son feuillage persistant. Idéal pour couvrir des murs ou des clôtures, il s'adapte à différentes expositions et demande peu d'entretien."
+    },
+    {
+        "id": 33,
+        "nom_commun": "Lilium",
+        "photo_defaut": "lilium.webp",
+        "nom_scientifique": "Lilium spp.",
+        "type": "Plante d'extérieur",
+        "classe_ia": "lilium_class",
+        "description": "Le Lilium, ou lys, est une plante bulbeuse élégante, connue pour ses grandes fleurs parfumées et spectaculaires. Il prospère en plein soleil ou mi-ombre et préfère un sol bien drainé et riche en nutriments."
+    },
+    {
+        "id": 34,
+        "nom_commun": "Marguerite",
+        "photo_defaut": "marguerite.webp",
+        "nom_scientifique": "Leucanthemum vulgare",
+        "type": "Plante d'extérieur",
+        "classe_ia": "marguerite_class",
+        "description": "La Marguerite est une plante vivace populaire, appréciée pour ses fleurs simples et élégantes avec des pétales blancs et un cœur jaune. Elle prospère en plein soleil et préfère les sols bien drainés."
+    },
+    {
+        "id": 35,
+        "nom_commun": "Monstera Deliciosa",
+        "photo_defaut": "monstera_deliciosa.webp",
+        "nom_scientifique": "Monstera deliciosa",
+        "type": "Plante d'intérieur",
+        "classe_ia": "monstera_deliciosa_class",
+        "description": "Le Monstera Deliciosa, ou plante gruyère, est une plante tropicale emblématique, connue pour ses grandes feuilles perforées. Elle prospère dans une lumière indirecte et demande un arrosage modéré, en laissant sécher le sol entre deux arrosages."
+    },
+    {
+        "id": 36,
+        "nom_commun": "Muguet de mai",
+        "photo_defaut": "muguet_de_mai.webp",
+        "nom_scientifique": "Convallaria majalis",
+        "type": "Plante d'extérieur",
+        "classe_ia": "muguet_de_mai_class",
+        "description": "Le Muguet de mai est une plante vivace connue pour ses clochettes blanches parfumées qui fleurissent au printemps. Il préfère les zones ombragées et des sols riches, frais et bien drainés."
+    },
+    {
+        "id": 37,
+        "nom_commun": "Narcisses",
+        "photo_defaut": "narcisses.webp",
+        "nom_scientifique": "Narcissus spp.",
+        "type": "Plante d'extérieur",
+        "classe_ia": "narcisses_class",
+        "description": "Les Narcisses sont des plantes bulbeuses populaires pour leurs fleurs éclatantes jaunes ou blanches au printemps. Ils préfèrent une exposition en plein soleil ou mi-ombre et un sol bien drainé."
+    },
+    {
+        "id": 38,
+        "nom_commun": "Nephrolepis exaltata",
+        "photo_defaut": "nephrolepis_exaltata.webp",
+        "nom_scientifique": "Nephrolepis exaltata",
+        "type": "Plante d'intérieur",
+        "classe_ia": "nephrolepis_exaltata_class",
+        "description": "La Nephrolepis exaltata, ou fougère de Boston, est une plante d'intérieur élégante avec son feuillage dense et retombant. Elle aime les environnements lumineux avec une lumière indirecte et une humidité élevée."
+    },
+    {
+        "id": 39,
+        "nom_commun": "Noline recourbée",
+        "photo_defaut": "noline_recourbee.webp",
+        "nom_scientifique": "Beaucarnea recurvata",
+        "type": "Plante d'intérieur",
+        "classe_ia": "noline_recourbee_class",
+        "description": "La Noline recourbée, également appelée 'pied d'éléphant', est une plante d'intérieur originale avec son tronc renflé et ses longues feuilles courbées. Elle est facile à entretenir et tolère bien les conditions de lumière indirecte."
+    },
+    {
+        "id": 40,
+        "nom_commun": "Orchidée",
+        "photo_defaut": "orchidee.webp",
+        "nom_scientifique": "Orchidaceae",
+        "type": "Plante d'intérieur",
+        "classe_ia": "orchidee_class",
+        "description": "Les Orchidées sont des plantes d'intérieur élégantes et raffinées, célèbres pour leurs fleurs exotiques et durables. Elles prospèrent dans une lumière indirecte et nécessitent un arrosage modéré avec un bon drainage."
+    },
+    {
+        "id": 41,
+        "nom_commun": "Parlor Palm",
+        "photo_defaut": "parlor_palm.webp",
+        "nom_scientifique": "Chamaedorea elegans",
+        "type": "Plante d'intérieur",
+        "classe_ia": "parlor_palm_class",
+        "description": "Le Parlor Palm, ou palmier d'appartement, est une plante d'intérieur populaire pour son feuillage élégant et sa capacité à prospérer dans des conditions de faible luminosité. Facile à entretenir, il ajoute une touche tropicale à tout espace."
+    },
+    {
+        "id": 42,
+        "nom_commun": "Pêcher",
+        "photo_defaut": "pecher.webp",
+        "nom_scientifique": "Prunus persica",
+        "type": "Plante d'extérieur",
+        "classe_ia": "pecher_class",
+        "description": "Le Pêcher est un arbre fruitier apprécié pour ses fleurs printanières et ses fruits juteux en été. Il prospère en plein soleil et préfère les sols bien drainés pour une production optimale."
+    },
+    {
+        "id": 43,
+        "nom_commun": "Poivron",
+        "photo_defaut": "poivron.webp",
+        "nom_scientifique": "Capsicum annuum",
+        "type": "Plante d'extérieur",
+        "classe_ia": "poivron_class",
+        "description": "Le Poivron est une plante potagère qui produit des fruits colorés et savoureux, riches en vitamines. Il préfère une exposition en plein soleil et un sol riche et bien drainé, avec un arrosage régulier."
+    },
+    {
+        "id": 44,
+        "nom_commun": "Pissenlit",
+        "photo_defaut": "pissenlit.webp",
+        "nom_scientifique": "Taraxacum officinale",
+        "type": "Plante d'extérieur",
+        "classe_ia": "pissenlit_class",
+        "description": "Le Pissenlit est une plante vivace commune, connue pour ses fleurs jaunes lumineuses et ses graines en forme de boules duveteuses. Il pousse facilement dans divers environnements et est souvent utilisé à des fins médicinales et culinaires."
+    },
+    {
+        "id": 45,
+        "nom_commun": "Plante à Monnaie Chinoise",
+        "photo_defaut": "plante_a_monnaie_chinoise.webp",
+        "nom_scientifique": "Pilea peperomioides",
+        "type": "Plante d'intérieur",
+        "classe_ia": "plante_a_monnaie_chinoise_class",
+        "description": "La Plante à Monnaie Chinoise, ou Pilea peperomioides, est une plante d'intérieur populaire pour ses feuilles rondes et brillantes. Facile d'entretien, elle aime la lumière indirecte et un arrosage modéré."
+    },
+    {
+        "id": 46,
+        "nom_commun": "Plante aux Éphélides",
+        "photo_defaut": "plante_aux_ephelides.webp",
+        "nom_scientifique": "Hypoestes phyllostachya",
+        "type": "Plante d'intérieur",
+        "classe_ia": "plante_aux_ephelides_class",
+        "description": "La Plante aux Éphélides, ou Hypoestes phyllostachya, est une plante d'intérieur colorée, connue pour ses feuilles tachetées de rose, rouge ou blanc. Elle aime la lumière indirecte et un arrosage modéré pour maintenir ses couleurs éclatantes."
+    },
+    {
+        "id": 47,
+        "nom_commun": "Plante ZZ",
+        "photo_defaut": "plante_zz_zamioculcas_zamiifolia.webp",
+        "nom_scientifique": "Zamioculcas zamiifolia",
+        "type": "Plante d'intérieur",
+        "classe_ia": "plante_zz_class",
+        "description": "La Plante ZZ, ou Zamioculcas zamiifolia, est une plante d'intérieur robuste et élégante, connue pour ses feuilles épaisses et brillantes. Facile d'entretien, elle tolère des conditions de faible luminosité et des arrosages peu fréquents."
+    },
+    {
+        "id": 48,
+        "nom_commun": "Pommier",
+        "photo_defaut": "pommier.webp",
+        "nom_scientifique": "Malus domestica",
+        "type": "Plante d'extérieur",
+        "classe_ia": "pommier_class",
+        "description": "Le Pommier est un arbre fruitier très apprécié pour ses fleurs printanières et ses fruits savoureux. Il prospère en plein soleil et préfère un sol riche, bien drainé, avec des arrosages réguliers."
+    },
+    {
+        "id": 49,
+        "nom_commun": "Pomme de terre",
+        "photo_defaut": "pomme_de_terre.webp",
+        "nom_scientifique": "Solanum tuberosum",
+        "type": "Plante d'extérieur",
+        "classe_ia": "pomme_de_terre_class",
+        "description": "La Pomme de terre est une plante potagère cultivée pour ses tubercules riches en amidon. Elle pousse bien en plein soleil et préfère un sol léger, riche et bien drainé."
+    },
+    {
+        "id": 50,
+        "nom_commun": "Pothos",
+        "photo_defaut": "pothos.webp",
+        "nom_scientifique": "Epipremnum aureum",
+        "type": "Plante d'intérieur",
+        "classe_ia": "pothos_class",
+        "description": "Le Pothos est une plante d'intérieur robuste et facile d'entretien, connue pour ses longues tiges traînantes et ses feuilles en forme de cœur. Elle prospère dans une lumière indirecte et tolère des conditions de faible luminosité."
+    },
+    {
+        "id": 51,
+        "nom_commun": "Framboisier",
+        "photo_defaut": "framboisier.webp",
+        "nom_scientifique": "Rubus idaeus",
+        "type": "Plante d'extérieur",
+        "classe_ia": "framboisier_class",
+        "description": "Le Framboisier est un arbuste fruitier apprécié pour ses fruits sucrés et juteux. Il prospère en plein soleil ou en mi-ombre, dans un sol bien drainé et riche en matières organiques."
+    },
+    {
+        "id": 53,
+        "nom_commun": "Rosier",
+        "photo_defaut": "rosier.webp",
+        "nom_scientifique": "Rosa spp.",
+        "type": "Plante d'extérieur",
+        "classe_ia": "rosier_class",
+        "description": "Le Rosier est une plante ornementale appréciée pour ses fleurs magnifiques et parfumées. Il prospère en plein soleil et demande un sol bien drainé, riche en nutriments, avec des arrosages réguliers."
+    },
+    {
+        "id": 54,
+        "nom_commun": "Saint Paulia",
+        "photo_defaut": "saintpaulia.webp",
+        "nom_scientifique": "Saintpaulia ionantha",
+        "type": "Plante d'intérieur",
+        "classe_ia": "saintpaulia_class",
+        "description": "Le Saintpaulia, ou violette africaine, est une plante d'intérieur compacte, appréciée pour ses fleurs délicates et colorées. Elle prospère dans une lumière indirecte et nécessite un arrosage modéré pour éviter l'humidité excessive."
+    },
+    {
+        "id": 55,
+        "nom_commun": "Sansevieria trifasciata",
+        "photo_defaut": "sansevieria_trifasciata.webp",
+        "nom_scientifique": "Sansevieria trifasciata",
+        "type": "Plante d'intérieur",
+        "classe_ia": "sansevieria_trifasciata_class",
+        "description": "La Sansevieria trifasciata, aussi appelée 'Langue de belle-mère', est une plante d'intérieur robuste et facile d'entretien. Elle tolère une faible luminosité et des arrosages peu fréquents, idéale pour les débutants."
+    },
+    {
+        "id": 56,
+        "nom_commun": "Sauge violette de Loire",
+        "photo_defaut": "sauge_violette_de_loire.webp",
+        "nom_scientifique": "Salvia nemorosa",
+        "type": "Plante d'extérieur",
+        "classe_ia": "sauge_violette_de_loire_class",
+        "description": "La Sauge violette de Loire est une plante vivace résistante, connue pour ses fleurs violettes spectaculaires en épis. Elle prospère en plein soleil et tolère bien les sols secs et bien drainés."
+    },
+    {
+        "id": 57,
+        "nom_commun": "Schefflera",
+        "photo_defaut": "schefflera.webp",
+        "nom_scientifique": "Schefflera arboricola",
+        "type": "Plante d'intérieur",
+        "classe_ia": "schefflera_class",
+        "description": "Le Schefflera, également connu sous le nom d'arbre ombrelle, est une plante d'intérieur élégante avec ses feuilles brillantes et regroupées en forme de parapluie. Facile d'entretien, il aime la lumière indirecte et tolère des conditions variées."
+    },
+    {
+        "id": 58,
+        "nom_commun": "Soja",
+        "photo_defaut": "soja.webp",
+        "nom_scientifique": "Glycine max",
+        "type": "Plante d'extérieur",
+        "classe_ia": "soja_class",
+        "description": "Le Soja est une plante légumineuse cultivée pour ses graines riches en protéines et en huile. Il prospère en plein soleil et préfère un sol bien drainé et fertile pour une croissance optimale."
+    },
+    {
+        "id": 59,
+        "nom_commun": "Spathiphyllum",
+        "photo_defaut": "spathiphyllum.webp",
+        "nom_scientifique": "Spathiphyllum spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "spathiphyllum_class",
+        "description": "Le Spathiphyllum, aussi connu sous le nom de 'Fleur de lune', est une plante d'intérieur élégante avec ses feuilles brillantes et ses fleurs blanches délicates. Elle aime une lumière indirecte et un arrosage modéré."
+    },
+    {
+        "id": 60,
+        "nom_commun": "Fraisier",
+        "photo_defaut": "fraisier.webp",
+        "nom_scientifique": "Fragaria × ananassa",
+        "type": "Plante d'extérieur",
+        "classe_ia": "fraisier_class",
+        "description": "Le Fraisier est une plante fruitière basse, connue pour ses délicieuses fraises sucrées. Il préfère une exposition en plein soleil et un sol riche, bien drainé, avec un arrosage régulier."
+    },
+    {
+        "id": 61,
+        "nom_commun": "Strelitzia Reginae",
+        "photo_defaut": "strelitzia_reginae.webp",
+        "nom_scientifique": "Strelitzia reginae",
+        "type": "Plante d'intérieur",
+        "classe_ia": "strelitzia_reginae_class",
+        "description": "Le Strelitzia Reginae, également appelé 'Oiseau de paradis', est une plante tropicale prisée pour ses fleurs spectaculaires ressemblant à un oiseau. Elle prospère dans une lumière vive et demande un arrosage modéré."
+    },
+    {
+        "id": 62,
+        "nom_commun": "Tomate",
+        "photo_defaut": "tomate.webp",
+        "nom_scientifique": "Solanum lycopersicum",
+        "type": "Plante d'extérieur",
+        "classe_ia": "tomate_class",
+        "description": "La Tomate est une plante potagère populaire cultivée pour ses fruits juteux et savoureux. Elle aime une exposition en plein soleil, un sol bien drainé et fertile, et un arrosage régulier."
+    },
+    {
+        "id": 63,
+        "nom_commun": "Tournesol",
+        "photo_defaut": "tournesol.webp",
+        "nom_scientifique": "Helianthus annuus",
+        "type": "Plante d'extérieur",
+        "classe_ia": "tournesol_class",
+        "description": "Le Tournesol est une plante emblématique connue pour ses grandes fleurs jaunes qui suivent la course du soleil. Il prospère en plein soleil et préfère un sol bien drainé et riche en nutriments."
+    },
+    {
+        "id": 64,
+        "nom_commun": "Tulipe",
+        "photo_defaut": "tulipe.webp",
+        "nom_scientifique": "Tulipa spp.",
+        "type": "Plante d'extérieur",
+        "classe_ia": "tulipe_class",
+        "description": "La Tulipe est une plante bulbeuse très appréciée pour ses fleurs colorées et variées au printemps. Elle prospère en plein soleil ou en mi-ombre et préfère un sol bien drainé et fertile."
+    },
+    {
+        "id": 65,
+        "nom_commun": "Yucca",
+        "photo_defaut": "yucca.webp",
+        "nom_scientifique": "Yucca spp.",
+        "type": "Plante d'intérieur",
+        "classe_ia": "yucca_class",
+        "description": "Le Yucca est une plante d'intérieur robuste et facile d'entretien, appréciée pour ses feuilles longues et rigides. Il prospère dans des environnements lumineux avec une lumière indirecte et tolère des périodes de sécheresse."
+    }
+]

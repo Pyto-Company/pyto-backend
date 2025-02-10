@@ -13,5 +13,5 @@ class Environnement(SQLModel, table=True):
     info_principale: str
     info_secondaire: Optional[str] = None
     espece_id: int = Field(foreign_key="espece.id")
-    
-    espece: "Espece" = Relationship(back_populates="entretiens")
+
+    espece: "Espece" = Relationship(back_populates="environnements")

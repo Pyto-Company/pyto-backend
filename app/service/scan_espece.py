@@ -36,28 +36,27 @@ transform = transforms.Compose([
 
 class ScanEspeceService():
 
-    def predict(file: UploadFile = File(...)):
-        try:
-            # Charger l'image
-            image = Image.open(io.BytesIO(file.read()))
-            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
+    def predict(self, file: UploadFile = File(...)):
+        # Charger l'image
+        image = Image.open(file.file)
+        # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
-            # Appliquer les transformations
-            input_tensor = transform(image).unsqueeze(0)  # Ajouter une dimension batch
+        # Appliquer les transformations
+        input_tensor = transform(image).unsqueeze(0)  # Ajouter une dimension batch
 
-            # Passer l'image dans le modèle
-            with torch.no_grad():
-                output = model(input_tensor)
-                _, predicted = torch.max(output, 1)
+        # Passer l'image dans le modèle
+        with torch.no_grad():
+            output = model(input_tensor)
+            _, predicted = torch.max(output, 1)
 
-            # Read file
-            utilisateurs_json_file_path = os.path.join("app/enum", "espece_classes.json")
-            with open(utilisateurs_json_file_path, "r") as file:
-                especes_classes = json.load(file)
+        # Read file
+        utilisateurs_json_file_path = os.path.join("app/enum", "espece_classes.json")
+        with open(utilisateurs_json_file_path, "r") as file:
+            especes_classes = json.load(file)
 
-            prediction = especes_classes[predicted.item()]
-            return {"prediction": prediction}
-        
-        except Exception as e:
-            return JSONResponse(content={"error": str(e)}, status_code=500)
-        
+        predicted_class = predicted.item()
+        if str(predicted_class) not in especes_classes:
+            raise ValueError(f"Classe prédite {predicted_class} non trouvée dans le fichier de mapping")
+
+        prediction = especes_classes[str(predicted_class)]
+        return prediction

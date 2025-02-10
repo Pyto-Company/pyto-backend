@@ -14,44 +14,57 @@ from app.service.scan_espece import ScanEspeceService
 from app.service.scan_maladie import ScanMaladieService
 from app.storage.image import ImageStorage
 from app.logger.logger import logger
+from sqlalchemy.orm import Session
+
+from app.repository.environnement import EnvironnementRepository
+from app.repository.traitement import TraitementRepository
+from app.repository.predisposition import PredispositionRepository
+from app.repository.symptome import SymptomeRepository
 
 class ScanService():
 
-    def predict(self, file: UploadFile = File(...)) -> ResultatScanDTO:
-        # Préparation du retour
-        resultat_scan = ResultatScanDTO()
+    def __init__(self, session: Session):
 
+        self.session = session
+
+    def predict(self, file: UploadFile = File(...)) -> ResultatScanDTO:
         # Prédiction de l'espèce
-        classe_espece_predicted = ScanEspeceService.predict(file)
+        classe_espece_predicted = ScanEspeceService().predict(file)
 
         # Récupèration de l'espèce par la classe ia
-        espece: Espece = EspeceRepository.get_by_class_ia(classe_espece_predicted)
-        resultat_scan.espece = espece
+        espece: Espece = EspeceRepository(self.session).get_by_class_ia(classe_espece_predicted)
 
         # Récupération des maladies de l'espèce
-        maladies: List[Maladie] = MaladieRepository.get_maladies_by_espece_id(espece.id)
+        maladies: List[Maladie] = MaladieRepository(self.session).get_maladies_by_espece_id(espece.id)
 
         # Prédiction des maladies
-        classes_maladies_predicted = ScanMaladieService.predict_all(file)
+        classes_maladies_predicted = ScanMaladieService().predict_all(file)
 
         # Filtrage des maladies
-        maladies_predicted: List[Maladie] = self.filtre_maladies(maladies, classes_maladies_predicted)
-
-        # Gestion des maladies filtrées 
-        length = len(maladies_predicted)
-        if length == 0:
-            logger.error("Aucune maladie détectée")
-        elif length == 1:
-            logger.info("Une seule maladie détectée")
-            resultat_scan.maladie = maladies_predicted[0]
-        else:
-            logger.error("Plus d'une maladie détectée")
+        maladie: Maladie = self.filtre_maladies(maladies, classes_maladies_predicted)
 
         # Récupération des conseils d'entretien
-        resultat_scan.entretiens = EntretienRepository.get_entretiens_by_espece_id(espece.id)
+        entretiens = EntretienRepository(self.session).get_entretiens_by_espece_id(espece.id)
+        environnements = EnvironnementRepository(self.session).get_environnements_by_espece_id(espece.id)
+
+        # Récupération des traitements
+        traitements = TraitementRepository(self.session).get_traitements_by_maladie_id(maladie.id)
+        predispositions = PredispositionRepository(self.session).get_predispositions_by_maladie_id(maladie.id)
+        symptomes = SymptomeRepository(self.session).get_symptomes_by_maladie_id(maladie.id)
 
         # Stockage de l'image sur le serveur
-        filename: str = ImageStorage.save_scan()
+        filename: str = ImageStorage.save_scan(file)
+
+        resultat_scan = ResultatScanDTO(
+            espece=espece,
+            maladie=maladie,
+            entretiens=entretiens,
+            environnements=environnements,
+            traitements=traitements,
+            predispositions=predispositions,
+            symptomes=symptomes
+        )
+
 
         # Stockage des informations en base
         if resultat_scan.maladie is not None:
@@ -61,19 +74,19 @@ class ScanService():
                 maladie_id = resultat_scan.maladie.id,
                 espece_id = resultat_scan.espece.id
             )
-            ScanRepository.create(scan)
+            ScanRepository(self.session).create(scan)
         else:
             scan = Scan(
                 nom_fichier = filename,
                 date_creation = datetime.now(),
                 espece_id = resultat_scan.espece.id
             )
-            ScanRepository.create(scan)
+            ScanRepository(self.session).create(scan)
 
         return resultat_scan
     
 
-    def filtre_maladies(self, maladies: List[Maladie], classes_maladies_predicted: List[Dict[str, float]]) -> List[Maladie]:
+    def filtre_maladies(self, maladies: List[Maladie], classes_maladies_predicted: List[Dict[str, float]]) -> Maladie:
         # Création d'un tableau de classes_ia des maladies
         classes_ia_maladies = [maladie.classe_ia for maladie in maladies]
 
@@ -82,13 +95,14 @@ class ScanService():
             if prediction["disease"] in classes_ia_maladies
         ]
 
+        # Gestion des maladies filtrées 
         length = len(filtered_predictions)
-        filtered_maladies = []
 
         if length == 0:
-            logger.error("Aucune maladie correspondant à l'espèce")
-        else:
-            highest_prediction = max(filtered_predictions, key=lambda x: x["prediction"])
-            filtered_maladies: List[Maladie] = [maladie for maladie in maladies if maladie.classe_ia == highest_prediction["prediction"]]
+            raise ValueError(f"Aucune maladie détectée pour {classes_maladies_predicted}")
 
-        return filtered_maladies
+        elif length == 1:
+            highest_prediction = max(filtered_predictions, key=lambda x: x["prediction"])
+            maladie = [maladie for maladie in maladies if maladie.classe_ia == highest_prediction["disease"]][0]
+
+        return maladie

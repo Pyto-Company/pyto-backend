@@ -49,45 +49,39 @@ class ScanMaladieService():
 
     
     def predict_higher(self,file: UploadFile = File(...)):
-        try:
-            # Charger l'image
-            image = Image.open(io.BytesIO(file.read()))
-            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
+        image = Image.open(file.file)
+        # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
-            output = self.predict_common(image)
-            _, predicted = torch.max(output, 1)
+        output = self.predict_common(image)
+        _, predicted = torch.max(output, 1)
 
-            # Read file
-            utilisateurs_json_file_path = os.path.join("app/enum", "maladie_classes.json")
-            with open(utilisateurs_json_file_path, "r") as file:
-                especes_classes = json.load(file)
+        # Read file
+        utilisateurs_json_file_path = os.path.join("app/enum", "maladie_classes.json")
+        with open(utilisateurs_json_file_path, "r") as file:
+            especes_classes = json.load(file)
 
-            prediction = especes_classes[predicted.item()]
-            return {"prediction": prediction}
-        
-        except Exception as e:
-            return JSONResponse(content={"error": str(e)}, status_code=500)
+        prediction = especes_classes[predicted.item()]
+        return {"prediction": prediction}
     
     
-    def predict_all(self,file: UploadFile = File(...)) -> List[Dict[str, float]]:
-        try:
-            # Charger l'image
-            image = Image.open(io.BytesIO(file.read()))
-            # image = Image.open(io.BytesIO(file.read())).convert("RGB")
+    def predict_all(self, file: UploadFile = File(...)) -> List[Dict[str, float]]:
+        image = Image.open(file.file)
+        # image = Image.open(io.BytesIO(file.read())).convert("RGB")
 
-            output = self.predict_common(image)
-            output_list = output.squeeze(0).tolist()
+        output = self.predict_common(image)
+        output_list = output.squeeze(0).tolist()
 
-            # Read file
-            utilisateurs_json_file_path = os.path.join("app/enum", "maladie_classes.json")
-            with open(utilisateurs_json_file_path, "r") as file:
-                especes_classes = json.load(file)
+        # Read file
+        utilisateurs_json_file_path = os.path.join("app/enum", "maladie_classes.json")
+        with open(utilisateurs_json_file_path, "r") as file:
+            especes_classes = json.load(file)
 
-            # Create a list of dictionaries, where each dictionary contains disease and prediction
-            predictions = [{"disease": especes_classes[i], "prediction": output_list[i]} for i in range(len(especes_classes))]
+        # Create a list of dictionaries, where each dictionary contains disease and prediction
+        predictions = []
+        for disease_class, disease_name in especes_classes.items():
+            predictions.append({
+                "disease": disease_name,
+                "prediction": output_list[int(disease_class)]
+            })
 
-            return {"predictions": predictions}
-        
-        except Exception as e:
-            return JSONResponse(content={"error": str(e)}, status_code=500)
-        
+        return predictions

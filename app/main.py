@@ -25,6 +25,8 @@ from dotenv import load_dotenv
 import os
 import logging
 
+from app.config.constants import Constants
+
 load_dotenv()
 
 ENVIRONNEMENT = os.getenv("ENV")
@@ -79,10 +81,7 @@ def custom_openapi():
     
     # Application de la sécurité globalement sauf pour les routes exclues
     for path in openapi_schema["paths"]:
-        if path in [
-            "/health",
-            "/inscription/token/{user_uid}"
-        ]:
+        if path in Constants.get_excluded_paths():
             for method in openapi_schema["paths"][path]:
                 openapi_schema["paths"][path][method]["security"] = []
     
@@ -93,11 +92,11 @@ def custom_openapi():
     return app.openapi_schema
 
 # Initialize the app with lifespan
+# servers=[{"url": "https://api.pyto.eu"}] if ENVIRONNEMENT != "development" else None
 app = FastAPI(
     title="Pyto API", 
     version="1.0.0", 
-    lifespan=lifespan,
-    servers=[{"url": "https://api.pyto.eu"}] if ENVIRONNEMENT != "development" else None
+    lifespan=lifespan
 )
 app.include_router(router=router)
 

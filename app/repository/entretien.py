@@ -1,7 +1,8 @@
-from typing import Annotated
+from typing import Annotated, Dict
 from fastapi import Query
 from sqlmodel import select
 from app.model.entretien import Entretien
+from app.model.conseil import Conseil
 from app.repository.base import BaseRepository
 from sqlalchemy.orm import Session
 
@@ -24,7 +25,32 @@ class EntretienRepository(BaseRepository[Entretien]):
     def update(self, entretien_id: int, updated_data: dict) -> Entretien:
         return super().update(entretien_id, updated_data)
     
-    def get_entretiens_by_espece_id(self, espece_id: int) -> list[Entretien]:
-        query = select(Entretien).where(Entretien.espece_id == espece_id)
+    def get_entretiens_by_espece_id(self, espece_id: int) -> list[Dict]:
+        # Sélectionner les entretiens avec leurs conseils associés
+        query = (
+            select(Entretien, Conseil)
+            .join(Conseil, Entretien.id == Conseil.entretien_id)
+            .where(Entretien.espece_id == espece_id)
+        )
         result = self.session.execute(query)
-        return result.scalars().all()
+        
+        # Organiser les résultats par entretien
+        entretiens_dict = {}
+        for entretien, conseil in result:
+            if entretien.id not in entretiens_dict:
+                entretiens_dict[entretien.id] = {
+                    "id": entretien.id,
+                    "type": entretien.type,
+                    "info_principale": entretien.info_principale,
+                    "info_secondaire": entretien.info_secondaire,
+                    "espece_id": entretien.espece_id,
+                    "conseils": []
+                }
+            entretiens_dict[entretien.id]["conseils"].append({
+                "id": conseil.id,
+                "description": conseil.description,
+                "ordre": conseil.ordre,
+                "titre": conseil.titre
+            })
+            
+        return list(entretiens_dict.values())

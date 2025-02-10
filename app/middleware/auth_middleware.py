@@ -3,50 +3,18 @@ from starlette.responses import JSONResponse
 from app.logger.logger import logger
 from firebase_admin import auth
 
+from app.config.constants import Constants
+
 class AuthMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware d'authentification pour FastAPI.
-    Vérifie la présence et la validité du token JWT pour toutes les routes,
-    sauf celles explicitement exclues.
-    """
     
     def __init__(self, app):
-        """
-        Initialise le middleware avec les chemins à exclure de l'authentification.
-        
-        Args:
-            app (FastAPI): L'application FastAPI
-            exclude_paths (list[str], optional): Liste des chemins à exclure
-        """
         super().__init__(app)
-        self.exclude_paths = [
-            "/docs",
-            "/docs/oauth2-redirect",
-            "/openapi.json",
-            "/health",
-            "/redoc",
-            "/inscription/token",
-            "/swagger-ui.css",
-            "/swagger-ui-bundle.js",
-            "/swagger-ui-standalone-preset.js"
-        ]
-
 
     async def dispatch(self, request, call_next):
-        """
-        Traite chaque requête entrante.
-        
-        Args:
-            request: La requête HTTP entrante
-            call_next: La fonction à appeler pour continuer le traitement
-            
-        Returns:
-            La réponse HTTP
-        """
         path = request.url.path
         
         # Vérifie si le chemin est exclu de l'authentification
-        if any(path.startswith(excluded) for excluded in self.exclude_paths):
+        if any(path.startswith(excluded) for excluded in Constants.get_excluded_paths()):
             return await call_next(request)
         
         # Vérifie le token pour tous les autres chemins
