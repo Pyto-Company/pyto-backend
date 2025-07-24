@@ -1,26 +1,27 @@
 [
     {
         "espece_id": 101,
-        "numero_mois": 3
-    },
-    {
-        "espece_id": 101,
-        "numero_mois": 4
-    },
-    {
-        "espece_id": 101,
-        "numero_mois": 5
-    },
-    {
-        "espece_id": 101,
-        "numero_mois": 6
+        "date_debut": "2025-02-10",
+        "date_fin": "2025-03-16"
     },
     {
         "espece_id": 102,
-        "numero_mois": 1
+        "date_debut": "2025-01-15",
+        "date_fin": "2025-02-20"
     },
     {
-        "espece_id": 102,
-        "numero_mois": 2
+        "espece_id": 103,
+        "date_debut": "2025-03-10",
+        "date_fin": "2025-04-16"
+    },
+    {
+        "espece_id": 104,
+        "date_debut": "2025-02-10",
+        "date_fin": "2025-03-16"
+    },
+    {
+        "espece_id": 105,
+        "date_debut": "2025-02-10",
+        "date_fin": "2025-03-16"
     }
 ]
